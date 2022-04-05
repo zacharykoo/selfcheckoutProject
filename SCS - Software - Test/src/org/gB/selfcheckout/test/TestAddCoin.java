@@ -1,16 +1,11 @@
 package org.gB.selfcheckout.test;
 
 import java.math.BigDecimal;
-import java.util.Currency;
-import java.util.List;
-
 import org.gB.selfcheckout.software.AddCoin;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
 import org.junit.Before;
 import org.junit.Test;
-import org.lsmr.selfcheckout.devices.CoinValidator;
-
 import junit.framework.Assert;
 
 @SuppressWarnings("deprecation")
