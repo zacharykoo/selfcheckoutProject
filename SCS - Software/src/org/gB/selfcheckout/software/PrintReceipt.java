@@ -2,6 +2,8 @@ package org.gB.selfcheckout.software;
 import java.util.ArrayList;
 
 import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.devices.EmptyException;
+import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
@@ -14,6 +16,15 @@ public class PrintReceipt{
         this.pdc = state.idb;
     }
     
+    private void printLetter(ReceiptPrinter printer, char letter) {
+    	try {
+			printer.print(letter);
+		} catch (EmptyException | OverloadException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
     public void printReceipt() {
     	ReceiptPrinter printer = state.scs.printer;
     	ArrayList<Item> scannedProducts = state.scannedItems;
@@ -24,37 +35,37 @@ public class PrintReceipt{
             String desc = "";
             for (int x = 0; x < desc.length(); x ++)
             {
-            	printer.print(desc.charAt(x));
+            	printLetter(printer, desc.charAt(x));
             }
             char c = '\n'; 
-            printer.print(c);
+            printLetter(printer, c);
             // Double price = scannedProducts.get(i).getPrice().doubleValue(); // TODO: Fix this.
             Double price = 0.0;
             String priceString = "Price: " + price;
             for (int y = 0; y < priceString.length(); y ++)
             {
-            	printer.print(priceString.charAt(y));
+            	printLetter(printer, priceString.charAt(y));
             }
-            printer.print(c);
+            printLetter(printer, c);
         }
-        printer.print('\n');
+        printLetter(printer, '\n');
         String totalString = "Total:\n" + pdc.getTotalCost().doubleValue();
         for (int w = 0; w < totalString.length(); w ++) 
         {
-        	printer.print(totalString.charAt(w));
+        	printLetter(printer, totalString.charAt(w));
         }
-        printer.print('\n');
+        printLetter(printer, '\n');
         String totalPaidString = "Total Paid:\n" + pdc.getTotalPaid().doubleValue();
         for (int z = 0; z < totalPaidString.length(); z ++)
         {
-        	printer.print(totalPaidString.charAt(z));
+        	printLetter(printer, totalPaidString.charAt(z));
         }
-        printer.print('\n');
+        printLetter(printer, '\n');
         Double change = pdc.getTotalPaid().subtract(pdc.getTotalCost()).doubleValue();
         String changeString = "Change:\n" + change;
         for (int q = 0; q < changeString.length(); q ++)
         {
-        	printer.print(changeString.charAt(q));
+        	printLetter(printer, changeString.charAt(q));
         }
         
         printer.cutPaper();
