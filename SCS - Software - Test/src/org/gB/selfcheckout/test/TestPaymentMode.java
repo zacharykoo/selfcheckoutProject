@@ -2,15 +2,11 @@ package org.gB.selfcheckout.test;
 
 import static org.junit.Assert.*;
 
-import java.math.BigDecimal;
-import java.util.Currency;
-
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.PaymentMode;
 import org.gB.selfcheckout.software.State;
 import org.junit.Before;
 import org.junit.Test;
-import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 
 public class TestPaymentMode {
     private State state;
