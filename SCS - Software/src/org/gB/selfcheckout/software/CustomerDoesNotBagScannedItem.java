@@ -9,6 +9,11 @@ public class CustomerDoesNotBagScannedItem implements ElectronicScaleObserver {
 	private State state;  // The state of the self checkout station's software.
 	private boolean enabled; // Indicates whether the watched device is enabled.
 
+	
+	public CustomerDoesNotBagScannedItem(State state) {
+		this.state = state;
+		this.enabled = true;
+	}
 	@Override
 	public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
 		// TODO Auto-generated method stub
