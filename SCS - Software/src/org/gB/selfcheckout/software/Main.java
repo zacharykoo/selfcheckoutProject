@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.devices.EmptyException;
+import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 
@@ -77,7 +79,7 @@ public class Main {
 		state.enableScanning();
 		
 		// Create the printer and get it ready
-		scs.printer.endConfigurationPhase();
+		scs.printer.endConfiguationPhase();
 		scs.printer.addInk(1000);
 		scs.printer.addPaper(1000);
 		
@@ -141,9 +143,11 @@ public class Main {
 	}
 	
 	/** Prints a receipt to the customer
+	 * @throws OverloadException 
+	 * @throws EmptyException 
 	 * 
 	 */
-	public void printReceipt(double totalForPrinting) {
+	public void printReceipt(double totalForPrinting) throws EmptyException, OverloadException {
 		
 		String printString = new String("Receipt: \n");
 		String tempString = new String();
