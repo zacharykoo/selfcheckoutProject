@@ -2,8 +2,8 @@ package org.gB.selfcheckout.software;
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.NullPointerSimulationException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
-import org.lsmr.selfcheckout.devices.SimulationException;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
@@ -41,7 +41,7 @@ public class ItemDatabase {
         //Ensure lists are not malformed.
         if(itemList.size() != productList.size() && productList.size() != barcodeList.size())
         {
-            throw new SimulationException("Database is malformed.");
+            throw new NullPointerSimulationException("Database is malformed.");
         }
 
         //Get barcode if applicable.
