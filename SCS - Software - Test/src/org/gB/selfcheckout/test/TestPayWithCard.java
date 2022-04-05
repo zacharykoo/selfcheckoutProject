@@ -53,8 +53,7 @@ public class TestPayWithCard {
         //Set variables to respective components of State.
         assert state != null;
 
-        cardReader = state.scs.cardReader;
-        cardReader.endConfigurationPhase();        
+        cardReader = state.scs.cardReader; 
         
         // Create test credit cards
         validTestCard1 = new Card("VISA", "4520123412341234", "John Doe", "123", "9999", true, true);
