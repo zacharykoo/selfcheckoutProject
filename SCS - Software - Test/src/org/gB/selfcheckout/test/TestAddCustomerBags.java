@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.OverloadException;
-import org.lsmr.selfcheckout.devices.SimulationException;
+import org.lsmr.selfcheckout.SimulationException;
 
 public class TestAddCustomerBags {
 

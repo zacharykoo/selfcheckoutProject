@@ -12,7 +12,7 @@ import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.devices.DisabledException;
 import org.lsmr.selfcheckout.devices.EmptyException;
 import org.lsmr.selfcheckout.devices.OverloadException;
-import org.lsmr.selfcheckout.devices.SimulationException;
+import org.lsmr.selfcheckout.SimulationException;
 import org.gB.selfcheckout.software.*;
 import org.junit.Assert;
 import org.junit.Before;

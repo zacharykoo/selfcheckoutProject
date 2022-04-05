@@ -8,7 +8,7 @@ import org.gB.selfcheckout.software.State;
 import org.junit.Test;
 import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
-import org.lsmr.selfcheckout.devices.SimulationException;
+import org.lsmr.selfcheckout.SimulationException;
 
 import junit.framework.Assert;
 
