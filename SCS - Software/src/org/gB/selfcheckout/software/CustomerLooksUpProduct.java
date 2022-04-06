@@ -37,6 +37,6 @@ public class CustomerLooksUpProduct  {
 				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
 			}
 		}
-		return null;
+		return productList;
 	}
 }
