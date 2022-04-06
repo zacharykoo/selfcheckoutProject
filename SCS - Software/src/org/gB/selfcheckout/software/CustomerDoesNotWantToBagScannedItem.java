@@ -33,7 +33,6 @@ public class CustomerDoesNotWantToBagScannedItem implements ElectronicScaleObser
 				// then re-enable the scanning status.
 				state.scs.mainScanner.enable();
 				state.scs.handheldScanner.enable();
-				state.waitingForBagging = false;
 			}
 			
 		// Issue an error to the interface for an unprompted weight change.
