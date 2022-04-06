@@ -13,16 +13,7 @@ import java.util.Set;
 public class CustomerLooksUpProduct  {
 	ArrayList<PLUCodedProduct> productList = new ArrayList<PLUCodedProduct>();
 	
-	public PLUCodedProduct lookUpPLUCodedProduct(PriceLookupCode code) {
-		if (ProductDatabases.PLU_PRODUCT_DATABASE.containsKey(code)) {
-			return ProductDatabases.PLU_PRODUCT_DATABASE.get(code);
-		} else {
-			System.out.println("Price Lookup Code matched no items in database!");
-		}
-		return null;
-	}
-	
-	public ArrayList<PLUCodedProduct> lookUpTest2(String partialLookUpCode) {
+	public ArrayList<PLUCodedProduct> customerLooksUpPLUProduct(String partialLookUpCode) {
 		boolean track = true;
 		char[] charArray = partialLookUpCode.toCharArray();
 		Numeral[] numerals = new Numeral[charArray.length];

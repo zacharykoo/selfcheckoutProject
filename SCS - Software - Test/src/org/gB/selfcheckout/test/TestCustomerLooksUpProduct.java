@@ -16,7 +16,7 @@ public class TestCustomerLooksUpProduct {
 	public void LookUpOnEmptyPLUDatabase() {
 		PriceLookupCode code = new PriceLookupCode("12345");
 		CustomerLooksUpProduct process = new CustomerLooksUpProduct();
-		assertEquals(null, process.lookUpPLUCodedProduct(code));
+		assertEquals(null, process.customerLooksUpPLUProduct(code));
 	}
 	
 	@Test
@@ -28,7 +28,7 @@ public class TestCustomerLooksUpProduct {
 		ProductDatabases.PLU_PRODUCT_DATABASE.put(product.getPLUCode(), product);
 		
 		CustomerLooksUpProduct process = new CustomerLooksUpProduct();
-		assertEquals(null, process.lookUpPLUCodedProduct(wrongCode));
+		assertEquals(null, process.customerLooksUpPLUProduct(wrongCode));
 	}
 
 	@Test
@@ -40,6 +40,6 @@ public class TestCustomerLooksUpProduct {
 		ProductDatabases.PLU_PRODUCT_DATABASE.put(product.getPLUCode(), product);
 		
 		CustomerLooksUpProduct process = new CustomerLooksUpProduct();
-		assertEquals(product, process.lookUpPLUCodedProduct(wrongCode));
+		assertEquals(product, process.customerLooksUpPLUProduct(wrongCode));
 	}
 }
