@@ -170,7 +170,7 @@ public class ItemDatabase {
         }
         return searchProduct;
     }
-//added
+    //added
 	public static ItemDatabase getInstance() {
 		// TODO Auto-generated method stub
 		return p;
@@ -192,4 +192,4 @@ public class ItemDatabase {
         return totalPaid;
     }
 
-	}
+}

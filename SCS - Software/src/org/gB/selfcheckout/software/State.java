@@ -2,6 +2,7 @@ package org.gB.selfcheckout.software;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.lsmr.selfcheckout.Card;
@@ -10,6 +11,9 @@ import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
 import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
+import org.lsmr.selfcheckout.products.PLUCodedProduct;
+import org.lsmr.selfcheckout.products.Product;
 
 /**
  * Stores the state of the self-checkout program. The members scs, addBanknote,
@@ -20,7 +24,8 @@ public class State {
 	public ArrayList<Item> scannedItems = new ArrayList<Item>();
 
 	// We need products in order to get the price for printing the receipt
-	//public ArrayList<Product> scannedProducts = new ArrayList<Product>();	
+	//public ArrayList<Product> scannedProducts = new ArrayList<Product>();
+	public Map<Product, Integer> productCart = new HashMap<>();
 	
 	// Stores the weight of all items in scannedItems.
 	private double expectedWeight = 0;
@@ -66,7 +71,7 @@ public class State {
 	public ScanItem scanItem = null;
 	public ScanMembershipCard scanMembershipCard = null;
 	public ReturnChange returnChange = null;
-	public ReceiptPrinterStatus printerStatus = null;
+	public PrintReceipt printReceipt = null;
 	
 	/**
 	 * Returns the current expected weight of the scanned items list.
@@ -89,6 +94,24 @@ public class State {
 		expectedWeight += item.getWeight();
 	}
 	
+	public void addProduct(Product product) {
+		if (productCart.containsKey(product)) {
+			// Increment count of that product
+			productCart.replace(product, productCart.get(product) + 1);
+		} else {
+			// Add the new product to productCart
+			productCart.put(product, 1);
+		}
+		totalToPay = totalToPay.add(product.getPrice());
+		if (product instanceof BarcodedProduct) {
+			expectedWeight += ((BarcodedProduct) product).getExpectedWeight();
+		}
+		else if (product instanceof PLUCodedProduct) {
+			// PLUCodedProducts are per kilogram
+			expectedWeight += 1000;
+		}
+	}
+	
 	/**
 	 * Removes the specified item from the scanned items list. The expected
 	 * weight is updated appropriately.
@@ -103,6 +126,30 @@ public class State {
 			for (Item i : this.scannedItems) expectedWeight += i.getWeight();
 			return true;
 		} else return false;
+	}
+	
+	public boolean removeProduct(Product product) {
+		boolean isProductRemoved = false;
+		// If there is more than 1 reduce count of that product, else remove product
+		if (productCart.containsKey(product) && productCart.get(product) > 1) {
+			productCart.replace(product, productCart.get(product) - 1);
+			isProductRemoved = true;
+		} else if (productCart.containsKey(product)) {
+			productCart.remove(product);
+			isProductRemoved = true;
+		}
+		
+		if (isProductRemoved) {
+			totalToPay = totalToPay.subtract(product.getPrice());
+			if (product instanceof BarcodedProduct) {
+				expectedWeight -= ((BarcodedProduct) product).getExpectedWeight();
+			}
+			else if (product instanceof PLUCodedProduct) {
+				// PLUCodedProducts are per kilogram
+				expectedWeight -= 1000;
+			}
+		}
+		return isProductRemoved;
 	}
 	
 
