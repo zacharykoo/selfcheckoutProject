@@ -65,7 +65,7 @@ public class ItemDatabase {
     }
     
     // Returns the PLUCodedProduct object if it exists in the database, else returns null
-    public PLUCodedProduct getPLUCodedEntry(PriceLookupCode pluCode) {
+    public PLUCodedProduct getPLUCodedProduct(PriceLookupCode pluCode) {
     	if (pluCode == null)
     		throw new NullPointerException("Provided pluCode is null.");
     	else
