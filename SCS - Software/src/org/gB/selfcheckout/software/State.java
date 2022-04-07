@@ -28,7 +28,7 @@ public class State {
 	public double previousWeight = 0;
 	// Stores the value of the money inserted into the system.
 	public BigDecimal paymentTotal = new BigDecimal(0.0);
-	// Sotres the total price of currently scanned products
+	// Stores the total price of currently scanned products
 	public BigDecimal totalToPay = new BigDecimal(0.0);
 	
 	public boolean isCardInserted = false;
@@ -41,6 +41,13 @@ public class State {
 	public String memberNumber = null;
 	// The weight of a customer's personal bags.
 	public double customerBagWeight = 0.0;
+	
+	// States of ink and paper left in the receipt printer hardware
+	public boolean lowOnInk = true;
+	public boolean outOfInk = true;
+	public boolean lowOnPaper = true;
+	public boolean outOfPaper = true;
+	
 	
 	// Stores the payments made for each card transactions.
 	public ArrayList<Pair<Card.CardData, BigDecimal>> cardPayments =
@@ -59,6 +66,7 @@ public class State {
 	public ScanItem scanItem = null;
 	public ScanMembershipCard scanMembershipCard = null;
 	public ReturnChange returnChange = null;
+	public ReceiptPrinterStatus printerStatus = null;
 	
 	/**
 	 * Returns the current expected weight of the scanned items list.
