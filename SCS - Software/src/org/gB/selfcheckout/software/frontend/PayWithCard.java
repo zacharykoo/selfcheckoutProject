@@ -14,36 +14,67 @@ public class PayWithCard extends JPanel implements ActionListener {
 	
 	private JButton backButton;
 	public CustomerUI customerFrame;
-	private JPanel topPanel;
+	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 
-		
+	
 	public PayWithCard(CustomerUI customerFrame) {
 		
 		this.customerFrame = customerFrame;
 
-		this.setBorder(BorderFactory.createEmptyBorder(50, 50, 40, 40));
+		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		this.setLayout(new GridLayout(2,1));
 		
 		setUpBackButton();
+		
+		this.bottomPanel.setLayout(new GridLayout(2, 1));
 		
 		enterCard = new JLabel("Please swipe/tap/insert your card", SwingConstants.CENTER);
 		enterCard.setFont(new Font("serif", Font.PLAIN, 20));
 		
 		this.bottomPanel.add(enterCard);
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout());
+		
+		JButton swipe, tap, insert;
+		swipe = new JButton("(SWIPE)");
+		tap = new JButton("(TAP)");
+		insert = new JButton("(INSERT)");
+		buttonPanel.add(swipe);
+		buttonPanel.add(tap);
+		buttonPanel.add(insert);
+		
+		this.bottomPanel.add(buttonPanel);
+
 	}
 
 	public void setUpBackButton() {
-		topPanel = new JPanel();
-		topPanel.setLayout(new FlowLayout());
-		bottomPanel = new JPanel();
-		bottomPanel.setLayout(new GridLayout(2, 1));
-		this.add(topPanel);
-		this.add(bottomPanel);
+		
+		gbc.insets = new Insets(3, 3, 3, 3);
+		
+		this.setLayout(new GridBagLayout());
 		
 		backButton = new JButton("Back");
 		backButton.addActionListener(this);
-		topPanel.add(backButton, BorderLayout.EAST);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weighty = 0.0;
+		gbc.weightx = 0.0;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		
+		backButton.addActionListener(this);
+		this.add(backButton, gbc);
+		
+		gbc.weighty = 1.0;
+		gbc.weightx = 1.0;		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		bottomPanel = new JPanel();
+		this.add(bottomPanel, gbc);
+		
 	}
 
 	@Override

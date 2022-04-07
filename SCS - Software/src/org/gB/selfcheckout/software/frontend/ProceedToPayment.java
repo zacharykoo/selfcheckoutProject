@@ -10,6 +10,8 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	
 	public CustomerUI customerFrame;
 	private JButton backButton;
+	private GridBagConstraints gbc = new GridBagConstraints();
+	private JPanel bottomPanel;	
 
 	private static final long serialVersionUID = 1L;
 	private JLabel paymentMethod;
@@ -17,8 +19,6 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	private JButton debit;
 	private JButton giftCard;
 	private JButton cash;
-	private JPanel topPanel;
-	private JPanel bottomPanel;
 	
 	private JPanel bottom1;
 	private JPanel bottom2;
@@ -28,12 +28,11 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	public ProceedToPayment(CustomerUI customerFrame) {
 				
 		this.customerFrame = customerFrame;
-
-		this.setBorder(BorderFactory.createEmptyBorder(50, 50, 40, 40));
-		this.setLayout(new GridLayout(2,1));
+		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		
 		setUpBackButton();
 
+		this.bottomPanel.setLayout(new GridLayout(2,1));
 		bottom1 = new JPanel();
 		bottom1.setLayout(new FlowLayout());
 		bottom2 = new JPanel();
@@ -47,7 +46,6 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 		debit = new JButton("Debit");
 		giftCard = new JButton("Gift Card");
 		cash = new JButton("Cash");
-		
 		
 		bottom1.add(paymentMethod);
 		bottom2.add(credit);
@@ -63,18 +61,30 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	}
 	
 	public void setUpBackButton() {
-		// Set up panel for back button (top) and rest (bottom)
-		topPanel = new JPanel();
-		topPanel.setLayout(new FlowLayout());
-		bottomPanel = new JPanel();
-		bottomPanel.setLayout(new GridLayout(2, 1));
-		this.add(topPanel);
-		this.add(bottomPanel);
+		
+		gbc.insets = new Insets(3, 3, 3, 3);
+		
+		this.setLayout(new GridBagLayout());
 		
 		backButton = new JButton("Back");
-		backButton.setBounds(50, 50, 75, 45);;
 		backButton.addActionListener(this);
-		topPanel.add(backButton, BorderLayout.EAST);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.weighty = 0.0;
+		gbc.weightx = 0.0;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		
+		backButton.addActionListener(this);
+		this.add(backButton, gbc);
+		
+		gbc.weighty = 1.0;
+		gbc.weightx = 1.0;		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.anchor = GridBagConstraints.CENTER;
+		bottomPanel = new JPanel();
+		this.add(bottomPanel, gbc);
 		
 	}
 
