@@ -60,6 +60,8 @@ public class State {
 	public ScanMembershipCard scanMembershipCard = null;
 	public ReturnChange returnChange = null;
 	
+	boolean poweredOn = false;
+	
 	/**
 	 * Returns the current expected weight of the scanned items list.
 	 * 
