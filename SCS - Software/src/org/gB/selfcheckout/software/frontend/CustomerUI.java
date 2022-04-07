@@ -23,7 +23,7 @@ public class CustomerUI extends JFrame {
 		
 		// I'm running proceed to payment first
 		ProceedToPayment ptpPanel = new ProceedToPayment(this);
-		mainPanel.add(ptpPanel, BorderLayout.CENTER);
+		mainPanel.add(ptpPanel, "ptpPanel");
 		this.pack();
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

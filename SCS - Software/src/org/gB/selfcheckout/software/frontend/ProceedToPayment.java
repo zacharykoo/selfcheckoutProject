@@ -9,6 +9,8 @@ import javax.swing.*;
 public class ProceedToPayment extends JPanel implements ActionListener {
 	
 	public CustomerUI customerFrame;
+	private JButton backButton;
+	private JPanel backPanel;
 
 	private static final long serialVersionUID = 1L;
 	private JLabel paymentMethod;
@@ -19,23 +21,26 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	private JPanel topPanel;
 	private JPanel bottomPanel;
 	
-	private JButton backButton;
+	private JPanel bottom1;
+	private JPanel bottom2;
+	
 
 	
 	public ProceedToPayment(CustomerUI customerFrame) {
-		
+				
 		this.customerFrame = customerFrame;
 
 		this.setBorder(BorderFactory.createEmptyBorder(50, 50, 40, 40));
-		this.setLayout(new GridLayout(2, 1));
+		this.setLayout(new GridLayout(2,1));
 		
-		topPanel = new JPanel();
-		topPanel.setLayout(new FlowLayout());
-		bottomPanel = new JPanel();
-		bottomPanel.setLayout(new GridLayout(2,2));
-		this.add(topPanel);
-		this.add(bottomPanel);
-		
+		setUpBackButton();
+
+		bottom1 = new JPanel();
+		bottom1.setLayout(new FlowLayout());
+		bottom2 = new JPanel();
+		bottom2.setLayout(new GridLayout(2,2));
+		this.bottomPanel.add(bottom1);
+		this.bottomPanel.add(bottom2);
 		
 		paymentMethod = new JLabel("Select a payment method");
 		paymentMethod.setFont(new Font("serif", Font.PLAIN, 20));
@@ -45,16 +50,32 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 		cash = new JButton("Cash");
 		
 		
-		topPanel.add(paymentMethod);
-		bottomPanel.add(credit);
-		bottomPanel.add(debit);
-		bottomPanel.add(giftCard);
-		bottomPanel.add(cash);
+		bottom1.add(paymentMethod);
+		bottom2.add(credit);
+		bottom2.add(debit);
+		bottom2.add(giftCard);
+		bottom2.add(cash);
 		
 		credit.addActionListener(this);
 		debit.addActionListener(this);
 		giftCard.addActionListener(this);
 		cash.addActionListener(this);
+		
+	}
+	
+	public void setUpBackButton() {
+		// Set up panel for back button (top) and rest (bottom)
+		topPanel = new JPanel();
+		topPanel.setLayout(new FlowLayout());
+		bottomPanel = new JPanel();
+		bottomPanel.setLayout(new GridLayout(2, 1));
+		this.add(topPanel);
+		this.add(bottomPanel);
+		
+		backButton = new JButton("Back");
+		backPanel = new JPanel();
+		backButton.addActionListener(this);
+		topPanel.add(backButton, BorderLayout.EAST);
 		
 	}
 
@@ -67,6 +88,9 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 			PayWithCard pwcPanel = new PayWithCard(this.customerFrame);
 			this.customerFrame.mainPanel.add(pwcPanel, "pwcPanel");
 			this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "pwcPanel");
+		} 
+		else if (e.getSource() == backButton) {
+			//this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "XXX");
 		}
 		
 		
