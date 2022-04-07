@@ -10,7 +10,6 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	
 	public CustomerUI customerFrame;
 	private JButton backButton;
-	private JPanel backPanel;
 
 	private static final long serialVersionUID = 1L;
 	private JLabel paymentMethod;
@@ -42,7 +41,7 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 		this.bottomPanel.add(bottom1);
 		this.bottomPanel.add(bottom2);
 		
-		paymentMethod = new JLabel("Select a payment method");
+		paymentMethod = new JLabel("Select a payment method", SwingConstants.CENTER);
 		paymentMethod.setFont(new Font("serif", Font.PLAIN, 20));
 		credit = new JButton("Credit");
 		debit = new JButton("Debit");
@@ -73,7 +72,7 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 		this.add(bottomPanel);
 		
 		backButton = new JButton("Back");
-		backPanel = new JPanel();
+		backButton.setBounds(50, 50, 75, 45);;
 		backButton.addActionListener(this);
 		topPanel.add(backButton, BorderLayout.EAST);
 		

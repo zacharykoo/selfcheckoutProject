@@ -13,7 +13,6 @@ public class PayWithCard extends JPanel implements ActionListener {
 	
 	
 	private JButton backButton;
-	private JPanel backPanel;
 	public CustomerUI customerFrame;
 	private JPanel topPanel;
 	private JPanel bottomPanel;
@@ -28,7 +27,7 @@ public class PayWithCard extends JPanel implements ActionListener {
 		
 		setUpBackButton();
 		
-		enterCard = new JLabel("Please swipe/tap/insert your card");
+		enterCard = new JLabel("Please swipe/tap/insert your card", SwingConstants.CENTER);
 		enterCard.setFont(new Font("serif", Font.PLAIN, 20));
 		
 		this.bottomPanel.add(enterCard);
@@ -43,7 +42,6 @@ public class PayWithCard extends JPanel implements ActionListener {
 		this.add(bottomPanel);
 		
 		backButton = new JButton("Back");
-		backPanel = new JPanel();
 		backButton.addActionListener(this);
 		topPanel.add(backButton, BorderLayout.EAST);
 	}
