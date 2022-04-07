@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class ProceedToPayment extends JPanel implements ActionListener {
+	
+	public CustomerUI customerFrame;
 
 	private static final long serialVersionUID = 1L;
 	private JLabel paymentMethod;
@@ -16,9 +18,13 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	private JButton cash;
 	private JPanel topPanel;
 	private JPanel bottomPanel;
+	
+	private JButton backButton;
 
 	
-	public ProceedToPayment() {
+	public ProceedToPayment(CustomerUI customerFrame) {
+		
+		this.customerFrame = customerFrame;
 
 		this.setBorder(BorderFactory.createEmptyBorder(50, 50, 40, 40));
 		this.setLayout(new GridLayout(2, 1));
@@ -45,12 +51,24 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 		bottomPanel.add(giftCard);
 		bottomPanel.add(cash);
 		
+		credit.addActionListener(this);
+		debit.addActionListener(this);
+		giftCard.addActionListener(this);
+		cash.addActionListener(this);
+		
 	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == credit || e.getSource() == debit) {
+			
+			// Set up a PayWithCardPanel and show it in the CardLayout panel
+			PayWithCard pwcPanel = new PayWithCard(this.customerFrame);
+			this.customerFrame.mainPanel.add(pwcPanel, "pwcPanel");
+			this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "pwcPanel");
+		}
+		
 		
 	}
 	
