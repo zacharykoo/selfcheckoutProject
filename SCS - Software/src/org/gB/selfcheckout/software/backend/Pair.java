@@ -1,4 +1,4 @@
-package org.gB.selfcheckout.software;
+package org.gB.selfcheckout.software.backend;
 
 /*
  * A class to store an ordered pair.
