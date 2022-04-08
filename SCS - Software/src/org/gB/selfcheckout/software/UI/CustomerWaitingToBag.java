@@ -28,6 +28,7 @@ public class CustomerWaitingToBag extends JPanel {
 	 * station.
 	 */
 	public CustomerWaitingToBag() {
+		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		// Have the button press cancel the timer and call the attendant.
 		doNotBag.addActionListener(new ActionListener() {

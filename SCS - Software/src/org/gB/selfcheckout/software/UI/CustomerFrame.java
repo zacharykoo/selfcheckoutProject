@@ -7,15 +7,16 @@ import javax.swing.JFrame;
  */
 public class CustomerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-	CustomerScanAndBag scanAndBag;
-	CustomerProductLookup lookup;
+//	CustomerScanAndBag scanAndBag;
+//	CustomerProductLookup lookup;
 	CustomerWaitingToBag waitToBag;
-	CustomerPayment payment;
-	CustomerEnterMember enterMember;
+//	CustomerPayment payment;
+//	CustomerEnterMember enterMember;
 	
 	public CustomerFrame(int stationIndex) {
 		super("Self-Checkout Station: " + Integer.toString(stationIndex + 1));
-		this.add(scanAndBag);
+		this.add(waitToBag); //this.add(scanAndBag);
+		this.setSize(1280, 720);
 		this.setVisible(true);
 	}
 	

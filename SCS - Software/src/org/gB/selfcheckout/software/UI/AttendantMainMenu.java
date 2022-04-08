@@ -1,6 +1,7 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,7 +15,7 @@ import javax.swing.JTabbedPane;
  */
 public class AttendantMainMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private BorderLayout border; // Outermost layout.
+	private BorderLayout border = new BorderLayout(); // Outermost layout.
 	// Top contents that contains controls for each self-checkout station:
 	private JTabbedPane tabs = new JTabbedPane();
 	// Bottom layout for navigation controls:
@@ -30,6 +31,7 @@ public class AttendantMainMenu extends JPanel {
 	 * 		The number of self-checkout stations that this attendant manages.
 	 */
 	public AttendantMainMenu(int stations) {
+		super();
 		this.setLayout(border); // Set the outermost layout.
 		// Instantiate the navigation buttons, add them to the bottom panel:
 		bottomPanel.add(logoutButton);
@@ -45,7 +47,9 @@ public class AttendantMainMenu extends JPanel {
 		logoutButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+//				Container parent = AttendantMainMenu.this.getParent();
+//				parent.removeAll();
+//				parent.add(((AttendantFrame) parent).login);
 			}});
 		
 		lookupButton.addActionListener(new ActionListener() {
@@ -53,6 +57,7 @@ public class AttendantMainMenu extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 			}});
+		this.setVisible(true);
 	}
 	
 	/**
