@@ -81,7 +81,7 @@ public class PayWithCard extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backButton) {
 			// Go back to ProceedToPayment Panel
-			this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "ptpPanel");
+			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "proceedToPay");
 		}
 		
 	}

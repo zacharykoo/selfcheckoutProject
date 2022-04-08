@@ -27,20 +27,20 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	public ProceedToPayment(CustomerFrame customerFrame) {
 				
 		this.customerFrame = customerFrame;
-		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+		setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		
 		setUpBackButton();
 
-		this.bottomPanel.setLayout(new GridLayout(2,1));
+		bottomPanel.setLayout(new GridLayout(2,1));
 		
 		paymentMethod = new JLabel("Select a payment method", SwingConstants.CENTER);
 		paymentMethod.setFont(new Font("serif", Font.PLAIN, 20));
-		this.bottomPanel.add(paymentMethod);
+		bottomPanel.add(paymentMethod);
 		
 		
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
-		this.bottomPanel.add(buttonPanel);
+		bottomPanel.add(buttonPanel);
 		
 		credit = new JButton("Credit");
 		debit = new JButton("Debit");
@@ -75,7 +75,7 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
 		
 		backButton.addActionListener(this);
-		this.add(backButton, gbc);
+		add(backButton, gbc);
 		
 		gbc.weighty = 1.0;
 		gbc.weightx = 1.0;		
@@ -83,7 +83,7 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 		gbc.gridy = 1;
 		gbc.anchor = GridBagConstraints.CENTER;
 		bottomPanel = new JPanel();
-		this.add(bottomPanel, gbc);
+		add(bottomPanel, gbc);
 		
 	}
 
@@ -91,16 +91,10 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == credit || e.getSource() == debit || e.getSource() == giftCard) {
-			
-			// Set up a PayWithCardPanel and show it in the CardLayout panel
-			PayWithCard pwcardPanel = new PayWithCard(this.customerFrame);
-			this.customerFrame.mainPanel.add(pwcardPanel, "pwcardPanel");
-			this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "pwcardPanel");
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "payWithCard");
 		} 
 		else if (e.getSource() == cash) {
-			PayWithCash pwcashPanel = new PayWithCash(this.customerFrame);
-			this.customerFrame.mainPanel.add(pwcashPanel, "pwcashPanel");
-			this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "pwcashPanel");
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "payWithCash");
 		}
 		else if (e.getSource() == backButton) {
 			//this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "XXX");

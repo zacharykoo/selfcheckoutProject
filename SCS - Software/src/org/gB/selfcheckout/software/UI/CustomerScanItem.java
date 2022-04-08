@@ -15,12 +15,12 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	public CustomerUI customerFrame;
+	public CustomerFrame customerFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 	
-	public CustomerScanItem(CustomerUI customerFrame) {
+	public CustomerScanItem(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));

@@ -12,42 +12,44 @@ public class CustomerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	public CardLayout cardLayout = new CardLayout();
-	public JPanel mainPanel;
 
-	CustomerScanItem scanItem;
-//	CustomerProductLookup lookup;
-	CustomerWaitingToBag waitToBag;
+	CustomerScanItem scanItem = new CustomerScanItem(this);
+//	CustomerProductLookup lookup = new CustomerProductLookup();
+	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag();
 	ProceedToPayment proceedToPay = new ProceedToPayment(this);
 	PayWithCard payWithCard = new PayWithCard(this);
 	PayWithCash payWithCash = new PayWithCash(this);
-//	CustomerEnterMember enterMember;
+//	CustomerEnterMember enterMember = new CustomerEnterMember();
 	
-	
+
 	public CustomerFrame(int stationIndex) {
 		super("Self-Checkout Station: " + Integer.toString(stationIndex + 1));
-		/*
-//		cardLayout.addLayoutComponent("lookup", lookup);
-		cardLayout.addLayoutComponent("scanItem", scanItem);
-		cardLayout.addLayoutComponent("waitToBag", waitToBag);
-		cardLayout.addLayoutComponent("proceedToPay", proceedToPay);
-		cardLayout.addLayoutComponent("payWithCard", payWithCard);
-		cardLayout.addLayoutComponent("payWithCash", payWithCash);
-//		cardLayout.addLayoutComponent("enterMember", enterMember);
-		 */
 		
-		this.getRootPane().setLayout(cardLayout);
-		this.getRootPane().add(proceedToPay, "proceedToPay");
-		cardLayout.show(this.getRootPane(), "proceedToPay");
+		addPanels();
 		
-				
+		// First panel
+		cardLayout.show(getContentPane(), "proceedToPay");
+		
 		this.setSize(1280, 720);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
 	
+	private void addPanels() {
+		this.getContentPane().setLayout(cardLayout);
+
+		getContentPane().add(proceedToPay, "proceedToPay");
+		getContentPane().add(payWithCash, "payWithCash");
+		getContentPane().add(scanItem, "scanItem");
+		getContentPane().add(payWithCard, "payWithCard");
+		getContentPane().add(waitToBag, "waitToBag");
+//		getContentPane().add(enterMember, "enterMember");
+//		getContentPane().add(lookup, "lookup");
+	}
+	
 	public void waitingToBag() {
-		cardLayout.show(this.getRootPane(), "waitToBag");
+		cardLayout.show(getContentPane(), "waitToBag");
 		waitToBag.waiting();
 	}
 }

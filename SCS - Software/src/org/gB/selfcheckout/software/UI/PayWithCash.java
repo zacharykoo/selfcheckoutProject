@@ -31,6 +31,7 @@ public class PayWithCash extends JPanel implements ActionListener {
 	JButton paidButton;
 	JButton totalButton;
 	
+	// Update these to work with the backend
 	private double paid = 0.0;
 	private double total = 54.99;
 
@@ -140,7 +141,7 @@ public class PayWithCash extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backButton) {
 			// Go back to ProceedToPayment Panel
-			this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "ptpPanel");
+			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "proceedToPay");
 		}
 		else if (e.getSource() == c5) {
 			// update amount in Paid
