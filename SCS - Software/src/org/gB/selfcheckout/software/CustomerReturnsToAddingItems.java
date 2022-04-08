@@ -24,7 +24,6 @@ public class CustomerReturnsToAddingItems implements TouchScreenObserver{
 	@Override
 	public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
 		this.enabled = false;
-		
 	}
 	
 

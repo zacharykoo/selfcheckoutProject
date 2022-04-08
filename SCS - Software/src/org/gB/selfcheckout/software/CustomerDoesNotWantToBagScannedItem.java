@@ -33,7 +33,6 @@ public class CustomerDoesNotWantToBagScannedItem implements ElectronicScaleObser
 				// then re-enable the scanning status.
 				state.scs.mainScanner.enable();
 				state.scs.handheldScanner.enable();
-				state.waitingForBagging = false;
 			}
 			
 		// Issue an error to the interface for an unprompted weight change.
@@ -51,7 +50,6 @@ public class CustomerDoesNotWantToBagScannedItem implements ElectronicScaleObser
 	public void outOfOverload(ElectronicScale scale) {
 		if (this.enabled)
 			Main.error("Scale no longer overloaded.");
-		
 	}
 
 }
