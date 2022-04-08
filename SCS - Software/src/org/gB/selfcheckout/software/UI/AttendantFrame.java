@@ -1,5 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
+import java.awt.CardLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 
@@ -10,22 +11,25 @@ import javax.swing.JFrame;
  */
 public class AttendantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-//	AttendantLogin login;
+	public CardLayout cardLayout = new CardLayout();
+	LoginScreen login = new LoginScreen();
 	AttendantMainMenu main = new AttendantMainMenu(8);
 //	AttendantProductLookup lookup;
-//	AttendantStationCart cart;
+	AttendantCartScreen cart = new AttendantCartScreen();
 //	AttendantAlert alert;
-	
-	public static void main(String[] args) {
-		AttendantFrame frame = new AttendantFrame();
-	}
 	
 	public AttendantFrame () {
 		super("Self-Chckout System: Attendant");
-		this.add(main); //this.add(login);
+		cardLayout.addLayoutComponent("login", login);
+		cardLayout.addLayoutComponent("main", main);
+//		cardLayout.addLayoutComponent("lookup", lookup);
+		cardLayout.addLayoutComponent("cart", cart);
+//		cardLayout.addLayoutComponent("alert", alert);
+		cardLayout.show(this.getRootPane(), "login");
+		this.setLayout(cardLayout);
 		this.setSize(1280, 720);
 		this.pack();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		System.out.print("");
 	}
 }
