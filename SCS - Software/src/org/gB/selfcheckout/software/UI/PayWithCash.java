@@ -145,6 +145,47 @@ public class PayWithCash extends JPanel implements ActionListener {
 		}
 		else if (e.getSource() == c5) {
 			// update amount in Paid
+			paid += 0.05;
+			
+		}
+		else if (e.getSource() == c10) {
+			// update amount in Paid
+			paid += 0.10;
+			
+		}
+		else if (e.getSource() == c25) {
+			// update amount in Paid
+			paid += 0.25;
+			
+		}
+		else if (e.getSource() == d1) {
+			// update amount in Paid
+			paid += 1.0;
+			
+		}
+		else if (e.getSource() == d2) {
+			// update amount in Paid
+			paid += 2.0;
+			
+		}
+		else if (e.getSource() == b5) {
+			// update amount in Paid
+			paid += 5.0;
+			
+		}
+		else if (e.getSource() == b10) {
+			// update amount in Paid
+			paid += 10.0;
+			
+		}
+		else if (e.getSource() == b20) {
+			// update amount in Paid
+			paid += 20.0;
+			
+		}
+		else if (e.getSource() == b50) {
+			// update amount in Paid
+			paid += 50.0;
 			
 		}
 		
