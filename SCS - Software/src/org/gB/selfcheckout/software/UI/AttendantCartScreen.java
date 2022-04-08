@@ -1,4 +1,4 @@
-package swing;
+package org.gB.selfcheckout.software.UI;
 
 import java.awt.*;
 import java.awt.event.*;
