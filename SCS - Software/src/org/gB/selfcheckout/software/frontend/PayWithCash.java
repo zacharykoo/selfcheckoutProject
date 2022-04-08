@@ -12,7 +12,6 @@ public class PayWithCash extends JPanel implements ActionListener {
 	private JLabel enterCoins;
 	private JLabel enterBanknotes;
 	
-	
 	private JButton backButton;
 	public CustomerUI customerFrame;
 	private GridBagConstraints gbc = new GridBagConstraints();
@@ -28,6 +27,9 @@ public class PayWithCash extends JPanel implements ActionListener {
 	JButton b10 = new JButton("$10");
 	JButton b20 = new JButton("$20");
 	JButton b50 = new JButton("$50");
+	
+	JButton paidButton;
+	JButton totalButton;
 	
 	private double paid = 0.0;
 	private double total = 54.99;
@@ -99,6 +101,10 @@ public class PayWithCash extends JPanel implements ActionListener {
 		gbc.weighty = 1.0;
 		gbc.anchor = GridBagConstraints.CENTER;
 		bottomPanel.add(banknotesPanel, gbc);
+		
+		// Set up bottom buttons
+		paidButton = new JButton("Paid: "+paid);
+		totalButton = new JButton("Total: "+total);
 		
 	}
 
