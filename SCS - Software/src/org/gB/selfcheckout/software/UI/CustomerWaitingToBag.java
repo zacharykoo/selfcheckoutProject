@@ -1,4 +1,4 @@
-package org.gB.selfcheckout.software.frontend;
+package org.gB.selfcheckout.software.UI;
 
 import javax.swing.*;
 
