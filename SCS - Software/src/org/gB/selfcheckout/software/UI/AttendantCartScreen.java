@@ -2,18 +2,26 @@ package org.gB.selfcheckout.software.UI;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigDecimal;
+import java.util.Map;
+import java.util.Map.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
+
+import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
+import org.lsmr.selfcheckout.products.Product;
 
 /*
 Based around the list example found on the oracle site:
 https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
 */
 public class AttendantCartScreen extends JPanel implements ListSelectionListener {
-    //TODO: Modify to accomodate for actual items
-    private JList<String> items;
-    private DefaultListModel<String> itemModel;
+    //TODO: Modify to add the actual productCart
+    private Map<Product,Integer> productCart;
+    private JList<Entry<Product,Integer>> items;
+    private DefaultListModel<Entry<Product,Integer>> itemModel;
     private JButton removeButton, backButton;
     public AttendantCartScreen() {
         this.setLayout(new GridBagLayout());
@@ -23,13 +31,15 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
         c.fill = GridBagConstraints.HORIZONTAL;
 
         // TODO: Fill itemModel with Customer Cart
-        itemModel = new DefaultListModel<String>();
-        itemModel.addElement("Items");
-        itemModel.addElement("Are");
-        itemModel.addElement("Complicated");
+        BarcodedProduct test = new BarcodedProduct(new Barcode(null), "test", BigDecimal.ONE, 1.0);
+        productCart.put(test, 1);
+        itemModel = new DefaultListModel<Entry<Product,Integer>>();
+        for(Entry<Product, Integer> entry: productCart.entrySet()) {
+            itemModel.addElement(entry);
+        }
 
         //Create the list and put it in a scroll pane.
-        items = new JList<String>(itemModel);
+        items = new JList<Entry<Product,Integer>>(itemModel);
         items.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         items.setSelectedIndex(0);
         items.addListSelectionListener(this);
@@ -95,9 +105,10 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
             //This method can be called only if
             //there's a valid selection
             //so go ahead and remove whatever's selected.
+            //TODO: Remove Item from Checkout
+            productCart.remove(items.getSelectedValue().getKey());
             int index = items.getSelectedIndex();
             itemModel.remove(index);
-            //TODO: Remove Item from Checkout
 
             int size = itemModel.getSize();
 
