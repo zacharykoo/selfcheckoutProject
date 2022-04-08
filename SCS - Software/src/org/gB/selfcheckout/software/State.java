@@ -89,10 +89,10 @@ public class State {
 	 * @param item
 	 * 		The item to be added to the scanned items list.
 	 */
-	public void addItem(Item item) {
-		scannedItems.add(item);
-		expectedWeight += item.getWeight();
-	}
+	// public void addItem(Item item) {
+	// 	scannedItems.add(item);
+	// 	expectedWeight += item.getWeight();
+	// }
 	
 	public void addProduct(Product product) {
 		if (productCart.containsKey(product)) {

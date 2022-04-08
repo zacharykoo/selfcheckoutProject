@@ -83,7 +83,8 @@ public class ScanItem implements BarcodeScannerObserver {
 		}
 		
 		if(currentItem != null)	{ // If it does exist, expect its weight.
-			state.addItem(currentItem);
+			// state.addItem(currentItem);
+			state.addProduct(product);
 			state.waitingForBagging = true;
 			state.scs.mainScanner.disable();
 			state.scs.handheldScanner.disable();
