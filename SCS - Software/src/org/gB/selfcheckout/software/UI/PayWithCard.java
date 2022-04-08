@@ -13,12 +13,12 @@ public class PayWithCard extends JPanel implements ActionListener {
 	
 	
 	private JButton backButton;
-	public CustomerUI customerFrame;
+	public CustomerFrame customerFrame;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 
 	
-	public PayWithCard(CustomerUI customerFrame) {
+	public PayWithCard(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
 

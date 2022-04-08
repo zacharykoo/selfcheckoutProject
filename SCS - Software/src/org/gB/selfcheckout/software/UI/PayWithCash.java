@@ -13,7 +13,7 @@ public class PayWithCash extends JPanel implements ActionListener {
 	private JLabel enterBanknotes;
 	
 	private JButton backButton;
-	public CustomerUI customerFrame;
+	public CustomerFrame customerFrame;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 	
@@ -35,7 +35,7 @@ public class PayWithCash extends JPanel implements ActionListener {
 	private double total = 54.99;
 
 	
-	public PayWithCash(CustomerUI customerFrame) {
+	public PayWithCash(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
 

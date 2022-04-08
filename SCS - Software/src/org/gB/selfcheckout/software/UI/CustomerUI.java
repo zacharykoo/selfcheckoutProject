@@ -22,8 +22,8 @@ public class CustomerUI extends JFrame {
 		this.add(mainPanel);
 		
 		// I'm running proceed to payment first
-		ProceedToPayment ptpPanel = new ProceedToPayment(this);
-		mainPanel.add(ptpPanel, "ptpPanel");
+		//ProceedToPayment ptpPanel = new ProceedToPayment(this);
+		//mainPanel.add(ptpPanel, "ptpPanel");
 		//CustomerScanItem csiPanel = new CustomerScanItem(this);
 		//mainPanel.add(csiPanel, "csiPanel");
 		this.pack();

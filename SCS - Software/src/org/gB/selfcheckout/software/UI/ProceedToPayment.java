@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class ProceedToPayment extends JPanel implements ActionListener {
 	
-	public CustomerUI customerFrame;
+	public CustomerFrame customerFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;	
@@ -24,7 +24,7 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	
 
 	
-	public ProceedToPayment(CustomerUI customerFrame) {
+	public ProceedToPayment(CustomerFrame customerFrame) {
 				
 		this.customerFrame = customerFrame;
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
