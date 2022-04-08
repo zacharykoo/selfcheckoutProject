@@ -4,12 +4,14 @@ import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class LoginScreen extends JPanel {
 	private JLabel loginlabel, passwordlabel;
-	private JTextField loginfield, passwordfield;
+	private JTextField loginfield;
+	private JPasswordField passwordfield;
 	private JButton loginbutton;
 
     public LoginScreen() {
@@ -42,7 +44,7 @@ public class LoginScreen extends JPanel {
 		c.gridy = 1;
 		subpanel.add(passwordlabel, c);
 
-		passwordfield = new JTextField();
+		passwordfield = new JPasswordField();
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = new Insets(5,0,5,5);
