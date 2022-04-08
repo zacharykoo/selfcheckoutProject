@@ -28,13 +28,13 @@ public class PayWithCash extends JPanel implements ActionListener {
 	JButton b20 = new JButton("$20");
 	JButton b50 = new JButton("$50");
 	
-	JButton paidButton;
-	JButton totalButton;
+	JLabel paidLabel;
+	JLabel totalLabel;
 	
 	// Update these to work with the backend
 	private double paid = 0.0;
 	private double total = 54.99;
-
+	
 	
 	public PayWithCash(CustomerFrame customerFrame) {
 		
@@ -68,6 +68,15 @@ public class PayWithCash extends JPanel implements ActionListener {
 		
 		
 		// Set up coin input buttons
+		c5.addActionListener(this);
+		c10.addActionListener(this);
+		c25.addActionListener(this);
+		d1.addActionListener(this);
+		d2.addActionListener(this);
+		b5.addActionListener(this);
+		b10.addActionListener(this);
+		b20.addActionListener(this);
+		b50.addActionListener(this);
 		
 		JPanel coinsPanel = new JPanel();
 		coinsPanel.setLayout(new GridLayout(3, 2));
@@ -104,14 +113,28 @@ public class PayWithCash extends JPanel implements ActionListener {
 		bottomPanel.add(banknotesPanel, gbc);
 		
 		// Set up bottom buttons
-		paidButton = new JButton("Paid: "+paid);
-		totalButton = new JButton("Total: "+total);
+		paidLabel = new JLabel("Paid: $"+paid);
+		totalLabel = new JLabel("Total: "+total);
+		
+		
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
+		gbc.anchor = GridBagConstraints.CENTER;
+		
+		JPanel labelPanel = new JPanel();
+		labelPanel.setLayout(new GridLayout(2, 1));
+		
+		bottomPanel.add(labelPanel, gbc);
+		labelPanel.add(paidLabel);
+		labelPanel.add(totalLabel);
 		
 	}
 
 	public void setUpBackButton() {
 		
-		gbc.insets = new Insets(10, 10, 10, 10);
+		gbc.insets = new Insets(3, 3, 3, 3);
 		
 		this.setLayout(new GridBagLayout());
 		
@@ -146,47 +169,47 @@ public class PayWithCash extends JPanel implements ActionListener {
 		else if (e.getSource() == c5) {
 			// update amount in Paid
 			paid += 0.05;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		else if (e.getSource() == c10) {
 			// update amount in Paid
 			paid += 0.10;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		else if (e.getSource() == c25) {
 			// update amount in Paid
 			paid += 0.25;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		else if (e.getSource() == d1) {
 			// update amount in Paid
 			paid += 1.0;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		else if (e.getSource() == d2) {
 			// update amount in Paid
 			paid += 2.0;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		else if (e.getSource() == b5) {
 			// update amount in Paid
 			paid += 5.0;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		else if (e.getSource() == b10) {
 			// update amount in Paid
 			paid += 10.0;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		else if (e.getSource() == b20) {
 			// update amount in Paid
 			paid += 20.0;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		else if (e.getSource() == b50) {
 			// update amount in Paid
 			paid += 50.0;
-			
+			paidLabel.setText(String.format("Paid: $%.2f", paid));
 		}
 		
 	}
