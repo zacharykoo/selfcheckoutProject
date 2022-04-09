@@ -1,9 +1,13 @@
 package org.gB.selfcheckout.software;
 
 import java.util.ArrayList;
+import java.util.Set;
+
 import org.lsmr.selfcheckout.Banknote;
 import org.lsmr.selfcheckout.Coin;
+import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.PLUCodedItem;
+import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
 import org.lsmr.selfcheckout.devices.DisabledException;
@@ -11,6 +15,7 @@ import org.lsmr.selfcheckout.devices.Keyboard;
 import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SupervisionStation;
+import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 import org.lsmr.selfcheckout.Barcode;
@@ -19,6 +24,7 @@ public class AttendantControl {
 
 	private ArrayList<State> scsList;
 	private SupervisionStation supervisionStation;
+	ArrayList<PLUCodedProduct> productList = new ArrayList<PLUCodedProduct>();
 
 	public AttendantControl(ArrayList<State> scsList) {
 		this.scsList = scsList;
@@ -112,8 +118,22 @@ public class AttendantControl {
 	}
 
 	// create a method to get an item from the item database
-	public void itemLookup(State state, Keyboard keyboard) {
-		// TODO: Figure this one out
+	public ArrayList<PLUCodedProduct> attendantLooksUpProduct(String partialLookUpCode) {
+		boolean track = true;
+		char[] charArray = partialLookUpCode.toCharArray();
+		Numeral[] numerals = new Numeral[charArray.length];
+		Set<PriceLookupCode> keys = ProductDatabases.PLU_PRODUCT_DATABASE.keySet();
+		for(PriceLookupCode key : keys) {
+			for(int i = 0; i < partialLookUpCode.length(); i++) {
+				if(key.getNumeralAt(i) != numerals[i]) {
+					track = false;
+				}
+			}
+			if(track == true) {
+				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
+			}
+		}
+		return productList;
 	}
 
 	// disable any user interaction, but allow user unloading/loading
@@ -130,16 +150,16 @@ public class AttendantControl {
 		state.enableScanning();
 	}
 
-	public void approveWeightDiscrepancy(State state) throws OverloadException {
-		//TODO: Figure this one out.
-
+	public void attendantRemoveProduct(State state, Product product) {
+		// based on removeProduct method in State from another member
+		state.scs.removeProduct(product);
 	}
 }
 
 
-// Attendant approves a weight discrepancy:
-// Attendant removes product from purchases: Front-end I think
-// Attendant looks up a product : Front-end I think
+// Attendant approves a weight discrepancy: to be done
+// Attendant removes product from purchases: done
+// Attendant looks up a product : done
 // Attendant starts up a station : done
 // Attendant shuts down a station : done
 
