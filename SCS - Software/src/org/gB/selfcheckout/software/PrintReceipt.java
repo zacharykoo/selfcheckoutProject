@@ -1,7 +1,7 @@
 package org.gB.selfcheckout.software;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.util.Map;
 
-import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.AbstractDevice;
 import org.lsmr.selfcheckout.devices.EmptyException;
 import org.lsmr.selfcheckout.devices.OverloadException;
@@ -19,12 +19,14 @@ public class PrintReceipt implements ReceiptPrinterObserver {
 	private ReceiptPrinter printer;
 	private int charactersOfInkRemaining = 0;
 	private int linesOfPaperRemaining = 0;
+	private Map<Product, Integer> products;
 
-    public PrintReceipt(State state){
+    public PrintReceipt(State state) {
         this.state = state;
         this.pdc = state.idb;
 		this.printer = state.scs.printer;
 		this.enabled = true;
+		this.products = state.productCart;
     }
     
     private void printLetter(char letter) {
@@ -32,6 +34,8 @@ public class PrintReceipt implements ReceiptPrinterObserver {
 			printer.print(letter);
 			if (letter == '\n') {
 				useLineOfPaper();
+			} else if (letter == ' '){
+				// ignore
 			} else {
 				useInk();
 			}
@@ -42,55 +46,57 @@ public class PrintReceipt implements ReceiptPrinterObserver {
     }
     
     public void printReceipt() {
-    	ArrayList<Product> scannedProducts = pdc.getScannedProducts();
+    	String header = String.format("%-4s %-30s %-7s %-5s\n", "Qty", "Product", "Price", "Total");
+    	System.out.println(header);
+    	// Printing quantity, product, price per product, total for that product
+    	for (Map.Entry<Product, Integer> pair : products.entrySet()) {
+    		String desc;
+    		Product product = pair.getKey();
+    		Integer qty = pair.getValue();
+    		
+    		String prod;
+    		String price;
+    		String total;
+    		
+    		if (product instanceof BarcodedProduct) {
+    			prod = ((BarcodedProduct) product).getDescription();
+    		} else if (product instanceof PLUCodedProduct) {
+        		prod = ((PLUCodedProduct) product).getDescription();
+    		} else {
+    			prod = "";
+    		}
+    		price = product.getPrice().toString();
+    		total = (product.getPrice().multiply(BigDecimal.valueOf(qty))).toString();
+    		
+    		desc = String.format("%-4d %-30s $ %-5s $ %-5s\n", qty, prod, price, total);
+    		for (int i = 0; i < desc.length(); i++) {
+    			printLetter(desc.charAt(i));
+    		}
+    	}
     	
-        for (int i = 0; i < scannedProducts.size(); i ++)
-        {
-        	String desc;
-        	Product product = scannedProducts.get(i);
-        	if (product instanceof BarcodedProduct) {
-        		desc = ((BarcodedProduct) product).getDescription();
-        	} else if (product instanceof PLUCodedProduct) {
-        		desc = ((PLUCodedProduct) product).getDescription();
-        	} else {
-        		desc = "";
-        	}
-        	
-            for (int x = 0; x < desc.length(); x ++)
-            {
-            	printLetter(desc.charAt(x));
-            }
-            char c = '\n'; 
-            printLetter(c);
-            Double price = scannedProducts.get(i).getPrice().doubleValue();
-            String priceString = "Price: " + price;
-            for (int y = 0; y < priceString.length(); y ++)
-            {
-            	printLetter(priceString.charAt(y));
-            }
-            printLetter(c);
-        }
-        printLetter('\n');
-        
-        String totalString = "Total:\n" + pdc.getTotalCost().doubleValue();
+    	// Print total price for all products
+    	String totalString = "\nTotal Cost: $" + state.totalToPay.doubleValue() + "\n";
         for (int w = 0; w < totalString.length(); w ++) 
         {
         	printLetter(totalString.charAt(w));
         }
-        printLetter('\n');
-        String totalPaidString = "Total Paid:\n" + pdc.getTotalPaid().doubleValue();
+    	
+    	// Print total price paid
+        String totalPaidString = "Total Paid: $" + state.paymentTotal.doubleValue() + "\n";
         for (int z = 0; z < totalPaidString.length(); z ++)
         {
         	printLetter(totalPaidString.charAt(z));
         }
-        printLetter('\n');
-        Double change = pdc.getTotalPaid().subtract(pdc.getTotalCost()).doubleValue();
-        String changeString = "Change:\n" + change;
+    	
+    	// Print change due
+        Double change = state.paymentTotal.doubleValue() - state.totalToPay.doubleValue();
+        /*pdc.getTotalPaid().subtract(pdc.getTotalCost()).doubleValue(); */
+        String changeString = "Change due: $" + change + "\n";
         for (int q = 0; q < changeString.length(); q ++)
         {
         	printLetter(changeString.charAt(q));
         }
-        
+
         printer.cutPaper();
     }
 
