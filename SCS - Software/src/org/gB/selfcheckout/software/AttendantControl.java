@@ -7,10 +7,12 @@ import org.lsmr.selfcheckout.PLUCodedItem;
 import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
 import org.lsmr.selfcheckout.devices.DisabledException;
+import org.lsmr.selfcheckout.devices.Keyboard;
 import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SupervisionStation;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
+import org.lsmr.selfcheckout.products.Product;
 import org.lsmr.selfcheckout.Barcode;
 
 public class AttendantControl {
@@ -64,6 +66,7 @@ public class AttendantControl {
 
 	public boolean startupStation(int stationId) {
 		// scsList.set(stationId, new Main.init());
+
 		return true;
 	}
 
@@ -109,36 +112,44 @@ public class AttendantControl {
 	}
 
 	// create a method to get an item from the item database
-	public void itemLookup(State state, PLUCodedProduct product) {
-		// TODO: figure what the concept of this one is
+	public void itemLookup(State state, Keyboard keyboard) {
+		// TODO: Figure this one out
 	}
 
 	// disable any user interaction, but allow user unloading/loading
 	public void blockStation(State state) throws DisabledException, OverloadException {
-		state.scs.cardReader.disable();
-		state.scs.mainScanner.disable();
-		state.scs.handheldScanner.disable();
-		state.scs.scanningArea.disable();
+		// state.scs.cardReader.disable();
+		// state.scs.mainScanner.disable();
+		// state.scs.handheldScanner.disable();
+		// state.scs.scanningArea.disable();
 		// eject bank notes and coins before disabling for customer
-		state.scs.coinStorage.unload();
-		state.scs.banknoteInput.emit();
-		state.scs.coinSlot.disable();
-		state.scs.banknoteInput.disable();
+		// state.scs.coinStorage.unload();
+		// state.scs.banknoteInput.emit();
+		// state.scs.coinSlot.disable();
+		// state.scs.banknoteInput.disable();
+		state.enableScanning();
+	}
+
+	public void approveWeightDiscrepancy(State state) throws OverloadException {
+		//TODO: Figure this one out.
+
 	}
 }
 
 
 // Attendant approves a weight discrepancy:
-// Attendant removes product from purchases
-// Attendant looks up a product : work in progress
+// Attendant removes product from purchases: Front-end I think
+// Attendant looks up a product : Front-end I think
+// Attendant starts up a station : done
+// Attendant shuts down a station : done
+
+
 // Attendant adds paper to receipt printer : done
 // Attendant adds ink to receipt printer : done
-// Attendant blocks a station : done..?
+// Attendant blocks a station : done
 // Attendant empties the coin storage unit : done
 // Attendant empties the banknote storage unit : done
 // Attendant refills the coin dispenser : done
 // Attendant refills the banknote dispenser : done
-// Attendant logs in to their control console : in-progress
-// Attendant logs out from their control console : in-progress
-// Attendant starts up a station : in-progress
-// Attendant shuts down a station : in-progress
+// Attendant logs in to their control console : done
+// Attendant logs out from their control console : done
