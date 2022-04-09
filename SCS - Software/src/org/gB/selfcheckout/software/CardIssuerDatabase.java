@@ -29,6 +29,7 @@ public class CardIssuerDatabase {
     public int addEntry(String s, CardIssuer cardIssuer){
         //check if contained already, don't add it
         if (cardToCardIssuerMap.containsKey(s)){
+            //System.out.println("in addENtry, contains key is " + s);
             return 0;
         }
         //otherwise, can add
