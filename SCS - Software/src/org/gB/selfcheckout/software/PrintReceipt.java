@@ -32,25 +32,24 @@ public class PrintReceipt implements ReceiptPrinterObserver {
     private void printLetter(char letter) {
     	try {
 			printer.print(letter);
-			if (letter == '\n') {
+			if (letter == '\n' && !state.outOfPaper) {
 				useLineOfPaper();
 			} else if (letter == ' '){
 				// ignore
-			} else {
+			} else if (!state.outOfInk){
 				useInk();
 			}
 		} catch (EmptyException | OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Main.error("Printer is out of ink and/or paper.");
 		}
     }
     
     public void printReceipt() {
     	String header = String.format("%-4s %-30s %-7s %-5s\n", "Qty", "Product", "Price", "Total");
-    	System.out.println(header);
+    	String desc = header;
     	// Printing quantity, product, price per product, total for that product
     	for (Map.Entry<Product, Integer> pair : products.entrySet()) {
-    		String desc;
+    		
     		Product product = pair.getKey();
     		Integer qty = pair.getValue();
     		
@@ -68,11 +67,12 @@ public class PrintReceipt implements ReceiptPrinterObserver {
     		price = product.getPrice().toString();
     		total = (product.getPrice().multiply(BigDecimal.valueOf(qty))).toString();
     		
-    		desc = String.format("%-4d %-30s $ %-5s $ %-5s\n", qty, prod, price, total);
-    		for (int i = 0; i < desc.length(); i++) {
-    			printLetter(desc.charAt(i));
-    		}
+    		desc += String.format("%-4d %-30s $ %-5s $ %-5s\n", qty, prod, price, total);
     	}
+    	
+    	for (int i = 0; i < desc.length(); i++) {
+			printLetter(desc.charAt(i));
+		}
     	
     	// Print total price for all products
     	String totalString = "\nTotal Cost: $" + state.totalToPay.doubleValue() + "\n";
@@ -138,21 +138,32 @@ public class PrintReceipt implements ReceiptPrinterObserver {
 	}
 	
 	public void useInk() {
-		this.charactersOfInkRemaining--;
-		if (charactersOfInkRemaining == ReceiptPrinter.MAXIMUM_INK / 10) {
+		charactersOfInkRemaining--;
+		if (charactersOfInkRemaining <= ReceiptPrinter.MAXIMUM_INK / 10) {
 			this.state.lowOnInk = true;
-		} else if (charactersOfInkRemaining == 0) {
+		}
+		if (charactersOfInkRemaining == 0) {
 			this.state.outOfInk = true;
 		}
 	}
 	
 	public void useLineOfPaper() {
-		this.linesOfPaperRemaining--;
-		if (linesOfPaperRemaining == ReceiptPrinter.MAXIMUM_PAPER / 10) {
+		linesOfPaperRemaining--;
+		if (linesOfPaperRemaining <= ReceiptPrinter.MAXIMUM_PAPER / 10) {
 			this.state.lowOnPaper = true;
-		} else if (charactersOfInkRemaining == 0) {
+		}
+		if (linesOfPaperRemaining == 0) {
 			this.state.outOfPaper = true;
 		}
+	}
+	
+	// For testing purposes
+	public void setPaperRemaining(int paper) {
+		linesOfPaperRemaining = paper;
+	}
+	
+	public void setInkRemaining(int ink) {
+		charactersOfInkRemaining = ink;
 	}
 }
 	
