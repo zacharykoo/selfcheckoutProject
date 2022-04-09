@@ -12,6 +12,12 @@ import javax.swing.*;
 
 /*
  * Main screen for user functionality
+ * Backend integration required:
+ *  Hardware:
+ *  	None
+ *  Software:
+ *  	Total paid so far
+ *  	Total to pay
  */
 
 public class CustomerMainScreen extends JPanel implements ActionListener {

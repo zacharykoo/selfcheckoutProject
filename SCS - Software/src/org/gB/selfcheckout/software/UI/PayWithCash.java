@@ -1,6 +1,15 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.*;
+
+/*
+ * Backend integration required: 
+ * 	Hardware: 
+ * 		access coin and banknote slots
+ *  Software:
+ *  	amount paid so far
+ *  	total amount to pay
+ */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

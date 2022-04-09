@@ -22,6 +22,14 @@ import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
+/* 
+ * Backend integration required:
+ *  Hardware:
+ *  	barcode scanner
+ *  Software:
+ *  	List of products in database
+ */
+
 public class CustomerScanItem extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -35,7 +43,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	private ItemDatabase idb = new ItemDatabase();
 	private JComboBox itemMenu = new JComboBox();
 	private JButton scanButton; 
-		
+	
 	public CustomerScanItem(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;

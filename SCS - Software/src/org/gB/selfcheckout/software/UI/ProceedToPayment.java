@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+/*
+ * Backend integration required: none
+ */
+
 public class ProceedToPayment extends JPanel implements ActionListener {
 	
 	public CustomerFrame customerFrame;
