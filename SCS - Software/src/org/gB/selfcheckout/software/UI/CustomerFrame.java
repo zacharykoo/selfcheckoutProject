@@ -20,6 +20,7 @@ public class CustomerFrame extends JFrame {
 	PayWithCard payWithCard = new PayWithCard(this);
 	PayWithCash payWithCash = new PayWithCash(this);
 	BlockedScreen blockedScreen = new BlockedScreen(this);
+	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 //	CustomerEnterMember enterMember = new CustomerEnterMember();
 //	CustomerProductLookup lookup = new CustomerProductLookup();
 
@@ -47,6 +48,7 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(payWithCard, "payWithCard");
 		getContentPane().add(waitToBag, "waitToBag");
 		getContentPane().add(blockedScreen, "blockedScreen");
+		getContentPane().add(shutDown, "shutDown");
 
 //		getContentPane().add(enterMember, "enterMember");
 //		getContentPane().add(lookup, "lookup");
