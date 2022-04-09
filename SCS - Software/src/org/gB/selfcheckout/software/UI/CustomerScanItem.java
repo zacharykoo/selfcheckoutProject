@@ -33,7 +33,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	private JPanel bottomPanel;
 	private ItemDatabase idb = new ItemDatabase();
 	private JComboBox itemMenu = new JComboBox();
-	private JButton scanButton;
+	private JButton scanButton; 
 		
 	public CustomerScanItem(CustomerFrame customerFrame) {
 		
