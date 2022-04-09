@@ -40,7 +40,7 @@ public class PayWithCash extends JPanel implements ActionListener {
 		
 		this.customerFrame = customerFrame;
 
-		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+		//this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		this.setLayout(new GridLayout(2,1));
 		
 		setUpBackButton();

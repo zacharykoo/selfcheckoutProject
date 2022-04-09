@@ -27,7 +27,7 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	public ProceedToPayment(CustomerFrame customerFrame) {
 				
 		this.customerFrame = customerFrame;
-		setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+		//setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		
 		setUpBackButton();
 

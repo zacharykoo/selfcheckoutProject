@@ -17,7 +17,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static String[] itemOptions;
+	private static String[] itemOptions = {"Apple", "Banana", "Pear"};
 	
 	public CustomerFrame customerFrame;
 	private JButton backButton;
@@ -34,10 +34,11 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		setUpItemOptions();
 		
 		this.bottomPanel.setLayout(new GridLayout(3,1));
-		JLabel scanLabel = new JLabel("Please scan your item");
+		JLabel scanLabel = new JLabel("Select an item to scan");
 		bottomPanel.add(scanLabel);
 		
-		JComboBox itemMenu = new JComboBox();
+		JComboBox itemMenu = new JComboBox(itemOptions);
+		bottomPanel.add(itemMenu);
 		
 		JButton scanButton = new JButton("(SCAN)");
 		bottomPanel.add(scanButton);
@@ -77,7 +78,8 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	private void setUpItemOptions() {
 		
 		for (int i = 0; i < ProductDatabases.BARCODED_PRODUCT_DATABASE.size(); i++) {
-			// Create 
+			// Create
+			
 		}
 		
 		
@@ -87,6 +89,8 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+		//itemMenu.getSelectedIndex();
 		
 	}
 	
