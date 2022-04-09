@@ -11,15 +11,19 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import org.lsmr.selfcheckout.external.ProductDatabases;
+
 public class CustomerScanItem extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	
+	private static String[] itemOptions;
 	
 	public CustomerFrame customerFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
-	
+		
 	public CustomerScanItem(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
@@ -27,9 +31,14 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		
 		setUpBackButton();
 		
-		this.bottomPanel.setLayout(new GridLayout(2,1));
+		setUpItemOptions();
+		
+		this.bottomPanel.setLayout(new GridLayout(3,1));
 		JLabel scanLabel = new JLabel("Please scan your item");
 		bottomPanel.add(scanLabel);
+		
+		JComboBox itemMenu = new JComboBox();
+		
 		JButton scanButton = new JButton("(SCAN)");
 		bottomPanel.add(scanButton);
 		
@@ -62,6 +71,15 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		gbc.anchor = GridBagConstraints.CENTER;
 		bottomPanel = new JPanel();
 		this.add(bottomPanel, gbc);
+		
+	}
+	
+	private void setUpItemOptions() {
+		
+		for (int i = 0; i < ProductDatabases.BARCODED_PRODUCT_DATABASE.size(); i++) {
+			// Create 
+		}
+		
 		
 	}
 
