@@ -1,5 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -21,15 +22,15 @@ public class StartScreen extends JPanel implements ActionListener {
 		this.customerFrame = cf;
 		
 		JButton startButton = new JButton("START");
-		startButton.setFont(new Font("serif", Font.PLAIN, 20));
 		startButton.addActionListener(this);
-		this.setLayout(new GridLayout(1,1));
+		setBorder(BorderFactory.createEmptyBorder(150, 0, 0, 0));
+		this.setLayout(new FlowLayout(FlowLayout.CENTER));
 		this.add(startButton);
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
 	}
 }

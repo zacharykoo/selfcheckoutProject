@@ -34,7 +34,7 @@ public class CustomerFrame extends JFrame {
 		addPanels();
 		
 		// First panel
-		cardLayout.show(getContentPane(), "scanItem");
+		cardLayout.show(getContentPane(), "startScreen");
 
 		this.setSize(1280, 720);
 		this.pack();
@@ -53,7 +53,7 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(blockedScreen, "blockedScreen");
 		getContentPane().add(shutDown, "shutDown");
 		getContentPane().add(startScreen, "startScreen");
-
+		getContentPane().add(mainScreen, "mainScreen");
 
 //		getContentPane().add(enterMember, "enterMember");
 //		getContentPane().add(lookup, "lookup");
