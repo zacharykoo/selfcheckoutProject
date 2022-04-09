@@ -21,6 +21,9 @@ public class CustomerFrame extends JFrame {
 	PayWithCash payWithCash = new PayWithCash(this);
 	BlockedScreen blockedScreen = new BlockedScreen(this);
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
+	StartScreen startScreen = new StartScreen(this);
+	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
+
 //	CustomerEnterMember enterMember = new CustomerEnterMember();
 //	CustomerProductLookup lookup = new CustomerProductLookup();
 
@@ -49,6 +52,8 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(waitToBag, "waitToBag");
 		getContentPane().add(blockedScreen, "blockedScreen");
 		getContentPane().add(shutDown, "shutDown");
+		getContentPane().add(startScreen, "startScreen");
+
 
 //		getContentPane().add(enterMember, "enterMember");
 //		getContentPane().add(lookup, "lookup");

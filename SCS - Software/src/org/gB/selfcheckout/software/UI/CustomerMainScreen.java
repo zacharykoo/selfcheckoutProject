@@ -1,5 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,19 +8,20 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 /*
- * Stubbed class for now, until actual blocked screen is added
+ * Main screen for user functionality
  */
 
-public class BlockedScreen extends JPanel implements ActionListener {
-	private static final long serialVersionUID = 1L;
+public class CustomerMainScreen extends JPanel implements ActionListener {
 
+	private static final long serialVersionUID = 1L;
 	private CustomerFrame customerFrame;
 	
-	public BlockedScreen(CustomerFrame cf) {
+	public CustomerMainScreen(CustomerFrame cf) {
 		super();
 		this.customerFrame = cf;
 		
-		JLabel msg = new JLabel("Blocked screen", SwingConstants.CENTER);
+		JLabel msg = new JLabel("Main Screen", SwingConstants.CENTER);
+		msg.setFont(new Font("serif", Font.PLAIN, 20));
 		this.setLayout(new GridLayout(1,1));
 		this.add(msg);
 	}
@@ -27,7 +29,6 @@ public class BlockedScreen extends JPanel implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 }
