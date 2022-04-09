@@ -43,6 +43,7 @@ public class CustomerFrame extends JFrame {
 	}
 	
 	private void addPanels() {
+		
 		this.getContentPane().setLayout(cardLayout);
 
 		getContentPane().add(proceedToPay, "proceedToPay");
