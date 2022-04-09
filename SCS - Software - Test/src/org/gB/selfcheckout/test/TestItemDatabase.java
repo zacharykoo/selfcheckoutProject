@@ -16,7 +16,15 @@ import java.math.BigDecimal;
  */
 public class TestItemDatabase {
 
-    private ItemDatabase database;
+	private ItemDatabase database;
+	private Numeral[] numeral1;
+	private Numeral[] numeral2;
+	private Barcode barcode1;
+	private Barcode barcode2;
+	private BarcodedProduct appleProduct;
+	private BarcodedProduct watermelonProduct;
+	private PriceLookupCode pluCode;
+	private PLUCodedProduct pluProduct;
 
     private Barcode barcode;
     private Item item;
@@ -32,7 +40,101 @@ public class TestItemDatabase {
         barcode = new Barcode(new Numeral[]{Numeral.one});
         item = new BarcodedItem(barcode, 1);
         product = new BarcodedProduct(barcode, "product", new BigDecimal(2), 46.5);
+        
+        // PLU Coded product
+        pluCode = new PriceLookupCode("12345");
+        pluProduct = new PLUCodedProduct(pluCode, "Orange", BigDecimal.valueOf(3));
+        
+        // "Apple" product, barcode = 10, price = 2, weight = 100.0
+ 		numeral1 = new Numeral[2];
+ 		numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
+ 		barcode1 = new Barcode(numeral1); // barcode is 10
+ 		appleProduct = new BarcodedProduct(barcode1, "Apple", BigDecimal.valueOf(2), 100.0);
+ 				
+ 		// "Watermelon" product, barcode = 11, price = 10, weight = 7000.0
+ 		numeral2 = new Numeral[2];
+ 		numeral2[0] = Numeral.one; numeral2[1] = Numeral.one;  // 11
+ 		barcode2 = new Barcode(numeral2);
+ 		watermelonProduct = new BarcodedProduct(barcode2, "Watermelon", BigDecimal.valueOf(10), 7000.0);
     }
+    
+    // Test adding null barcode for addBarcodedEntry
+    @Test (expected = NullPointerException.class)
+    public void testAddNullBarcode() {
+    	database.addBarcodedEntry(null, appleProduct);
+    }
+    
+    // Test adding null product for addBarcodedEntry
+    @Test (expected = NullPointerException.class)
+    public void testAddNullProduct() {
+    	database.addBarcodedEntry(barcode1, null);
+    }
+    
+    // Test removing null barcode for removeBarcodedEntry
+    @Test (expected = NullPointerException.class)
+    public void testRemoveNullBarcode() {
+    	database.removeBarcodedEntry(null);
+    }
+    
+    // Test adding null PLU code for addPLUCodedEntry
+    @Test (expected = NullPointerException.class)
+    public void testAddNullPLUCode() {
+    	database.addPLUCodedEntry(null, pluProduct);
+    }
+    
+    // Test adding null product for addPLUCodedEntry
+    @Test (expected = NullPointerException.class)
+    public void testAddNullPLUProduct() {
+    	database.addPLUCodedEntry(pluCode, null);
+    }
+    
+    // Test removing null PLU Code for removePLUCodedEntry
+    @Test (expected = NullPointerException.class)
+    public void testRemoveNullPLUCode() {
+    	database.removePLUCodedEntry(null);
+    }
+    
+    // Test null input for getBarcodedProduct
+    @Test (expected = NullPointerException.class)
+    public void testGetNullBarcode() {
+    	database.getBarcodedProduct(null);
+    }
+    
+    // Test null input for getPLUCodedProduct
+    @Test (expected = NullPointerException.class)
+    public void testGetNullPLUCode() {
+    	database.getPLUCodedProduct(null);
+    }
+    
+    // Tests on the item database.
+    @Test
+    public void testItemDatabase() {
+    	// Adding a single barcoded product and checking if all it's field are correct
+    	database.addBarcodedEntry(barcode1, appleProduct);
+    	Assert.assertEquals(100, database.getBarcodedProduct(barcode1).getExpectedWeight(), 0.001);
+    	Assert.assertEquals(BigDecimal.valueOf(2), database.getBarcodedProduct(barcode1).getPrice());
+    	Assert.assertEquals("Apple", database.getBarcodedProduct(barcode1).getDescription());
+    	
+    	// Adding a second barcoded products and checking if all it's field are correct
+    	database.addBarcodedEntry(barcode2, watermelonProduct);
+    	Assert.assertEquals(7000, database.getBarcodedProduct(barcode2).getExpectedWeight(), 0.001);
+    	Assert.assertEquals(BigDecimal.valueOf(10), database.getBarcodedProduct(barcode2).getPrice());
+    	Assert.assertEquals("Watermelon", database.getBarcodedProduct(barcode2).getDescription());
+    	
+    	// Adding a PLUCodedProduct and checking if all it's field are correct
+    	database.addPLUCodedEntry(pluCode, pluProduct);
+    	Assert.assertEquals(BigDecimal.valueOf(3), database.getPLUCodedProduct(pluCode).getPrice());
+    	Assert.assertEquals("Orange", database.getPLUCodedProduct(pluCode).getDescription());
+    	
+    	// Removing a barcoded product and testing if it's still there
+    	database.removeBarcodedEntry(barcode1);
+    	Assert.assertEquals(null, database.getBarcodedProduct(barcode1));
+    	
+    	// Removing a PLUcoded product and testing if it's still there
+    	database.removePLUCodedEntry(pluCode);
+    	Assert.assertEquals(null, database.getPLUCodedProduct(pluCode));
+    }
+    
 
     @Test
     public void testAddFirstValidEntry()
