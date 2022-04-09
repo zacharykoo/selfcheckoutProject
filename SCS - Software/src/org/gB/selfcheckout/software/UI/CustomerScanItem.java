@@ -33,6 +33,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	private JPanel bottomPanel;
 	private ItemDatabase idb = new ItemDatabase();
 	private JComboBox itemMenu = new JComboBox();
+	private JButton scanButton;
 		
 	public CustomerScanItem(CustomerFrame customerFrame) {
 		
@@ -49,7 +50,8 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		
 		bottomPanel.add(itemMenu);
 		
-		JButton scanButton = new JButton("(SCAN)");
+		scanButton = new JButton("(SCAN)");
+		scanButton.addActionListener(this);
 		bottomPanel.add(scanButton);
 		
 	}
@@ -108,7 +110,14 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
-		//itemMenu.getSelectedIndex();
+		if (e.getSource() == backButton) {
+			// Go back to main customer menu
+		
+		}
+		else if (e.getSource() == scanButton) {
+			// Go to "place your item in bagging area" panel
+			this.customerFrame.waitingToBag();
+		}
 		
 	}
 	
