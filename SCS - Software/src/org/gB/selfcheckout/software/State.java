@@ -27,6 +27,8 @@ public class State {
 	//public ArrayList<Product> scannedProducts = new ArrayList<Product>();
 	public Map<Product, Integer> productCart = new HashMap<>();
 	
+	// Stores the number of plastic bags used
+	private int plasticBagCount = 0;
 	// Stores the weight of all items in scannedItems.
 	private double expectedWeight = 0;
 	// Stores the weight at the time an item was scanned, excluding it.
@@ -198,6 +200,52 @@ public class State {
 	public void removeBag(Item bag) {
 		customerBagWeight -= bag.getWeight();
 		scs.baggingArea.remove(bag);
+	}
+	
+	/**
+	 * Remove the specified item from the bagging area scale if the due amount
+	 * is equal to the amount paid i.e. the scanned items have been purchased.
+	 * 
+	 * @param item
+	 * 		The item to be removed from the bagging area.
+	 */
+	public boolean removePurchasedItemFromScale(Item item) {
+		//Check if the due amount is paid
+		if (totalToPay.compareTo(paymentTotal) == 0) {
+			scs.baggingArea.remove(item);
+			expectedWeight = 0.0;
+			for (Item i : this.scannedItems) expectedWeight += i.getWeight();
+		} else {
+			Main.error("Please finish payment before removing items from the bagging area.");
+			return false;
+		}
+		return true;
+	}
+	
+	/**
+	 * Set the total number of plastic bags used by the customer.
+	 * 
+	 * @param b
+	 * 		Number of plastic bags used.
+	 * @return
+	 * 		True if the a valid number is entered, false otherwise.
+	 */
+	public boolean setPlasticBagsUsed(int b) {
+		if (b < 0) {
+			return false;
+		}
+		plasticBagCount = b;
+		return true;
+	}
+	
+	/**
+	 * Get function for plasticBagCount;
+	 * 
+	 * @return
+	 * 		Returns the number of plastic bags used. 
+	 */		
+	public int getPlasticBagsUsed() {
+		return plasticBagCount;
 	}
 	
 	/**
