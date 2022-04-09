@@ -2,6 +2,7 @@ package org.gB.selfcheckout.software.UI;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -46,6 +47,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		
 		this.bottomPanel.setLayout(new GridLayout(3,1));
 		JLabel scanLabel = new JLabel("Select an item to scan");
+		scanLabel.setFont(new Font("serif", Font.PLAIN, 20));
 		bottomPanel.add(scanLabel);
 		
 		bottomPanel.add(itemMenu);
