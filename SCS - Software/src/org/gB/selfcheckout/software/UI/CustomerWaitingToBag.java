@@ -1,5 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -26,14 +27,17 @@ public class CustomerWaitingToBag extends JPanel {
 	// Button to for the user to indicate they don't want to bag the item.
 	private JButton doNotBag = new JButton("Skip Bagging This Item");
 	private Timer attendantTimer; // A 5 second timeout for the bagging.
+	private CustomerFrame customerFrame;
 	
 	/**
 	 * Initializes the waiting to bag item interface for the self-checkout
 	 * station.
 	 */
 	
-	public CustomerWaitingToBag() {
+	public CustomerWaitingToBag(CustomerFrame customerFrame) {
 		super();
+
+		this.customerFrame = customerFrame;
 		setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		doNotBag.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -77,6 +81,8 @@ public class CustomerWaitingToBag extends JPanel {
 	 */
 	private void itemNotBagged() {
 		// TODO: Transition to the blocked screen.
+		customerFrame.cardLayout.show(customerFrame.getContentPane(), "blockedScreen");
+
 		// TODO: Alert the attendant that the item was not bagged.
 	}
 	

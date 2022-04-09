@@ -15,10 +15,11 @@ public class CustomerFrame extends JFrame {
 	public CardLayout cardLayout = new CardLayout();
 
 	CustomerScanItem scanItem = new CustomerScanItem(this);
-	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag();
+	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag(this);
 	ProceedToPayment proceedToPay = new ProceedToPayment(this);
 	PayWithCard payWithCard = new PayWithCard(this);
 	PayWithCash payWithCash = new PayWithCash(this);
+	BlockedScreen blockedScreen = new BlockedScreen(this);
 //	CustomerEnterMember enterMember = new CustomerEnterMember();
 //	CustomerProductLookup lookup = new CustomerProductLookup();
 
@@ -45,6 +46,8 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(scanItem, "scanItem");
 		getContentPane().add(payWithCard, "payWithCard");
 		getContentPane().add(waitToBag, "waitToBag");
+		getContentPane().add(blockedScreen, "blockedScreen");
+
 //		getContentPane().add(enterMember, "enterMember");
 //		getContentPane().add(lookup, "lookup");
 	}

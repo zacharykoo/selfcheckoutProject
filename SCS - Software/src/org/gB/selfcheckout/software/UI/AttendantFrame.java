@@ -19,7 +19,8 @@ public class AttendantFrame extends JFrame {
 //	AttendantAlert alert;
 	
 	public AttendantFrame () {
-		super("Self-Chckout System: Attendant");
+		super("Attendant Station");
+		
 		cardLayout.addLayoutComponent("login", login);
 		cardLayout.addLayoutComponent("main", main);
 //		cardLayout.addLayoutComponent("lookup", lookup);
