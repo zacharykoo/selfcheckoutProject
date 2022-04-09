@@ -8,21 +8,31 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
 
+import org.gB.selfcheckout.software.backend.ItemDatabase;
+import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.external.ProductDatabases;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
 
 public class CustomerScanItem extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	private static String[] itemOptions = {"Apple", "Banana", "Pear"};
+	private static String[] itemOptions;
 	
 	public CustomerFrame customerFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
+	private ItemDatabase idb = new ItemDatabase();
+	private JComboBox itemMenu = new JComboBox();
 		
 	public CustomerScanItem(CustomerFrame customerFrame) {
 		
@@ -37,7 +47,6 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		JLabel scanLabel = new JLabel("Select an item to scan");
 		bottomPanel.add(scanLabel);
 		
-		JComboBox itemMenu = new JComboBox(itemOptions);
 		bottomPanel.add(itemMenu);
 		
 		JButton scanButton = new JButton("(SCAN)");
@@ -77,12 +86,21 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	
 	private void setUpItemOptions() {
 		
-		for (int i = 0; i < ProductDatabases.BARCODED_PRODUCT_DATABASE.size(); i++) {
-			// Create
-			
-		}
+		Numeral[] num = {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one};
+		Barcode bc1 = new Barcode(num);
+		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Lucky Charms", new BigDecimal(5.35), 15.5);
 		
+		idb.addBarcodedEntry(bc1, bcp1);
 		
+		Numeral[] num2 = {Numeral.seven, Numeral.nine, Numeral.four, Numeral.zero, Numeral.four};
+		Barcode bc2 = new Barcode(num2);
+		BarcodedProduct bcp2 = new BarcodedProduct(bc2, "Greek Yogurt", new BigDecimal(7.99), 13.75);
+		
+		idb.addBarcodedEntry(bc2, bcp2);
+		
+		// Add barcoded products to drop down menu
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.forEach((barcode, barcodedProduct) -> 
+				itemMenu.addItem(barcodedProduct.getDescription()));
 	}
 
 
