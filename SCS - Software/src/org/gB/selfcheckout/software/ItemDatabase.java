@@ -13,6 +13,7 @@ import org.lsmr.selfcheckout.products.Product;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Simple database for relating items, products, and barcodes.
@@ -80,16 +81,16 @@ public class ItemDatabase {
     		return ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
     }
     
+    public Map<PriceLookupCode, PLUCodedProduct> getPLUProductDatabase() {
+    	return ProductDatabases.PLU_PRODUCT_DATABASE;
+    }
+    
+    public Map<Barcode, BarcodedProduct> getBarcodedProductDatabase() {
+    	return ProductDatabases.BARCODED_PRODUCT_DATABASE;
+    }
+    
+    
     ///////////////////////////////////
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     /**
      * Adds an entry to the database.

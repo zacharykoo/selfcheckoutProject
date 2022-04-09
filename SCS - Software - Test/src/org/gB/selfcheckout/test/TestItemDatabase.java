@@ -10,6 +10,8 @@ import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * A test suite for org.g30.selfcheckout.ItemDatabase.
@@ -108,7 +110,7 @@ public class TestItemDatabase {
     
     // Tests on the item database.
     @Test
-    public void testItemDatabase() {
+    public void testProductDatabases() {
     	// Adding a single barcoded product and checking if all it's field are correct
     	database.addBarcodedEntry(barcode1, appleProduct);
     	Assert.assertEquals(100, database.getBarcodedProduct(barcode1).getExpectedWeight(), 0.001);
@@ -133,6 +135,45 @@ public class TestItemDatabase {
     	// Removing a PLUcoded product and testing if it's still there
     	database.removePLUCodedEntry(pluCode);
     	Assert.assertEquals(null, database.getPLUCodedProduct(pluCode));
+    }
+    
+    @Test
+    public void testGetProductDatabases() {
+    	Map<PriceLookupCode, PLUCodedProduct> pluProducts = database.getPLUProductDatabase();
+    	Map<Barcode, BarcodedProduct> barProducts = database.getBarcodedProductDatabase();
+    	database.addPLUCodedEntry(pluCode, pluProduct);
+    	database.addBarcodedEntry(barcode1, appleProduct);
+    	database.addBarcodedEntry(barcode2, watermelonProduct);
+    	
+    	// Iterate through the PLU database and get check product info
+    	for (Map.Entry<PriceLookupCode, PLUCodedProduct> pair: pluProducts.entrySet()) {
+    		PriceLookupCode plu = pair.getKey();
+    		PLUCodedProduct pProduct = pair.getValue();
+    		for (int i = 0; i < pluProducts.size(); i++) {
+    			// Check PLU code
+    			Assert.assertEquals(pluCode, plu);
+    			// Check product
+    			Assert.assertEquals(pluProduct, pProduct);
+    		}
+    	}
+    	
+    	// Iterate through the Barcode database and get check product info
+    	ArrayList<Barcode> bCodes = new ArrayList<>();
+    	ArrayList<BarcodedProduct> bProducts = new ArrayList<>();
+    	bCodes.add(barcode1);
+    	bCodes.add(barcode2);
+    	bProducts.add(appleProduct);
+    	bProducts.add(watermelonProduct);
+    	for (Map.Entry<Barcode, BarcodedProduct> pair: barProducts.entrySet()) {
+    		Barcode bcode = pair.getKey();
+    		BarcodedProduct bProduct = pair.getValue();
+    		for (int i = 0; i < barProducts.size(); i++) {
+    			// check that the barcodes in the database are the ones added
+    			Assert.assertTrue(bCodes.contains(bcode));
+    			// check that the products in the database are the ones added
+    			Assert.assertTrue(bProducts.contains(bProduct));
+    		}
+    	}
     }
     
 
