@@ -97,7 +97,7 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "payWithCash");
 		}
 		else if (e.getSource() == backButton) {
-			//this.customerFrame.cardLayout.show(this.customerFrame.mainPanel, "XXX");
+			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		
 		

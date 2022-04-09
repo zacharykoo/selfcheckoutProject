@@ -27,8 +27,8 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 	private JButton pay = new JButton("Pay");
 	private JButton addBags = new JButton("Add Bags");
 
-	private JLabel paidLabel = new JLabel("Paid: $0.00");
-	private JLabel totalLabel = new JLabel("Total: $0.00");
+	private JLabel paidLabel = new JLabel();
+	private JLabel totalLabel = new JLabel();
 	
 	private double paid = 0.0;
 	private double total = 0.0;
@@ -41,6 +41,8 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		this.setLayout(new GridBagLayout());
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		
+		
+		// Show cart contents
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.weighty = 0.75;
@@ -50,6 +52,28 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		
 		this.add(mainLabel, gbc);
 		
+		
+		// Show subtotals
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.weighty = 0.0;
+		gbc.weightx = 1.0;
+		gbc.anchor = GridBagConstraints.BASELINE_LEADING;
+		JPanel subtotalsPanel = new JPanel();
+		
+		this.add(subtotalsPanel, gbc);
+		subtotalsPanel.setLayout(new BoxLayout(subtotalsPanel, BoxLayout.Y_AXIS));
+		
+		paidLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		totalLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		paidLabel.setText(String.format("Paid: $%.2f", paid));
+		totalLabel.setText(String.format("Total: $%.2f", total));
+		
+		subtotalsPanel.add(paidLabel);
+		subtotalsPanel.add(totalLabel);
+
+		
+		// Buttons for functionality
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.weighty = 1.0;
@@ -76,16 +100,35 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		buttonsPanel.add(scan);
 		buttonsPanel.add(lookup);
 		buttonsPanel.add(enterCode);
-
 		buttonsPanel.add(remove);
 		buttonsPanel.add(addBags);
 		buttonsPanel.add(pay);
 
+		
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		if (e.getSource() == scan) {
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "scanItem");
+		}
+		else if (e.getSource() == enterCode) {
+			
+		}
+		else if (e.getSource() == lookup) {
+	
+		}
+		else if (e.getSource() == remove) {
+	
+		}
+		else if (e.getSource() == addBags) {
+			
+		}
+		else if (e.getSource() == pay) {
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "proceedToPay");
+		}
+
+
 	}
 }

@@ -114,7 +114,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		
 		if (e.getSource() == backButton) {
 			// Go back to main customer menu
-		
+			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		else if (e.getSource() == scanButton) {
 			// Go to "place your item in bagging area" panel
