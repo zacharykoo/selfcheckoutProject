@@ -54,6 +54,7 @@ public class State {
 	public AddBanknote addBanknote = null;
 	public AddCoin addCoin = null;
 	public AddItemToBag addItemToBag = null;
+	public CustomerDoesNotWantToBagScannedItem customerDoesNotWantToBagScannedItem = null;
 	public AddCustomerBags customerBags = null;
 	public PaymentMode paymentMode = null;
 	public ScanItem scanItem = null;
