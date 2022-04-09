@@ -16,19 +16,6 @@ public class CustomerUI extends JFrame {
 	}
 	
 	public void setUp() {
-		
-		cardLayout = new CardLayout();
-		mainPanel = new JPanel(cardLayout);
-		this.add(mainPanel);
-		
-		// I'm running proceed to payment first
-		//ProceedToPayment ptpPanel = new ProceedToPayment(this);
-		//mainPanel.add(ptpPanel, "ptpPanel");
-		//CustomerScanItem csiPanel = new CustomerScanItem(this);
-		//mainPanel.add(csiPanel, "csiPanel");
-		this.pack();
-		this.setVisible(true);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 }
