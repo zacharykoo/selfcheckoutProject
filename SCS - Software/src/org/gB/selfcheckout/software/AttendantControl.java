@@ -154,10 +154,14 @@ public class AttendantControl {
 		// based on removeProduct method in State from another member
 		state.scs.removeProduct(product);
 	}
+
+    public void attendantApproveWeightDifference(State state) throws OverloadException {
+        state.expectedWeight = state.scs.baggingArea.getCurrentWeight();
+    }
 }
 
 
-// Attendant approves a weight discrepancy: to be done
+// Attendant approves a weight discrepancy: done? double check if you think this is right, since this is all i can imagine it needing.
 // Attendant removes product from purchases: done
 // Attendant looks up a product : done
 // Attendant starts up a station : done
