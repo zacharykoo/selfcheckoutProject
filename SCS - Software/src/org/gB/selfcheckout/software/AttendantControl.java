@@ -6,19 +6,15 @@ import java.util.Set;
 import org.lsmr.selfcheckout.Banknote;
 import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.Numeral;
-import org.lsmr.selfcheckout.PLUCodedItem;
 import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
 import org.lsmr.selfcheckout.devices.DisabledException;
-import org.lsmr.selfcheckout.devices.Keyboard;
 import org.lsmr.selfcheckout.devices.OverloadException;
-import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.devices.SupervisionStation;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
-import org.lsmr.selfcheckout.Barcode;
 
 public class AttendantControl {
 
@@ -28,14 +24,15 @@ public class AttendantControl {
 
 	public AttendantControl(ArrayList<State> scsList) {
 		this.scsList = scsList;
-		for (State state : scsList) {
+		supervisionStation = new SupervisionStation();
+		for (State state : this.scsList) {
 			supervisionStation.add(state.scs);
 		}
 	}
 
 	// Allow attendant to logout with supervisor on the current state
 	public void attendantLogout() {
-		for (State state : scsList) {
+		for (State state : this.scsList) {
 			supervisionStation.remove(state.scs);
 		}
     }
@@ -71,13 +68,13 @@ public class AttendantControl {
 
 	public boolean startupStation(int stationId, int scaleMaxWeight, int scaleSensitivity) throws Exception {
 		new Main();
-		scsList.set(stationId, Main.init(scaleMaxWeight, scaleSensitivity));
+		this.scsList.set(stationId, Main.init(scaleMaxWeight, scaleSensitivity));
 
 		return true;
 	}
 
 	public ArrayList<State> getSCSList() {
-		return scsList;
+		return this.scsList;
 	}
 
 	public void addInkCartridge(State state, int inkCartridgeAmount) throws OverloadException {
@@ -143,7 +140,7 @@ public class AttendantControl {
 
 	public void attendantRemoveProduct(State state, Product product) {
 		// based on removeProduct method in State from another member
-		state.removeProduct(product);
+//		state.removeProduct(product);
 	}
 
     public void attendantApproveWeightDifference(State state) throws OverloadException {
