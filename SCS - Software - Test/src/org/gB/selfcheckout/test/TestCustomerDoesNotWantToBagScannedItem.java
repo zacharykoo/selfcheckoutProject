@@ -48,7 +48,6 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		state.waitingForBagging = false;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
-		state.currentTest = "bob"; // TODO: REMOVE.
 		// Put the item on the scale.
 		state.scs.baggingArea.add(a);
 		// Ensure the state is correctly updated.
