@@ -8,13 +8,15 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.gB.selfcheckout.software.LoginDB;
+
 public class LoginScreen extends JPanel {
 	private JLabel loginlabel, passwordlabel;
 	private JTextField loginfield;
 	private JPasswordField passwordfield;
 	private JButton loginbutton;
 
-    public LoginScreen() {
+    public LoginScreen(LoginDB logindatabase) {
 		this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(200, 100));
         JPanel subpanel = new JPanel();;
@@ -22,7 +24,7 @@ public class LoginScreen extends JPanel {
         subpanel.setPreferredSize(new Dimension(200, 100));
 		GridBagConstraints c = new GridBagConstraints();
 		
-		loginlabel = new JLabel("Login: ", SwingConstants.RIGHT);
+		loginlabel = new JLabel("Username: ", SwingConstants.RIGHT);
 		c.weightx = 0.5;
 		c.anchor = GridBagConstraints.LINE_END;
 		c.gridx = 0;
@@ -60,7 +62,12 @@ public class LoginScreen extends JPanel {
 		c.gridx = 1;
 		c.gridy = 3;
         loginbutton.addActionListener(e -> {
-    		//TODO: idk it does something though
+			String username = new String(loginfield.getText());
+			String password = new String(passwordfield.getPassword());
+			if (logindatabase.login(username, password)) {
+				//TODO: Change Screens
+				//AttendantControl(scsList);
+			}
     	});
 		subpanel.add(loginbutton, c);
         this.add(subpanel);

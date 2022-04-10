@@ -9,32 +9,41 @@ import java.util.Map.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import org.gB.selfcheckout.software.State;
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
-/*
-Based around the list example found on the oracle site:
-https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
-*/
+/**
+ * Panel for the Attendant to view a Customer's Cart
+ * 
+ * Can remove a product from the customer's cart
+ * 
+ * Based around the list example found on the oracle site:
+ * https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ListDemoProject/src/components/ListDemo.java
+ * 
+**/
 public class AttendantCartScreen extends JPanel implements ListSelectionListener {
-    //TODO: Modify to add the actual productCart
-    private Map<Product,Integer> productCart;
+    private State customerState;
     private JList<Entry<Product,Integer>> items;
     private DefaultListModel<Entry<Product,Integer>> itemModel;
     private JButton removeButton, backButton;
-    public AttendantCartScreen() {
+
+    /**
+     * Generates a JPanel for the Attendant Cart Screen
+     *
+     * @param state The state of the current customer's station
+     */
+    public AttendantCartScreen(State state) {
+        customerState = state;
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(500, 500));
         this.setMinimumSize(new Dimension(200, 200));
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
 
-        // TODO: Fill itemModel with Customer Cart
-        BarcodedProduct test = new BarcodedProduct(new Barcode(null), "test", BigDecimal.ONE, 1.0);
-        productCart.put(test, 1);
         itemModel = new DefaultListModel<Entry<Product,Integer>>();
-        for(Entry<Product, Integer> entry: productCart.entrySet()) {
+        for(Entry<Product, Integer> entry: customerState.productCart.entrySet()) {
             itemModel.addElement(entry);
         }
 
@@ -102,11 +111,7 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
     }
     class RemoveListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //This method can be called only if
-            //there's a valid selection
-            //so go ahead and remove whatever's selected.
-            //TODO: Remove Item from Checkout
-            productCart.remove(items.getSelectedValue().getKey());
+            customerState.productCart.remove(items.getSelectedValue().getKey());
             int index = items.getSelectedIndex();
             itemModel.remove(index);
 
