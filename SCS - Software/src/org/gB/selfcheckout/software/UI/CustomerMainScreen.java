@@ -31,6 +31,7 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 	private JButton lookup = new JButton("Look Up Item");
 	private JButton remove = new JButton("Remove Item");
 	private JButton pay = new JButton("Pay");
+	private JButton memeberInfo = new JButton("Enter Member Info");
 	private JButton addBags = new JButton("Add Bags");
 
 	private JLabel paidLabel = new JLabel();
@@ -100,6 +101,8 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		remove.setAlignmentX(Component.CENTER_ALIGNMENT);
 		addBags.addActionListener(this);
 		addBags.setAlignmentX(Component.CENTER_ALIGNMENT);
+		memeberInfo.addActionListener(this);
+		memeberInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
 		pay.addActionListener(this);
 		pay.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -108,6 +111,7 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		buttonsPanel.add(enterCode);
 		buttonsPanel.add(remove);
 		buttonsPanel.add(addBags);
+		buttonsPanel.add(memeberInfo);
 		buttonsPanel.add(pay);
 
 		
@@ -130,6 +134,9 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		}
 		else if (e.getSource() == addBags) {
 			
+		}
+		else if (e.getSource() == memeberInfo) {
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "enterMember");
 		}
 		else if (e.getSource() == pay) {
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "proceedToPay");

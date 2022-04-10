@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 /**
  * JFrame to contain the UI used by customers at self-checkout stations.
  */
-
 public class CustomerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
@@ -23,14 +22,14 @@ public class CustomerFrame extends JFrame {
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 	StartScreen startScreen = new StartScreen(this);
 	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
-
-//	CustomerEnterMember enterMember = new CustomerEnterMember();
+	MemberInfo enterMember;
+	
 //	CustomerProductLookup lookup = new CustomerProductLookup();
 
 
 	public CustomerFrame(int stationIndex) {
 		super("Self-Checkout Station: " + Integer.toString(stationIndex + 1));
-		
+		enterMember = new MemberInfo(this);
 		addPanels();
 		
 		// First panel
@@ -55,8 +54,8 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(shutDown, "shutDown");
 		getContentPane().add(startScreen, "startScreen");
 		getContentPane().add(mainScreen, "mainScreen");
-
-//		getContentPane().add(enterMember, "enterMember");
+		getContentPane().add(enterMember, "enterMember");
+		
 //		getContentPane().add(lookup, "lookup");
 	}
 	

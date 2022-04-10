@@ -1,11 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
@@ -17,7 +12,7 @@ import javax.swing.JTabbedPane;
 public class AttendantMainMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private AttendantFrame attendantFrame;
-	private BorderLayout border = new BorderLayout(); // Outermost layout.
+	private BorderLayout mainBorder = new BorderLayout(); // Outermost layout.
 	// Top contents that contains controls for each self-checkout station:
 	private JTabbedPane tabs = new JTabbedPane();
 	// Bottom layout for navigation controls:
@@ -31,42 +26,32 @@ public class AttendantMainMenu extends JPanel {
 	 * 
 	 * @param stations
 	 * 		The number of self-checkout stations that this attendant manages.
+	 * @param attendantFrame
+	 * 		The instance of AttendantFrame that owns this panel.
 	 */
-	
 	public AttendantMainMenu(int stations, AttendantFrame attendantFrame) {
 		super();
-		this.setLayout(border); // Set the outermost layout.
-		this.attendantFrame = attendantFrame;
-		// Instantiate the navigation buttons, add them to the bottom panel:
-		
-		this.add(bottomPanel);
-		
-		bottomPanel.add(logoutButton);
-		bottomPanel.add(lookupButton);
-		border.addLayoutComponent(bottomPanel, BorderLayout.SOUTH);
+    this.attendantFrame = attendantFrame;
+		this.setLayout(mainBorder); // Set the outermost layout.
 		// Create the tabs to manage each self-checkout station:
-		for (int i = 0; i < stations; i ++) tabs.add(
+		for (int i = 0; i < stations; i ++) tabs.addTab(
 				"Station " + Integer.toString(i + 1),
 				new StationInterface(i));
-		border.addLayoutComponent(tabs, BorderLayout.SOUTH);
+		this.add(tabs, BorderLayout.NORTH);
+
+		// Instantiate the navigation buttons, add them to the bottom panel:
+		bottomPanel.add(logoutButton);
+		bottomPanel.add(lookupButton);
+		this.add(bottomPanel, BorderLayout.SOUTH);
 		
 		// Setup event handlers:
-		logoutButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				Container parent = AttendantMainMenu.this.getParent();
-//				parent.removeAll();
-//				parent.add(((AttendantFrame) parent).login);
-				attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
-			}});
-		
-		lookupButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "lookup");
-			}});
-		this.setVisible(true);
+		logoutButton.addActionListener(e -> {
+			attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
+		});
+    
+		lookupButton.addActionListener(e -> {
+			// TODO:
+		});
 	}
 	
 	/**
@@ -103,17 +88,19 @@ public class AttendantMainMenu extends JPanel {
 		 * 		controls will be manipulated with this instance.
 		 */
 		public StationInterface(int index) {
+			super();
 			// Set the station number and main layout.
 			stationIndex = index;
+			this.setLayout(border);
 			// Setup the top row UI:
 			top.add(power);
 			top.add(blockStation);
 			top.add(viewCart);
-			border.addLayoutComponent(top, BorderLayout.NORTH);
+			this.add(top, BorderLayout.NORTH);
 			// Setup the middle row UI:
 			middle.add(refillPaper);
 			middle.add(refillInk);
-			border.addLayoutComponent(middle, BorderLayout.CENTER);
+			this.add(middle, BorderLayout.CENTER);
 			// Setup the bottom row UI:
 			refillCoins.add("$0.05");
 			refillCoins.add("$0.10");
@@ -126,62 +113,44 @@ public class AttendantMainMenu extends JPanel {
 			refillBanknotes.add("$50.00");
 			middle.add(emptyCoins);
 			middle.add(emptyBanknotes);
-			border.addLayoutComponent(bottom, BorderLayout.SOUTH);
+			this.add(bottom, BorderLayout.SOUTH);
 			
 			// Set up event handlers:
-			power.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
+			power.addActionListener(e -> {
+				
+			});
 			
-			blockStation.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
+			blockStation.addActionListener(e -> {
+				
+			});
 			
-			viewCart.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
+			viewCart.addActionListener(e -> {
+				
+			});
+		
+			refillPaper.addActionListener(e -> {
+				
+			});
 			
-			refillPaper.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
+			refillInk.addActionListener(e -> {
+				
+			});
 			
-			refillInk.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
+			refillCoins.addActionListener(e -> {
+				
+			});
 			
-			refillCoins.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
+			refillBanknotes.addActionListener(e -> {
+				
+			});
 			
-			refillBanknotes.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
+			emptyCoins.addActionListener(e -> {
+				
+			});
 			
-			emptyCoins.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
-			
-			emptyBanknotes.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				}});
+			emptyBanknotes.addActionListener(e -> {
+				
+			});
 		}
 	}
 }

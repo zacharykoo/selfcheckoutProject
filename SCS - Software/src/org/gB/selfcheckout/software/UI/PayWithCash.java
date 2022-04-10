@@ -144,7 +144,6 @@ public class PayWithCash extends JPanel implements ActionListener {
 	public void setUpBackButton() {
 		
 		gbc.insets = new Insets(3, 3, 3, 3);
-		
 		this.setLayout(new GridBagLayout());
 		
 		backButton = new JButton("Back");
