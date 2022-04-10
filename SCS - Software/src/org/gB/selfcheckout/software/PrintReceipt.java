@@ -14,16 +14,12 @@ import org.lsmr.selfcheckout.products.Product;
 
 public class PrintReceipt implements ReceiptPrinterObserver {
     private State state; // Stores a program state for testing.
-    private boolean enabled; // Indicates whether the watched device is enabled.
-    private ItemDatabase pdc;
-	private ReceiptPrinter printer;
+    private ReceiptPrinter printer;
 	private Map<Product, Integer> products;
 
     public PrintReceipt(State state) {
         this.state = state;
-        this.pdc = state.idb;
-		this.printer = state.scs.printer;
-		this.enabled = true;
+        this.printer = state.scs.printer;
 		this.products = state.productCart;
     }
     
@@ -97,13 +93,11 @@ public class PrintReceipt implements ReceiptPrinterObserver {
     }
 
 	@Override
-	public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
-		this.enabled = true;		
+	public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {		
 	}
 
 	@Override
-	public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
-		this.enabled = false;		
+	public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {		
 	}
 
 	@Override

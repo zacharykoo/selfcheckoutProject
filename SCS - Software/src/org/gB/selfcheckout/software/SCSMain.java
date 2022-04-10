@@ -3,10 +3,8 @@ package org.gB.selfcheckout.software;
 import java.math.BigDecimal;
 import java.util.Currency;
 import org.lsmr.selfcheckout.Coin;
-import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.EmptyException;
 import org.lsmr.selfcheckout.devices.OverloadException;
-import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 
 /**
@@ -152,9 +150,6 @@ public class SCSMain {
 	public void printReceipt(double totalForPrinting) throws EmptyException, OverloadException {
 
 		String printString = new String("Receipt: \n");
-		String tempString = new String();
-		int j = 1;
-
 		printString = printString.concat("Total: " + totalForPrinting);
 
 		for (int i = 0; i < printString.length(); i++) {
