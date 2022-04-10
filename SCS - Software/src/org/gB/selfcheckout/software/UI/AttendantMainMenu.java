@@ -30,14 +30,13 @@ public class AttendantMainMenu extends JPanel {
 	 * @param stations
 	 * 		The number of self-checkout stations that this attendant manages.
 	 */
-	
+
 	public AttendantMainMenu(AttendantFrame attendantFrame, int stations) {
 		super();
 		this.setLayout(border); // Set the outermost layout.
 		// Instantiate the navigation buttons, add them to the bottom panel:
 		
 		this.add(bottomPanel);
-		
 		bottomPanel.add(logoutButton);
 		bottomPanel.add(lookupButton);
 		border.addLayoutComponent(bottomPanel, BorderLayout.SOUTH);
@@ -51,7 +50,7 @@ public class AttendantMainMenu extends JPanel {
 		logoutButton.addActionListener(e -> {
 			attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
 		});
-		
+    
 		lookupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -137,7 +136,7 @@ public class AttendantMainMenu extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 				}});
-			
+		
 			refillPaper.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {

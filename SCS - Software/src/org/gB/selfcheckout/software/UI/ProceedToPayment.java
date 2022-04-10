@@ -26,8 +26,6 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	
 	private JPanel buttonPanel;
 	
-
-	
 	public ProceedToPayment(CustomerFrame customerFrame) {
 				
 		this.customerFrame = customerFrame;

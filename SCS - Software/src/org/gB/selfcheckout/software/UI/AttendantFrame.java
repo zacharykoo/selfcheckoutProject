@@ -12,13 +12,13 @@ import javax.swing.JFrame;
 public class AttendantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public CardLayout cardLayout = new CardLayout();
-	
 	LoginScreen login = new LoginScreen(this);
 	AttendantMainMenu main;
 //	AttendantProductLookup lookup;
 	AttendantCartScreen cart = new AttendantCartScreen();
 //	AttendantAlert alert;
 	
+
 	public AttendantFrame (int numStations) {
 		super("Attendant Station");
 		
@@ -33,7 +33,6 @@ public class AttendantFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
-	
 	private void addPanels() {
 		
 		this.getContentPane().setLayout(cardLayout);

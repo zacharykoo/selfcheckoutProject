@@ -82,15 +82,6 @@ public class ItemDatabase {
     
     ///////////////////////////////////
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /**
      * Adds an entry to the database.
      *

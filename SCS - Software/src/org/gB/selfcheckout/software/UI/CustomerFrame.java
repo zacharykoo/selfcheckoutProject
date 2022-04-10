@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 /**
  * JFrame to contain the UI used by customers at self-checkout stations.
  */
-
 public class CustomerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
