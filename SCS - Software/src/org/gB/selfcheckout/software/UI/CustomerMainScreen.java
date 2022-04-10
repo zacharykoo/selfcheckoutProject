@@ -110,7 +110,6 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		buttonsPanel.add(addBags);
 		buttonsPanel.add(pay);
 
-		
 	}
 	
 	
@@ -126,10 +125,10 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "lookup");
 		}
 		else if (e.getSource() == remove) {
-	
+			
 		}
 		else if (e.getSource() == addBags) {
-			
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "addBags");
 		}
 		else if (e.getSource() == pay) {
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "proceedToPay");
