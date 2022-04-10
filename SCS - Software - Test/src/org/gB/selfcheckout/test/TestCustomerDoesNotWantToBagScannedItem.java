@@ -126,23 +126,17 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
 	}
 	
-	
-
-	
-	
-	
-/**
 	@Test
 	public void testEnabled() {
 		state.customerDoesNotWantToBagScannedItem.enabled(null);
-		Assert.assertFalse(state.scs.baggingArea.isDisabled());
+		Assert.assertTrue(state.scs.baggingArea.isDisabled());
 	}
 	
 	@Test
 	public void testNotEnabled() {
 		state.customerDoesNotWantToBagScannedItem.disabled(null);
-		Assert.assertTrue(state.scs.baggingArea.isDisabled());
+		Assert.assertFalse(state.scs.baggingArea.isDisabled());
 	}
-	**/
+	
 	
 }
