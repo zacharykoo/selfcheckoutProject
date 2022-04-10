@@ -2,35 +2,66 @@ package org.gB.selfcheckout.software.UI;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.*;
+
+import org.gB.selfcheckout.software.backend.ItemDatabase;
+import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.Numeral;
+import org.lsmr.selfcheckout.external.ProductDatabases;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
+
+/* 
+ * Backend integration required:
+ *  Hardware:
+ *  	barcode scanner
+ *  Software:
+ *  	List of products in database
+ */
 
 public class CustomerScanItem extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	public CustomerUI customerFrame;
+	private static String[] itemOptions;
+	
+	public CustomerFrame customerFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
+	private ItemDatabase idb = new ItemDatabase();
+	private JComboBox itemMenu = new JComboBox();
+	private JButton scanButton; 
 	
-	public CustomerScanItem(CustomerUI customerFrame) {
+	public CustomerScanItem(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		
 		setUpBackButton();
 		
-		this.bottomPanel.setLayout(new GridLayout(2,1));
-		JLabel scanLabel = new JLabel("Please scan your item");
+		setUpItemOptions();
+		
+		this.bottomPanel.setLayout(new GridLayout(3,1));
+		JLabel scanLabel = new JLabel("Select an item to scan");
+		scanLabel.setFont(new Font("serif", Font.PLAIN, 20));
 		bottomPanel.add(scanLabel);
-		JButton scanButton = new JButton("(SCAN)");
+		
+		bottomPanel.add(itemMenu);
+		
+		scanButton = new JButton("(SCAN)");
+		scanButton.addActionListener(this);
 		bottomPanel.add(scanButton);
 		
 	}
@@ -64,11 +95,39 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		this.add(bottomPanel, gbc);
 		
 	}
+	
+	private void setUpItemOptions() {
+		
+		Numeral[] num = {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one};
+		Barcode bc1 = new Barcode(num);
+		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Lucky Charms", new BigDecimal(5.35), 15.5);
+		
+		idb.addBarcodedEntry(bc1, bcp1);
+		
+		Numeral[] num2 = {Numeral.seven, Numeral.nine, Numeral.four, Numeral.zero, Numeral.four};
+		Barcode bc2 = new Barcode(num2);
+		BarcodedProduct bcp2 = new BarcodedProduct(bc2, "Greek Yogurt", new BigDecimal(7.99), 13.75);
+		
+		idb.addBarcodedEntry(bc2, bcp2);
+		
+		// Add barcoded products to drop down menu
+		ProductDatabases.BARCODED_PRODUCT_DATABASE.forEach((barcode, barcodedProduct) -> 
+				itemMenu.addItem(barcodedProduct.getDescription()));
+	}
 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		
+		if (e.getSource() == backButton) {
+			// Go back to main customer menu
+			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
+		}
+		else if (e.getSource() == scanButton) {
+			// Go to "place your item in bagging area" panel
+			this.customerFrame.waitingToBag();
+		}
 		
 	}
 	

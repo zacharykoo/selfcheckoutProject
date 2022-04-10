@@ -9,12 +9,17 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class LoginScreen extends JPanel {
+	
+	private AttendantFrame attendantFrame;
+	
 	private JLabel loginlabel, passwordlabel;
 	private JTextField loginfield;
 	private JPasswordField passwordfield;
 	private JButton loginbutton;
 
-    public LoginScreen() {
+    public LoginScreen(AttendantFrame attendantFrame) {
+    	this.attendantFrame = attendantFrame;
+    	
 		this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(200, 100));
         JPanel subpanel = new JPanel();;
@@ -61,6 +66,8 @@ public class LoginScreen extends JPanel {
 		c.gridy = 3;
         loginbutton.addActionListener(e -> {
     		//TODO: idk it does something though
+        	// Go to main menu
+        	attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
     	});
 		subpanel.add(loginbutton, c);
         this.add(subpanel);
