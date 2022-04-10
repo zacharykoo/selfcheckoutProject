@@ -1,6 +1,7 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,24 +14,34 @@ import javax.swing.*;
  * When attendant starts up a station, this panel will change
  */
 
-public class AttendantStationShutDown extends JPanel {
+public class AttendantStationShutDown extends JPanel implements ActionListener {
 
-	private CustomerFrame customerFrame;
+	private AttendantFrame attendantFrame;
 	
-	public AttendantStationShutDown(CustomerFrame cf) {
+	public AttendantStationShutDown(AttendantFrame af) {
 		super();
-		this.customerFrame = cf;
+		this.attendantFrame = af;
 		
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setBorder(BorderFactory.createEmptyBorder(100, 10, 10, 10));
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		this.setBackground(Color.GRAY);
 		JLabel msg = new JLabel("Attendant Station Shut Down", SwingConstants.CENTER);
 		msg.setFont(new Font("serif", Font.PLAIN, 20));
-		this.setLayout(new GridLayout(1,1));
 		this.add(msg);
 		
 		JButton powerOn = new JButton("Power On");
 		add(powerOn);
+		powerOn.addActionListener(this);
+		
+		msg.setAlignmentX(Component.CENTER_ALIGNMENT);
+		powerOn.setAlignmentX(Component.CENTER_ALIGNMENT);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
 	}
 	
 }

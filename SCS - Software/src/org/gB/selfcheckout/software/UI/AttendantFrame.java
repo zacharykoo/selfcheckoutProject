@@ -15,6 +15,7 @@ public class AttendantFrame extends JFrame {
 	
 	LoginScreen login = new LoginScreen(this);
 	AttendantMainMenu main;
+	AttendantStationShutDown shutDown = new AttendantStationShutDown(this);
 //	AttendantProductLookup lookup;
 	AttendantCartScreen cart = new AttendantCartScreen();
 //	AttendantAlert alert;
@@ -26,7 +27,7 @@ public class AttendantFrame extends JFrame {
 		
 		addPanels();
 		
-		cardLayout.show(this.getContentPane(), "login");
+		cardLayout.show(this.getContentPane(), "shutDown");
 		this.setLayout(cardLayout);
 		this.setSize(1280, 720);
 		this.pack();
@@ -41,6 +42,7 @@ public class AttendantFrame extends JFrame {
 		getContentPane().add(login, "login");
 		getContentPane().add(main, "main");
 		getContentPane().add(cart, "cart");
+		getContentPane().add(shutDown, "shutDown");
 
 //		getContentPane().add(alert, "alert");
 //		getContentPane().add(lookup, "lookup");
