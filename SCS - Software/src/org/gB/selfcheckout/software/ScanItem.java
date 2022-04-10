@@ -70,8 +70,7 @@ public class ScanItem implements BarcodeScannerObserver {
 	@Override
 	public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 		if (!this.enabled) return;
-		// Grab the item from the item database, if it exists.
-		Item currentItem = state.idb.getItem(barcode);
+		// Grab the product from the database, if it exists
 		BarcodedProduct product = state.idb.getBarcodedProduct(barcode);
 		if (product != null) {
 			state.addProduct(product);
@@ -79,17 +78,7 @@ public class ScanItem implements BarcodeScannerObserver {
 			state.scs.mainScanner.disable();
 			state.scs.handheldScanner.disable();
 		} else {
-			Main.error("Unknown item.");
+			Main.error("Unknown product.");
 		}
-		
-		if(currentItem != null)	{ // If it does exist, expect its weight.
-			// state.addItem(currentItem);
-			state.addProduct(product);
-			state.waitingForBagging = true;
-			state.scs.mainScanner.disable();
-			state.scs.handheldScanner.disable();
-		
-		// If the item does not exist, report the error.
-		} else Main.error("Unknown item.");
 	}
 }

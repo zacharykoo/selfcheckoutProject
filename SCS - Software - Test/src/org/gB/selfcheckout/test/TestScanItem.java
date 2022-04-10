@@ -64,6 +64,7 @@ public class TestScanItem {
 
     private Item item;
     private Item itemInvalid;
+    private Product product;
 
     @Before
     public void setupTests() {
@@ -87,8 +88,8 @@ public class TestScanItem {
         //Add an entry to database.
         Barcode barcode = new Barcode(new Numeral[]{Numeral.one});
         item = new BarcodedItem(barcode, 1);
-        Product product = new BarcodedProduct(barcode, "product", new BigDecimal(2), 50.0);
-        database.addEntry(item, product);
+        product = new BarcodedProduct(barcode, "product", new BigDecimal(2), 50.0);
+        database.addBarcodedEntry(barcode, (BarcodedProduct) product);
 
         //Create an entry not in database.
         Barcode barcodeInvalid = new Barcode(new Numeral[]{Numeral.four});
@@ -103,7 +104,7 @@ public class TestScanItem {
     public void testAddItemToList() {
         scanner.scan(item); //Scan the item.
         //Ensure the item is now available to be removed from the scanned items list.
-        Assert.assertTrue(state.removeItem(item));
+        Assert.assertTrue(state.removeProduct(product));
     }
 
     @Test
