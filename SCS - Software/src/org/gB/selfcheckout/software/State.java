@@ -10,7 +10,6 @@ import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
 import org.lsmr.selfcheckout.devices.OverloadException;
-import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
@@ -51,6 +50,8 @@ public class State {
 	public double customerBagWeight = 0.0;
 	
 	// States of ink and paper left in the receipt printer hardware
+	public int linesOfPaperRemaining = 0;
+	public int charactersOfInkRemaining = 0;
 	public boolean lowOnInk = true;
 	public boolean outOfInk = true;
 	public boolean lowOnPaper = true;

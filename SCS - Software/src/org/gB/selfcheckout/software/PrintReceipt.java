@@ -1,7 +1,7 @@
 package org.gB.selfcheckout.software;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.util.Map;
 
-import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.AbstractDevice;
 import org.lsmr.selfcheckout.devices.EmptyException;
 import org.lsmr.selfcheckout.devices.OverloadException;
@@ -14,139 +14,158 @@ import org.lsmr.selfcheckout.products.Product;
 
 public class PrintReceipt implements ReceiptPrinterObserver {
     private State state; // Stores a program state for testing.
-    private boolean enabled; // Indicates whether the watched device is enabled.
-    private ItemDatabase pdc;
-	private ReceiptPrinter printer;
-	private int charactersOfInkRemaining = 0;
-	private int linesOfPaperRemaining = 0;
+    private ReceiptPrinter printer;
+	private Map<Product, Integer> products;
 
-    public PrintReceipt(State state){
+    public PrintReceipt(State state) {
         this.state = state;
-        this.pdc = state.idb;
-		this.printer = state.scs.printer;
-		this.enabled = true;
+        this.printer = state.scs.printer;
+		this.products = state.productCart;
     }
     
     private void printLetter(char letter) {
     	try {
 			printer.print(letter);
-			if (letter == '\n') {
+			if (letter == '\n' && !state.outOfPaper) {
 				useLineOfPaper();
-			} else {
+			} else if (letter == ' '){
+				// ignore
+			} else if (!state.outOfInk){
 				useInk();
 			}
 		} catch (EmptyException | OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Main.error("Printer is out of ink and/or paper.");
 		}
     }
     
     public void printReceipt() {
-    	ArrayList<Product> scannedProducts = pdc.getScannedProducts();
+    	String header = String.format("%-4s %-30s %-7s %-5s\n", "Qty", "Product", "Price", "Total");
+    	String desc = header;
+    	// Printing quantity, product, price per product, total for that product
+    	for (Map.Entry<Product, Integer> pair : products.entrySet()) {
+    		
+    		Product product = pair.getKey();
+    		Integer qty = pair.getValue();
+    		
+    		String prod = "";
+    		String price = "";
+    		String total = "";
+    		
+    		if (product instanceof BarcodedProduct) {
+    			prod = ((BarcodedProduct) product).getDescription();
+    		} else if (product instanceof PLUCodedProduct) {
+        		prod = ((PLUCodedProduct) product).getDescription();
+    		}
+    		price = product.getPrice().toString();
+    		total = (product.getPrice().multiply(BigDecimal.valueOf(qty))).toString();
+    		
+    		desc += String.format("%-4d %-30s $ %-5s $ %-5s\n", qty, prod, price, total);
+    	}
     	
-        for (int i = 0; i < scannedProducts.size(); i ++)
-        {
-        	String desc;
-        	Product product = scannedProducts.get(i);
-        	if (product instanceof BarcodedProduct) {
-        		desc = ((BarcodedProduct) product).getDescription();
-        	} else if (product instanceof PLUCodedProduct) {
-        		desc = ((PLUCodedProduct) product).getDescription();
-        	} else {
-        		desc = "";
-        	}
-        	
-            for (int x = 0; x < desc.length(); x ++)
-            {
-            	printLetter(desc.charAt(x));
-            }
-            char c = '\n'; 
-            printLetter(c);
-            Double price = scannedProducts.get(i).getPrice().doubleValue();
-            String priceString = "Price: " + price;
-            for (int y = 0; y < priceString.length(); y ++)
-            {
-            	printLetter(priceString.charAt(y));
-            }
-            printLetter(c);
-        }
-        printLetter('\n');
-        
-        String totalString = "Total:\n" + pdc.getTotalCost().doubleValue();
+    	for (int i = 0; i < desc.length(); i++) {
+			printLetter(desc.charAt(i));
+		}
+    	
+    	// Print total price for all products
+    	String totalString = "\nTotal Cost: $" + state.totalToPay.doubleValue() + "\n";
         for (int w = 0; w < totalString.length(); w ++) 
         {
         	printLetter(totalString.charAt(w));
         }
-        printLetter('\n');
-        String totalPaidString = "Total Paid:\n" + pdc.getTotalPaid().doubleValue();
+    	
+    	// Print total price paid
+        String totalPaidString = "Total Paid: $" + state.paymentTotal.doubleValue() + "\n";
         for (int z = 0; z < totalPaidString.length(); z ++)
         {
         	printLetter(totalPaidString.charAt(z));
         }
-        printLetter('\n');
-        Double change = pdc.getTotalPaid().subtract(pdc.getTotalCost()).doubleValue();
-        String changeString = "Change:\n" + change;
+    	
+    	// Print change due
+        Double change = state.paymentTotal.doubleValue() - state.totalToPay.doubleValue();
+        /*pdc.getTotalPaid().subtract(pdc.getTotalCost()).doubleValue(); */
+        String changeString = "Change due: $" + change + "\n";
         for (int q = 0; q < changeString.length(); q ++)
         {
         	printLetter(changeString.charAt(q));
         }
-        
+
         printer.cutPaper();
     }
 
 	@Override
-	public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
-		this.enabled = true;		
+	public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {		
 	}
 
 	@Override
-	public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
-		this.enabled = false;		
+	public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {		
 	}
 
 	@Override
 	public void outOfPaper(ReceiptPrinter printer) {
-		this.linesOfPaperRemaining = 0;
+		state.outOfPaper = true;
+		state.lowOnPaper = true;
 	}
 
 	@Override
 	public void outOfInk(ReceiptPrinter printer) {
-		this.charactersOfInkRemaining = 0;
+		state.outOfInk = true;
+		state.lowOnPaper = true;
 		
 	}
 
 	@Override
 	public void paperAdded(ReceiptPrinter printer) {
-		// Assumption: a new full roll is added each time
-		this.linesOfPaperRemaining = ReceiptPrinter.MAXIMUM_PAPER;
-		this.state.lowOnPaper = false;
-		this.state.outOfPaper = false;		
+		updatePaper();
 	}
 
 	@Override
 	public void inkAdded(ReceiptPrinter printer) {
-		// Assumption: Ink is filled to full each time
-		this.charactersOfInkRemaining = ReceiptPrinter.MAXIMUM_INK;
-		this.state.lowOnInk = false;
-		this.state.outOfInk = false;
+		updateInk();
 	}
 	
 	public void useInk() {
-		this.charactersOfInkRemaining--;
-		if (charactersOfInkRemaining == ReceiptPrinter.MAXIMUM_INK / 10) {
-			this.state.lowOnInk = true;
-		} else if (charactersOfInkRemaining == 0) {
-			this.state.outOfInk = true;
-		}
+		state.charactersOfInkRemaining--;
+		updateInk();
 	}
 	
 	public void useLineOfPaper() {
-		this.linesOfPaperRemaining--;
-		if (linesOfPaperRemaining == ReceiptPrinter.MAXIMUM_PAPER / 10) {
-			this.state.lowOnPaper = true;
-		} else if (charactersOfInkRemaining == 0) {
-			this.state.outOfPaper = true;
+		state.linesOfPaperRemaining--;
+		updatePaper();
+	}
+	
+	private void updatePaper() {
+		if (state.linesOfPaperRemaining > ReceiptPrinter.MAXIMUM_PAPER / 10) {
+			state.lowOnPaper = false;
+			state.outOfPaper = false;	
 		}
+		if (state.linesOfPaperRemaining <= ReceiptPrinter.MAXIMUM_PAPER / 10) {
+			this.state.lowOnPaper = true;
+		}
+		if (state.linesOfPaperRemaining != 0) {
+			this.state.outOfPaper = false;
+		}
+	}
+	
+	private void updateInk() {
+		if (state.charactersOfInkRemaining > ReceiptPrinter.MAXIMUM_INK / 10) {
+			state.lowOnInk = false;
+			state.outOfInk = false;
+		}
+		if (state.charactersOfInkRemaining <= ReceiptPrinter.MAXIMUM_INK / 10) {
+			this.state.lowOnInk = true;
+		}
+		if (state.charactersOfInkRemaining != 0) {
+			this.state.outOfInk = false;
+		}
+	}
+	
+	// These setters are only used for correcting software estimates of ink/paper amount
+	public void setPaperRemaining(int paper) {
+		state.linesOfPaperRemaining = paper;
+	}
+	
+	public void setInkRemaining(int ink) {
+		state.charactersOfInkRemaining = ink;
 	}
 }
 	

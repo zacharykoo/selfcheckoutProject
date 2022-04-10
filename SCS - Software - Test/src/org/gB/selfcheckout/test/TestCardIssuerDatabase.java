@@ -1,7 +1,6 @@
 package org.gB.selfcheckout.test;
 
 import org.gB.selfcheckout.software.CardIssuerDatabase;
-import org.gB.selfcheckout.software.ItemDatabase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

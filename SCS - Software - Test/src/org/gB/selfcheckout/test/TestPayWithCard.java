@@ -1,33 +1,17 @@
 package org.gB.selfcheckout.test;
 
 import org.gB.selfcheckout.software.CardIssuerDatabase;
-import org.gB.selfcheckout.software.ItemDatabase;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.Pair;
 import org.gB.selfcheckout.software.PayWithCard;
-import org.gB.selfcheckout.software.ScanItem;
 import org.gB.selfcheckout.software.State;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.lsmr.selfcheckout.Barcode;
-import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Card;
-import org.lsmr.selfcheckout.Item;
-import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.Card.CardData;
-import org.lsmr.selfcheckout.devices.AbstractDevice;
-import org.lsmr.selfcheckout.devices.BarcodeScanner;
 import org.lsmr.selfcheckout.devices.CardReader;
-import org.lsmr.selfcheckout.devices.ElectronicScale;
-import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
-import org.lsmr.selfcheckout.devices.observers.CardReaderObserver;
-import org.lsmr.selfcheckout.devices.observers.ElectronicScaleObserver;
 import org.lsmr.selfcheckout.external.CardIssuer;
-import org.lsmr.selfcheckout.products.BarcodedProduct;
-import org.lsmr.selfcheckout.products.Product;
-
-import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -40,12 +24,8 @@ public class TestPayWithCard {
     private Card validTestCard1;
     private Card validTestCard2;
     private Card validTestCard3;
-    private Card invalidTestCard;
     private PayWithCard payWithCard;
     private BigDecimal amountToPay;
-    private BigDecimal subtractedAmountLeft;
-
-
     //the stuff needed for CardIssuerDatabas
     private CardIssuerDatabase database;
     private CardIssuer visa_issuer;
@@ -96,21 +76,15 @@ public class TestPayWithCard {
         validTestCard2 = new Card("MASTERCARD", "8976650412338276", "Jeff MacDonald", "344", "8923", true, true);
         validTestCard3 = new Card("GIFT_DEBIT", "6666666666666666", "Jeff MacDonald", "344", "8923", true, true);
         
-        // Create an test card for invalid attempts, with no chip and no tap enabled
-        invalidTestCard = new Card("MASTERCARD", "7822123412349999", "John Doe", "842", "7790", false, false);
-        
         //Initialize test class
         amountToPay = new BigDecimal(13.75);
         
         BigDecimal tTP  = new BigDecimal(55.15);
         state.totalToPay = tTP;
-        subtractedAmountLeft = new BigDecimal(55.15-13.75);
-        
 
         //we need to initialize the card issuer database here
         //Initialize database.
         database = new CardIssuerDatabase();
-
 
         //create issuers
         visa_issuer = new CardIssuer("VISA_ISSUER");

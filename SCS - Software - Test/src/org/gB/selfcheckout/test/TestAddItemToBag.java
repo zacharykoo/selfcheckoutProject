@@ -89,7 +89,6 @@ public class TestAddItemToBag {
 	// Ensure an unexpected item on the scale does not alter the state.
 	@Test
 	public void testUnexpectedChange() {
-		Product p = new Product(new BigDecimal(12.66), true) {};
 		Item i = new Item(12.66) {};
 		state.scs.baggingArea.add(i);
 		Assert.assertFalse(state.waitingForBagging);
@@ -102,7 +101,6 @@ public class TestAddItemToBag {
 	public void testValidAfterOverload() {
 		Product p1 = new Product(new BigDecimal(45.6), true) {};
 		Item i1 = new Item(45.6) {};
-		Product p2 = new Product(new BigDecimal(20000), true) {};
 		Item i2 = new Item(20000) {};
 		// "Scan" an item.
 		state.addProduct(p1);

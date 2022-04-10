@@ -23,6 +23,7 @@ import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +31,6 @@ import org.junit.Test;
 public class AttendantControlTest {
 	private ArrayList<State> scsList;
 	private AttendantControl attendant;
-	private Coin coin;
 
 	@Before
 	public void setup() throws Exception {
