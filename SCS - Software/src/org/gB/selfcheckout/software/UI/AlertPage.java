@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;  
 import java.awt.event.*; 
 	public class AlertPage extends JPanel {
+		private JLabel label;
 		public void alertPage() {
 			super();
 			    JLabel label;
