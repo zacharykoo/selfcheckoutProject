@@ -122,7 +122,7 @@ public class State {
 	 * Removes the specified item from the scanned items list. The expected
 	 * weight is updated appropriately.
 	 * 
-	 * @param item
+	 * @param product
 	 * 		The item to be removed from the scanned items list.
 	 * @return True if the item was removed, false otherwise.
 	 */
