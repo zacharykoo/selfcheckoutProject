@@ -13,13 +13,14 @@ public class AttendantFrame extends JFrame {
 	AttendantMainMenu main;
 //	AttendantProductLookup lookup;
 	AttendantCartScreen cart = new AttendantCartScreen();
-	AlertPage alert = new AlertPage();
+	AlertPage alert;
 	
 
 	public AttendantFrame (int numStations) {
 		super("Attendant Station");
 		
 		main = new AttendantMainMenu(this, numStations);
+		alert = new AlertPage(this);
 		
 		addPanels();
 		
