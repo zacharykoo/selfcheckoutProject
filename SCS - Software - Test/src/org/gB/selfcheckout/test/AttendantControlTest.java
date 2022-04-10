@@ -155,7 +155,7 @@ public class AttendantControlTest {
 		PriceLookupCode dataCode = new PriceLookupCode("12345");
 		PLUCodedProduct product = new PLUCodedProduct(dataCode, "cheese", new BigDecimal(1.0));
 		// productList.add(product);
-		ProductDatabases.PLU_PRODUCT_DATABASE.put(product.getPLUCode(), product);
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(dataCode, product);
 
 		attendant.looksUpProduct("cheese");
 	}

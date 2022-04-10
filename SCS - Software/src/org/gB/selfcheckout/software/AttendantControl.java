@@ -129,14 +129,18 @@ public class AttendantControl {
 	public ArrayList<PLUCodedProduct> looksUpProduct(String partialLookUpCode) {
 		boolean track = true;
 		char[] charArray = partialLookUpCode.toCharArray();
-		Numeral[] numerals = new Numeral[charArray.length];
 		Set<PriceLookupCode> keys = ProductDatabases.PLU_PRODUCT_DATABASE.keySet();
 		for(PriceLookupCode key : keys) {
-			for(int i = 0; i < partialLookUpCode.length(); i++) {
-				if(key.getNumeralAt(i) != numerals[i]) {
-					track = false;
+			for (int i = 0; i < key.toString().length(); i++) {
+				if (i < charArray.length) {
+					if (key.toString().charAt(i) != charArray[i]) {
+						track = false;
+					}
+				} else {
+					break;
 				}
 			}
+			
 			if (track) {
 				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
 			}
