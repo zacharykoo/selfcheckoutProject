@@ -1,7 +1,5 @@
 package org.gB.selfcheckout.test;
 
-import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -23,7 +21,6 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
-import org.lsmr.selfcheckout.products.Product;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +28,6 @@ import org.junit.Test;
 public class AttendantControlTest {
 	private ArrayList<State> scsList;
 	private AttendantControl attendant;
-	private Coin coin;
 
 	@Before
 	public void setup() throws Exception {

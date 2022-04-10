@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.gB.selfcheckout.software.AttendantControl;
-import org.gB.selfcheckout.software.ItemDatabase;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.PrintReceipt;
 import org.gB.selfcheckout.software.State;
@@ -12,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.lsmr.selfcheckout.Barcode;
-import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.EmptyException;
@@ -23,10 +21,7 @@ import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 public class TestPrintReceipt {
     private State state; // Stores a program state for testing.
-    private Item item;
-    
-    private ItemDatabase database;
-	private Numeral[] numeral1;
+    private Numeral[] numeral1;
 	private Numeral[] numeral2;
 	private Barcode barcode1;
 	private Barcode barcode2;
@@ -49,7 +44,6 @@ public class TestPrintReceipt {
 
         assert state != null;
 
-        database = state.idb;
         printReceipt = this.state.printReceipt;
 
         // PLU Coded product
