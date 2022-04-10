@@ -1,9 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.CardLayout;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
-
 import javax.swing.JFrame;
 
 /**
@@ -12,18 +9,19 @@ import javax.swing.JFrame;
 public class AttendantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public CardLayout cardLayout = new CardLayout();
-	
 	LoginScreen login = new LoginScreen(this);
 	AttendantMainMenu main;
 	AttendantLookupProduct lookup = new AttendantLookupProduct(this);;
 	AttendantCartScreen cart = new AttendantCartScreen();
 	AttendantStationShutDown shutDown = new AttendantStationShutDown(this);
-//	AttendantAlert alert;
+	AlertPage alert;
 	
+
 	public AttendantFrame (int numStations) {
 		super("Attendant Station");
 		
 		main = new AttendantMainMenu(numStations, this);
+		alert = new AlertPage(this);
 		
 		addPanels();
 		
@@ -34,7 +32,6 @@ public class AttendantFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
-	
 	private void addPanels() {
 		
 		this.getContentPane().setLayout(cardLayout);
@@ -43,8 +40,7 @@ public class AttendantFrame extends JFrame {
 		getContentPane().add(main, "main");
 		getContentPane().add(cart, "cart");
 		getContentPane().add(shutDown, "shutDown");
-
-//		getContentPane().add(alert, "alert");
 		getContentPane().add(lookup, "lookup");
+		getContentPane().add(alert, "alert");
 	}
 }

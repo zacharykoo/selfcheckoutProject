@@ -29,11 +29,9 @@ import org.lsmr.selfcheckout.products.BarcodedProduct;
  *  Software:
  *  	List of products in database
  */
-
 public class CustomerScanItem extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	
 	private static String[] itemOptions;
 	
 	public CustomerFrame customerFrame;
@@ -50,7 +48,6 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		
 		setUpBackButton();
-		
 		setUpItemOptions();
 		
 		this.bottomPanel.setLayout(new GridLayout(3,1));
@@ -95,7 +92,6 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		this.add(bottomPanel, gbc);
 		
 	}
-	
 	private void setUpItemOptions() {
 		
 		Numeral[] num = {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one};
@@ -119,7 +115,6 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
 		if (e.getSource() == backButton) {
 			// Go back to main customer menu
 			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
@@ -128,7 +123,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 			// Go to "place your item in bagging area" panel
 			customerFrame.waitingToBag();
 		}
-		
+
 	}
 	
 }

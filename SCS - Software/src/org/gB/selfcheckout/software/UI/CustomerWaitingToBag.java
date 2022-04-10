@@ -33,7 +33,6 @@ public class CustomerWaitingToBag extends JPanel {
 	 * Initializes the waiting to bag item interface for the self-checkout
 	 * station.
 	 */
-	
 	public CustomerWaitingToBag(CustomerFrame customerFrame) {
 		super();
 

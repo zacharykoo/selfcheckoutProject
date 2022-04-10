@@ -10,7 +10,6 @@ public class PayWithCard extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel enterCard;
-	
 	private NumericKeypad keypad = new NumericKeypad("Enter PIN");
 	private JPanel panel;
 
@@ -39,7 +38,6 @@ public class PayWithCard extends JPanel implements ActionListener {
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
-		
 		swipe = new JButton("(SWIPE)");
 		tap = new JButton("(TAP)");
 		insert = new JButton("(INSERT)");
@@ -49,7 +47,6 @@ public class PayWithCard extends JPanel implements ActionListener {
 		buttonPanel.add(swipe);
 		buttonPanel.add(tap);
 		buttonPanel.add(insert);
-		
 		bottomPanel.add(buttonPanel);
 		
 		keypad.setEnabled(false);
@@ -61,7 +58,6 @@ public class PayWithCard extends JPanel implements ActionListener {
 	public void setUpBackButton() {
 		
 		gbc.insets = new Insets(3, 3, 3, 3);
-		
 		setLayout(new GridBagLayout());
 		
 		backButton = new JButton("Back");
