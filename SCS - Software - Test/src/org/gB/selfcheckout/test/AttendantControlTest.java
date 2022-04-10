@@ -2,18 +2,31 @@ package org.gB.selfcheckout.test;
 
 import static org.junit.Assert.*;
 
-import org.gB.selfcheckout.software.AttendantControl;
-import org.gB.selfcheckout.software.State;
+import java.util.ArrayList;
 
+import org.gB.selfcheckout.software.AttendantControl;
+import org.gB.selfcheckout.software.Main;
+import org.gB.selfcheckout.software.State;
+import org.junit.Before;
 import org.junit.Test;
 
 public class AttendantControlTest {
-	private State state;
-	public AttendantControl attendant;
+	private AttendantControl attendant;
+
+	@Before
+	public void setup() throws Exception {
+		ArrayList<State> scsList = new ArrayList<State>();
+		for (int i = 0; i < 8; i++) {
+			State state = Main.init(1000, 1);
+			scsList.add(state);
+		}
+
+		attendant = new AttendantControl(scsList);
+	}
 
 	@Test
 	public void testAttendantControl() {
-		fail("Not yet implemented");
+		// assert.assertNotNull(attendant);
 	}
 
 	@Test
