@@ -1,5 +1,7 @@
 package org.gB.selfcheckout.software.UI;
 
+import java.awt.GridLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,8 +25,9 @@ public class MemberInfo extends JPanel {
 	public MemberInfo(CustomerFrame cutomerFrame) {
 		super();
 		this.cutomerFrame = cutomerFrame;
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new GridLayout(2, 1));
 		this.add(new JLabel("Please enter your member number:"));
+		
 		this.add(keypad);
 		this.add(enterButton);
 		

@@ -67,7 +67,7 @@ public class LoginScreen extends JPanel {
 		c.gridy = 3;
         loginbutton.addActionListener(e -> {
         	for (CustomerFrame cf : attendantFrame.cFrames) {
-    			cf.cardLayout.previous(cf.getContentPane());
+    			cf.cardLayout.show(cf.getContentPane(), "mainScreen");
     		}
         	attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
     	});

@@ -141,7 +141,7 @@ public class NumericKeypad extends JPanel {
 				txtField.setText(enteredInfo);
 			}
 		});
-		
+		/*
 		JButton BEnter = new JButton("Enter");
 		BEnter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -149,9 +149,9 @@ public class NumericKeypad extends JPanel {
 			}
 		});
 		add(BEnter);
-		
+		*/
 		otherPanel.add(BBackspace);
-		otherPanel.add(BEnter);
+		//otherPanel.add(BEnter);
 		
 		add(otherPanel);
 		
