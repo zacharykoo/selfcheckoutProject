@@ -66,12 +66,12 @@ public class AttendantControlTest {
 			public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
 				// TODO Auto-generated method stub
 			}
-			
+
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 				Assert.fail("Should not receive a call.");
 			}
-		} 
+		}
 		// scsList.get(0).scs.mainScanner.attach(BarcodeScannerObserverStub);
 
 		Assert.assertTrue(attendant.shutdownStation(scsList.get(0)));
@@ -158,13 +158,16 @@ public class AttendantControlTest {
 		ProductDatabases.PLU_PRODUCT_DATABASE.put(dataCode, product);
 
 		attendant.looksUpProduct("cheese");
+		attendant.looksUpProduct("");
+
+		Assert.assertEquals(product, ProductDatabases.PLU_PRODUCT_DATABASE.get(dataCode));
 	}
 
 	@Test
 	public void testBlockStation() throws DisabledException, OverloadException {
 		State state = scsList.get(0);
 		Assert.assertTrue(attendant.blockStation(state));
-		
+
 	}
 
 	@Test
