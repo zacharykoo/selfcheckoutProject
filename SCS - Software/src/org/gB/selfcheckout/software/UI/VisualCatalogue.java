@@ -234,6 +234,21 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 			}
 			updateCatalogue();
 		}
+		else if (e.getSource() == firstB) {
+			// 
+		}
+		else if (e.getSource() == secondB) {
+			if (itemMenu.size() - startingOffset > 3) {
+				startingOffset += 3;
+			}
+			updateCatalogue();
+		}
+		else if (e.getSource() == thirdB) {
+			if (itemMenu.size() - startingOffset > 3) {
+				startingOffset += 3;
+			}
+			updateCatalogue();
+		}
 		
 	}
 	

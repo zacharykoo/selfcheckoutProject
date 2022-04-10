@@ -97,7 +97,6 @@ public class CustomerAddBags extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 		if (e.getSource() == backButton) {
 			// Go back to main customer menu
