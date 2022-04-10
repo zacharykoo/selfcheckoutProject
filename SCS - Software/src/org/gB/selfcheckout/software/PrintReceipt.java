@@ -17,8 +17,6 @@ public class PrintReceipt implements ReceiptPrinterObserver {
     private boolean enabled; // Indicates whether the watched device is enabled.
     private ItemDatabase pdc;
 	private ReceiptPrinter printer;
-	private int charactersOfInkRemaining = 0;
-	private int linesOfPaperRemaining = 0;
 	private Map<Product, Integer> products;
 
     public PrintReceipt(State state) {
@@ -53,16 +51,14 @@ public class PrintReceipt implements ReceiptPrinterObserver {
     		Product product = pair.getKey();
     		Integer qty = pair.getValue();
     		
-    		String prod;
-    		String price;
-    		String total;
+    		String prod = "";
+    		String price = "";
+    		String total = "";
     		
     		if (product instanceof BarcodedProduct) {
     			prod = ((BarcodedProduct) product).getDescription();
     		} else if (product instanceof PLUCodedProduct) {
         		prod = ((PLUCodedProduct) product).getDescription();
-    		} else {
-    			prod = "";
     		}
     		price = product.getPrice().toString();
     		total = (product.getPrice().multiply(BigDecimal.valueOf(qty))).toString();
@@ -112,58 +108,70 @@ public class PrintReceipt implements ReceiptPrinterObserver {
 
 	@Override
 	public void outOfPaper(ReceiptPrinter printer) {
-		this.linesOfPaperRemaining = 0;
+		state.outOfPaper = true;
+		state.lowOnPaper = true;
 	}
 
 	@Override
 	public void outOfInk(ReceiptPrinter printer) {
-		this.charactersOfInkRemaining = 0;
+		state.outOfInk = true;
+		state.lowOnPaper = true;
 		
 	}
 
 	@Override
 	public void paperAdded(ReceiptPrinter printer) {
-		// Assumption: a new full roll is added each time
-		this.linesOfPaperRemaining = ReceiptPrinter.MAXIMUM_PAPER;
-		this.state.lowOnPaper = false;
-		this.state.outOfPaper = false;		
+		updatePaper();
 	}
 
 	@Override
 	public void inkAdded(ReceiptPrinter printer) {
-		// Assumption: Ink is filled to full each time
-		this.charactersOfInkRemaining = ReceiptPrinter.MAXIMUM_INK;
-		this.state.lowOnInk = false;
-		this.state.outOfInk = false;
+		updateInk();
 	}
 	
 	public void useInk() {
-		charactersOfInkRemaining--;
-		if (charactersOfInkRemaining <= ReceiptPrinter.MAXIMUM_INK / 10) {
-			this.state.lowOnInk = true;
-		}
-		if (charactersOfInkRemaining == 0) {
-			this.state.outOfInk = true;
-		}
+		state.charactersOfInkRemaining--;
+		updateInk();
 	}
 	
 	public void useLineOfPaper() {
-		linesOfPaperRemaining--;
-		if (linesOfPaperRemaining <= ReceiptPrinter.MAXIMUM_PAPER / 10) {
+		state.linesOfPaperRemaining--;
+		updatePaper();
+	}
+	
+	private void updatePaper() {
+		if (state.linesOfPaperRemaining > ReceiptPrinter.MAXIMUM_PAPER / 10) {
+			state.lowOnPaper = false;
+			state.outOfPaper = false;	
+		}
+		if (state.linesOfPaperRemaining <= ReceiptPrinter.MAXIMUM_PAPER / 10) {
 			this.state.lowOnPaper = true;
 		}
-		if (linesOfPaperRemaining == 0) {
-			this.state.outOfPaper = true;
+		if (state.linesOfPaperRemaining != 0) {
+			this.state.outOfPaper = false;
 		}
 	}
 	
-	// For testing purposes
+	private void updateInk() {
+		if (state.charactersOfInkRemaining > ReceiptPrinter.MAXIMUM_INK / 10) {
+			state.lowOnInk = false;
+			state.outOfInk = false;
+		}
+		if (state.charactersOfInkRemaining <= ReceiptPrinter.MAXIMUM_INK / 10) {
+			this.state.lowOnInk = true;
+		}
+		if (state.charactersOfInkRemaining != 0) {
+			this.state.outOfInk = false;
+		}
+	}
+	
+	// These setters are only used for correcting software estimates of ink/paper amount
 	public void setPaperRemaining(int paper) {
-		linesOfPaperRemaining = paper;
+		state.linesOfPaperRemaining = paper;
 	}
 	
 	public void setInkRemaining(int ink) {
-		charactersOfInkRemaining = ink;
+		state.charactersOfInkRemaining = ink;
 	}
 }
 	
