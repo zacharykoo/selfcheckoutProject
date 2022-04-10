@@ -4,15 +4,12 @@ import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.NullPointerSimulationException;
 import org.lsmr.selfcheckout.PriceLookupCode;
-import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -25,17 +22,11 @@ import java.util.Map;
 public class ItemDatabase {
     //Objects with the same indices are related in the following lists.
     //Null represents no corresponding object for that entry.
-    private final ArrayList<Item> itemList = new ArrayList<>(); //Ordered list of items.
+    private final ArrayList<Item> itemList = new ArrayList<>(); 	  //Ordered list of items.
     private final ArrayList<Product> productList = new ArrayList<>(); //Ordered list of products.
     private final ArrayList<Barcode> barcodeList = new ArrayList<>(); //Ordered list of barcodes.
     //added
     private static ItemDatabase p = new ItemDatabase();
-    private ArrayList<Product> scannedProducts;
-    private SelfCheckoutStation selfCheckout;
-    private BigDecimal totalCost;
-    private BigDecimal totalPaid;
-    
-    ////////////////////////////////////////////////////////////
     
     public void addBarcodedEntry(Barcode barcode, BarcodedProduct product) {
     	if (barcode == null || product == null)
@@ -88,9 +79,6 @@ public class ItemDatabase {
     public Map<Barcode, BarcodedProduct> getBarcodedProductDatabase() {
     	return ProductDatabases.BARCODED_PRODUCT_DATABASE;
     }
-    
-    
-    ///////////////////////////////////
     
     /**
      * Adds an entry to the database.
@@ -171,26 +159,9 @@ public class ItemDatabase {
         }
         return searchProduct;
     }
-    //added
+    
 	public static ItemDatabase getInstance() {
 		// TODO Auto-generated method stub
 		return p;
 	}
-
-	public SelfCheckoutStation getSelfCheckout() {
-		return selfCheckout;
-	}
-
-	public ArrayList<Product> getScannedProducts() {
-		return scannedProducts;
-	}
-
-    public BigDecimal getTotalCost() {
-        return totalCost;
-    }
-
-    public BigDecimal getTotalPaid() {
-        return totalPaid;
-    }
-
 }
