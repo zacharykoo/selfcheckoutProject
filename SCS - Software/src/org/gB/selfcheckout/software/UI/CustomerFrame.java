@@ -12,6 +12,7 @@ public class CustomerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	public CardLayout cardLayout = new CardLayout();
+	public int stationIndex;
 
 	CustomerScanItem scanItem = new CustomerScanItem(this);
 	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag(this);
@@ -22,13 +23,16 @@ public class CustomerFrame extends JFrame {
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 	StartScreen startScreen = new StartScreen(this);
 	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
+	EnterPLUCode enterPLU = new EnterPLUCode(this);
+	VisualCatalogue lookup = new VisualCatalogue(this);
+	CustomerAddBags addBags = new CustomerAddBags(this);
 	MemberInfo enterMember;
-	
 //	CustomerProductLookup lookup = new CustomerProductLookup();
 
 
 	public CustomerFrame(int stationIndex) {
 		super("Self-Checkout Station: " + Integer.toString(stationIndex + 1));
+		this.stationIndex = stationIndex;
 		enterMember = new MemberInfo(this);
 		addPanels();
 		
@@ -54,9 +58,10 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(shutDown, "shutDown");
 		getContentPane().add(startScreen, "startScreen");
 		getContentPane().add(mainScreen, "mainScreen");
+		getContentPane().add(enterPLU, "enterPLU");
+		getContentPane().add(lookup, "lookup");
+		getContentPane().add(addBags, "addBags");
 		getContentPane().add(enterMember, "enterMember");
-		
-//		getContentPane().add(lookup, "lookup");
 	}
 	
 	public void waitingToBag() {

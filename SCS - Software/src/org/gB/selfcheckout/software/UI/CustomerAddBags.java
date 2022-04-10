@@ -25,41 +25,43 @@ import org.lsmr.selfcheckout.products.BarcodedProduct;
 /* 
  * Backend integration required:
  *  Hardware:
- *  	barcode scanner
+ *  	none
  *  Software:
- *  	List of products in database
+ *  	number of bags used?
  */
-public class CustomerScanItem extends JPanel implements ActionListener {
+
+public class CustomerAddBags extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private static String[] itemOptions;
 	
 	public CustomerFrame customerFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
-	private ItemDatabase idb = new ItemDatabase();
-	private JComboBox itemMenu = new JComboBox();
-	private JButton scanButton; 
+	private JButton ownBags, useBags; 
+	private NumericKeypad keypad = new NumericKeypad("Enter # Bags Used");
 	
-	public CustomerScanItem(CustomerFrame customerFrame) {
+	public CustomerAddBags(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		
 		setUpBackButton();
-		setUpItemOptions();
 		
-		this.bottomPanel.setLayout(new GridLayout(3,1));
-		JLabel scanLabel = new JLabel("Select an item to scan");
-		scanLabel.setFont(new Font("serif", Font.PLAIN, 20));
-		bottomPanel.add(scanLabel);
+		this.bottomPanel.setLayout(new FlowLayout());
 		
-		bottomPanel.add(itemMenu);
+		ownBags = new JButton("Use Own Bags");
+		useBags = new JButton("Use Plastic Bags");
+
+		ownBags.addActionListener(this);
+		useBags.addActionListener(this);
+
+		bottomPanel.add(ownBags);
+		bottomPanel.add(useBags);
 		
-		scanButton = new JButton("(SCAN)");
-		scanButton.addActionListener(this);
-		bottomPanel.add(scanButton);
+		keypad.setEnabled(false);
+		keypad.setVisible(false);
+		bottomPanel.add(keypad);
 		
 	}
 	
@@ -92,38 +94,29 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		this.add(bottomPanel, gbc);
 		
 	}
-	private void setUpItemOptions() {
-		
-		Numeral[] num = {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one};
-		Barcode bc1 = new Barcode(num);
-		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Lucky Charms", new BigDecimal(5.35), 15.5);
-		
-		idb.addBarcodedEntry(bc1, bcp1);
-		
-		Numeral[] num2 = {Numeral.seven, Numeral.nine, Numeral.four, Numeral.zero, Numeral.four};
-		Barcode bc2 = new Barcode(num2);
-		BarcodedProduct bcp2 = new BarcodedProduct(bc2, "Greek Yogurt", new BigDecimal(7.99), 13.75);
-		
-		idb.addBarcodedEntry(bc2, bcp2);
-		
-		// Add barcoded products to drop down menu
-		ProductDatabases.BARCODED_PRODUCT_DATABASE.forEach((barcode, barcodedProduct) -> 
-				itemMenu.addItem(barcodedProduct.getDescription()));
-	}
-
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
 		if (e.getSource() == backButton) {
 			// Go back to main customer menu
+			keypad.setEnabled(false);
+			keypad.setVisible(false);
+			keypad.enteredInfo = "";
+			keypad.txtField.setText("Enter # Bags Used");
 			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
-		else if (e.getSource() == scanButton) {
-			// Go to "place your item in bagging area" panel
-			customerFrame.waitingToBag();
+		else if (e.getSource() == ownBags) {
+			// Alert Attendant with message "Customer at station "+customerFrame.stationIndex+" wants to use their own bag"
+			// Backend: block the station?
+			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "blockedScreen");
 		}
-
+		else if (e.getSource() == useBags) {
+			keypad.setEnabled(true);
+			keypad.setVisible(true);
+			
+		}
+		
 	}
 	
 }

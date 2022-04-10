@@ -18,7 +18,7 @@ import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 public class State {
 	// Stores all items scanned into the machine.
 	public ArrayList<Item> scannedItems = new ArrayList<Item>();
-
+	
 	// We need products in order to get the price for printing the receipt
 	//public ArrayList<Product> scannedProducts = new ArrayList<Product>();	
 	
@@ -70,7 +70,7 @@ public class State {
 	public double getExpectedWeight() {
 		return expectedWeight;
 	}
-		
+	
 	/**
 	 * Add the specified item to the scanned items list. The expected weight
 	 * is updated appropriately.

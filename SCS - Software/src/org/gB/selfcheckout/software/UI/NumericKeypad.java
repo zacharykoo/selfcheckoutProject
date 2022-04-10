@@ -21,7 +21,7 @@ public class NumericKeypad extends JPanel {
 	private JPanel numPanel = new JPanel();
 	private JPanel otherPanel = new JPanel();
 	
-	private String enteredInfo = "";
+	public String enteredInfo = "";
     
 	public NumericKeypad(String msg) {
 		super();

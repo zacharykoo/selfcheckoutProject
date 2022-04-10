@@ -1,5 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,8 @@ public class BlockedScreen extends JPanel implements ActionListener {
 		super();
 		this.customerFrame = cf;
 		
-		JLabel msg = new JLabel("Blocked screen", SwingConstants.CENTER);
+		JLabel msg = new JLabel("Wait for attendant", SwingConstants.CENTER);
+		msg.setFont(new Font("serif", Font.PLAIN, 20));
 		this.setLayout(new GridLayout(1,1));
 		this.add(msg);
 	}
