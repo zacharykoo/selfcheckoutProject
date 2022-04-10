@@ -35,8 +35,6 @@ public class TestCustomerDoesNotWantToBagScannedItem {
         Barcode barcode2 = new Barcode(numeral1); // barcode is 11
         this.heavyProduct = new BarcodedProduct(barcode2, "Heavy Item", BigDecimal.valueOf(2), 20000);
 	}
-	//BIG CHANGES
-	//WOO
 	
 	@Test
 	public void testValidWeightChange() {
@@ -118,42 +116,35 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
 	
-	/**
+	
 	@Test
 	public void testValidAfterOverload() {
-		//Product i1 = new Product(new BigDecimal(45.6), true) {};
-		Numeral[] numeral1 = new Numeral[2];
-        numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
-        Barcode barcode1 = new Barcode(numeral1); // barcode is 10
-        BarcodedProduct appleProduct = new BarcodedProduct(barcode1, "Apple", BigDecimal.valueOf(2), 45.6);
-        numeral1[0] = Numeral.one; numeral1[1] = Numeral.one; // 11
-        Barcode barcode2 = new Barcode(numeral1); // barcode is 11
-        BarcodedProduct heavyProduct = new BarcodedProduct(barcode2, "Heavy Item", BigDecimal.valueOf(2), 20000);
-		Item a1 = new Item(45.6) {};
+		Item a1 = new Item(25.0) {};
 		Item a2 = new Item(20000) {};
 		// "Scan" an item.
-		//state.addProduct(i1);
 		
-		state.addProduct(appleProduct);
-		state.addProduct(heavyProduct);
 		
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
 		// Put a spurious overloading item on the scale.
+		state.addProduct(heavyProduct);
 		state.scs.baggingArea.add(a2);
 		
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
+		
+		state.addProduct(appleProduct);
 		state.scs.baggingArea.add(a1); // Add the scanned item.
 		
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
+		state.removeProduct(heavyProduct);
 		state.scs.baggingArea.remove(a2); // Remove the spurious item.
 		// Ensure the state is correctly updated.
 		
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
-	}**/
+	}
 	
 	
 	@Test
