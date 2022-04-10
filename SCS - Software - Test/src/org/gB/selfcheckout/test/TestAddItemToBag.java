@@ -1,5 +1,7 @@
 package org.gB.selfcheckout.test;
 
+import java.math.BigDecimal;
+
 import org.gB.selfcheckout.software.AddItemToBag;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
@@ -7,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.products.Product;
 
 /**
  * A test suite for org.g30.selfcheckout.AddItemToBag.
@@ -28,9 +31,10 @@ public class TestAddItemToBag {
 	// correctly by the state being reset to a scannable mode.
 	@Test
 	public void testVaidWeightChange() {
+		Product p = new Product(new BigDecimal(45.6), true) {};
 		Item i = new Item(45.6) {};
 		// "Scan" an item.
-		state.addItem(i);
+		state.addProduct(p);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
@@ -46,9 +50,10 @@ public class TestAddItemToBag {
 	// barcode scanning event.
 	@Test
 	public void testValidDisabledWeightChange() {
+		Product p = new Product(new BigDecimal(45.6), true) {};
 		Item i = new Item(45.6) {};
 		// "Scan" an item.
-		state.addItem(i);
+		state.addProduct(p);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
@@ -66,10 +71,10 @@ public class TestAddItemToBag {
 	// does not reset the state.
 	@Test
 	public void testInvalidWeightChange() {
-		Item i1 = new Item(45.6) {};
+		Product p1 = new Product(new BigDecimal(45.6), true) {};
 		Item i2 = new Item(22.3) {};
 		// "Scan" item 'a'.
-		state.addItem(i1);
+		state.addProduct(p1);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
@@ -84,6 +89,7 @@ public class TestAddItemToBag {
 	// Ensure an unexpected item on the scale does not alter the state.
 	@Test
 	public void testUnexpectedChange() {
+		Product p = new Product(new BigDecimal(12.66), true) {};
 		Item i = new Item(12.66) {};
 		state.scs.baggingArea.add(i);
 		Assert.assertFalse(state.waitingForBagging);
@@ -94,10 +100,12 @@ public class TestAddItemToBag {
 	// Ensure a valid item added during an overload is correctly handled.
 	@Test
 	public void testValidAfterOverload() {
+		Product p1 = new Product(new BigDecimal(45.6), true) {};
 		Item i1 = new Item(45.6) {};
+		Product p2 = new Product(new BigDecimal(20000), true) {};
 		Item i2 = new Item(20000) {};
 		// "Scan" an item.
-		state.addItem(i1);
+		state.addProduct(p1);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
@@ -137,9 +145,10 @@ public class TestAddItemToBag {
 	@Test
 	public void addItemWhileDisabled() {
 		Item i = new Item(45.6) {};
+		Product p = new Product(new BigDecimal(45.6), true) {};
 		state.scs.baggingArea.disable(); // Disable the scale.
 		// "Scan" an item.
-		state.addItem(i);
+		state.addProduct(p);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
