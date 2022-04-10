@@ -127,6 +127,19 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
 	
+	@Test
+	public void overloadCycleButDisabled() {
+		state.customerDoesNotWantToBagScannedItem.disabled(null);
+		Item i = new Item(20000) {};
+		state.scs.baggingArea.add(i);
+		Assert.assertFalse(state.scs.mainScanner.isDisabled());
+		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
+		state.scs.baggingArea.remove(i);
+		Assert.assertFalse(state.waitingForBagging);
+		Assert.assertFalse(state.scs.mainScanner.isDisabled());
+		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
+	}
+	
 	public void addItemWhileDisabled() {
 		Item i = new Item(45.6) {};
 		state.scs.baggingArea.disable(); // Disable the scale.
