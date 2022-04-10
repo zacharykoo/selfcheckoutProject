@@ -31,7 +31,7 @@ public class State {
 	// Stores the number of plastic bags used
 	private int plasticBagCount = 0;
 	// Stores the weight of all items in scannedItems.
-	private double expectedWeight = 0;
+	public double expectedWeight = 0;
 	// Stores the weight at the time an item was scanned, excluding it.
 	public double previousWeight = 0;
 	// Stores the value of the money inserted into the system.
