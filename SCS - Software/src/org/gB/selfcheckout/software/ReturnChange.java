@@ -214,8 +214,5 @@ public class ReturnChange implements BanknoteSlotObserver{
     public void banknoteInserted(BanknoteSlot slot) {}
 
 	@Override
-	public void banknotesEjected(BanknoteSlot slot) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void banknotesEjected(BanknoteSlot slot) {}
 }

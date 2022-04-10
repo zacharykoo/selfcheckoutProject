@@ -1,10 +1,8 @@
 package org.gB.selfcheckout.software;
 import org.lsmr.selfcheckout.Barcode;
-import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.*;
 import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
-import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
 /**

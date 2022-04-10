@@ -161,7 +161,6 @@ public class ItemDatabase {
     }
     
 	public static ItemDatabase getInstance() {
-		// TODO Auto-generated method stub
 		return p;
 	}
 }
