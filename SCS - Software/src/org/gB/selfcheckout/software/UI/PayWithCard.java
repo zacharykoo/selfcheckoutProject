@@ -91,6 +91,8 @@ public class PayWithCard extends JPanel implements ActionListener {
 		if (e.getSource() == backButton) {
 			// Go back to ProceedToPayment Panel
 			keypad.setVisible(false);
+			keypad.txtField.setText("Enter PIN");
+			keypad.enteredInfo = "";
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "proceedToPay");
 		}
 		else if (e.getSource() == insert) {

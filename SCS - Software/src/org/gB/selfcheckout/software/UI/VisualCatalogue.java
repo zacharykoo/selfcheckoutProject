@@ -105,7 +105,7 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 		firstL = new JLabel(itemMenu.get(0));
 		secondL = new JLabel(itemMenu.get(1));
 		thirdL = new JLabel(itemMenu.get(2));
-		
+
 		gbc2.gridx = 1;
 		gbc2.gridy = 2;
 		bottomPanel.add(firstL, gbc2);
@@ -157,6 +157,7 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 		
 	}
 	
+	// This is hardcoded for now, will be integrated with backend later
 	private void setUpItemOptions() {
 		
 		PriceLookupCode plu1 = new PriceLookupCode("7654");
@@ -164,8 +165,8 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 		
 		idb.addPLUCodedEntry(plu1, plup1);
 		
-		PriceLookupCode plu2 = new PriceLookupCode("4567");
-		PLUCodedProduct plup2 = new PLUCodedProduct(plu2, "Dried Dill", new BigDecimal(2.25));
+		PriceLookupCode plu2 = new PriceLookupCode("8889");
+		PLUCodedProduct plup2 = new PLUCodedProduct(plu2, "Carrot", new BigDecimal(2.25));
 		
 		idb.addPLUCodedEntry(plu2, plup2);
 		
@@ -175,7 +176,7 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 		idb.addPLUCodedEntry(plu3, plup3);
 		
 		PriceLookupCode plu4 = new PriceLookupCode("4567");
-		PLUCodedProduct plup4 = new PLUCodedProduct(plu4, "Pistachios", new BigDecimal(12.10));
+		PLUCodedProduct plup4 = new PLUCodedProduct(plu4, "Pistachio", new BigDecimal(12.10));
 		
 		idb.addPLUCodedEntry(plu4, plup4);
 		
@@ -184,9 +185,18 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 		
 		idb.addPLUCodedEntry(plu5, plup5);
 		
+		PriceLookupCode plu6 = new PriceLookupCode("2837");
+		PLUCodedProduct plup6 = new PLUCodedProduct(plu6, "Seed", new BigDecimal(3.79));
+		
+		idb.addPLUCodedEntry(plu6, plup6);
+		
+		PriceLookupCode plu7 = new PriceLookupCode("8886");
+		PLUCodedProduct plup7 = new PLUCodedProduct(plu7, "Avocado", new BigDecimal(9.98));
+		
+		idb.addPLUCodedEntry(plu7, plup7);
+		
 		// Add barcoded products to drop down menu
-		ProductDatabases.PLU_PRODUCT_DATABASE.forEach((plu, pluCodedProduct) -> 
-				itemMenu.add(pluCodedProduct.getDescription()));
+		ProductDatabases.PLU_PRODUCT_DATABASE.forEach((plu, pluCodedProduct) -> itemMenu.add(pluCodedProduct.getDescription()));
 	}
 	
 	private void updateCatalogue() {
