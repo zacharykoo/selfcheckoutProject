@@ -31,10 +31,11 @@ public class AttendantControl {
 	}
 
 	// Allow attendant to logout with supervisor on the current state
-	public void attendantLogout() {
+	public boolean logout() {
 		for (State state : this.scsList) {
 			supervisionStation.remove(state.scs);
 		}
+		return true;
     }
 
 
@@ -77,41 +78,51 @@ public class AttendantControl {
 		return this.scsList;
 	}
 
-	public void addInkCartridge(State state, int inkCartridgeAmount) throws OverloadException {
+	public boolean addInkCartridge(State state, int inkCartridgeAmount) throws OverloadException {
 		state.scs.printer.addInk(inkCartridgeAmount);
+		return true;
 	}
 
-	public void addPaper(State state, int paperAmount) throws OverloadException {
+	public boolean addPaper(State state, int paperAmount) throws OverloadException {
 		state.scs.printer.addPaper(paperAmount);
+		return true;
 	}
 
-	public void refillCoinDispenser(State state, Coin... coins) throws OverloadException {
+	public boolean refillCoinDispenser(State state, Coin... coins) throws OverloadException {
 		// coinDispenser attempt. Not sure if working.
 		if (!state.poweredOn) {
 			for (Coin coin : coins) { // TODO: Check if this is correct.
 				state.scs.coinDispensers.get(coin.getValue()).load(coin);
 			}
+			return true;
 		}
+		return false;
 	}
 
-	public void emptyCoinStorageUnit(State state) {
+	public boolean emptyCoinStorageUnit(State state) {
 		if (!state.poweredOn) {
 			state.scs.coinStorage.unload();
+			return true;
 		}
+		return false;
 	}
 
-	public void refillBanknoteDispenser(State state, Banknote... banknotes) throws OverloadException {
+	public boolean refillBanknoteDispenser(State state, Banknote... banknotes) throws OverloadException {
 		if (!state.poweredOn) {
 			for (Banknote banknote : banknotes) {
 				state.scs.banknoteDispensers.get(banknote.getValue()).load(banknote);
 			}
+			return true;
 		}
+		return false;
 	}
 
-	public void emptyBanknoteStorageUnit(State state) {
+	public boolean emptyBanknoteStorageUnit(State state) {
 		if (!state.poweredOn) {
 			state.scs.banknoteStorage.unload();
+			return true;
 		}
+		return false;
 	}
 
 	// create a method to get an item from the item database
@@ -134,17 +145,20 @@ public class AttendantControl {
 	}
 
 	// disable any user interaction, but allow user unloading/loading
-	public void blockStation(State state) throws DisabledException, OverloadException {
+	public boolean blockStation(State state) throws DisabledException, OverloadException {
 		state.enableScanning();
+		return true;
 	}
 
-	public void attendantRemoveProduct(State state, Product product) {
+	public boolean attendantRemoveProduct(State state, Product product) {
 		// based on removeProduct method in State from another member
 //		state.removeProduct(product);
+		return true;
 	}
 
-    public void attendantApproveWeightDifference(State state) throws OverloadException {
+    public boolean attendantApproveWeightDifference(State state) throws OverloadException {
         state.expectedWeight = state.scs.baggingArea.getCurrentWeight();
         state.enableScanning();
+		return true;
     }
 }

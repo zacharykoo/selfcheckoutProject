@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Currency;
 
 import org.gB.selfcheckout.software.AttendantControl;
+import org.gB.selfcheckout.software.ItemDatabase;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
 import org.lsmr.selfcheckout.Banknote;
@@ -16,16 +18,19 @@ import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.devices.AbstractDevice;
 import org.lsmr.selfcheckout.devices.BarcodeScanner;
+import org.lsmr.selfcheckout.devices.DisabledException;
 import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
+import org.lsmr.selfcheckout.products.Product;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class AttendantControlTest {
-	ArrayList<State> scsList;
-	AttendantControl attendant;
+	private ArrayList<State> scsList;
+	private AttendantControl attendant;
 	private Coin coin;
 
 	@Before
@@ -46,12 +51,12 @@ public class AttendantControlTest {
 
 	@Test
 	public void testAttendantLogout() {
-		fail("Not yet implemented");
+		Assert.assertTrue(attendant.logout());
 	}
 
 	@Test
 	public void testShutdownStation() {
-		class BarcodeScannerObserverStub implements BarcodeScannerObserver {
+		class BarcodeScannerObserverStub implements BarcodeScannerObserver { // TODO: Fix this stub, doesn't work.
 			@Override
 			public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
 				// TODO Auto-generated method stub
@@ -61,14 +66,15 @@ public class AttendantControlTest {
 			public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
 				// TODO Auto-generated method stub
 			}
-
+			
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 				Assert.fail("Should not receive a call.");
 			}
 		} 
+		// scsList.get(0).scs.mainScanner.attach(BarcodeScannerObserverStub);
 
-		attendant.shutdownStation(scsList.get(0));
+		Assert.assertTrue(attendant.shutdownStation(scsList.get(0)));
 		Barcode barcode = new Barcode(new Numeral[]{Numeral.one});
         Item item = new BarcodedItem(barcode, 1);
 		scsList.get(0).scs.mainScanner.scan(item);
@@ -77,7 +83,12 @@ public class AttendantControlTest {
 
 	@Test
 	public void testStartupStation() {
-		fail("Not yet implemented");
+		try {
+			Assert.assertTrue(attendant.startupStation(5, 100, 1));
+			Assert.assertTrue(attendant.getSCSList().get(5).poweredOn);
+		} catch(Exception e) {
+			Assert.fail("Should not throw an exception.");
+		}
 	}
 
 	@Test
@@ -87,55 +98,83 @@ public class AttendantControlTest {
 
 	@Test
 	public void testAddInkCartridge() throws OverloadException {
-		attendant.addInkCartridge(null, 100);
+		State state = scsList.get(0);
+		Assert.assertTrue(attendant.addInkCartridge(state, 100));
 	}
 
 	@Test
 	public void testAddPaper() throws OverloadException {
-		attendant.addPaper(null, 100);
+		State state = scsList.get(0);
+		Assert.assertTrue(attendant.addPaper(state, 10));
 	}
 
 	@Test
 	public void testRefillCoinDispenser() throws OverloadException {
-		BigDecimal bd = new BigDecimal(25);
-		Coin coins = new Coin(bd);
-		attendant.refillCoinDispenser(null, coins);
+		State state = scsList.get(0);
+		state.poweredOn = false;
+		BigDecimal CoinValue = new BigDecimal(0.25);
+		Coin coin = new Coin(CoinValue);
+		Assert.assertTrue(attendant.refillCoinDispenser(state, coin));
+		state.poweredOn = true;
+		Assert.assertFalse(attendant.refillCoinDispenser(state, coin));
 	}
 
 	@Test
 	public void testEmptyCoinStorageUnit() {
-		attendant.emptyCoinStorageUnit(null);
+		State state = scsList.get(0);
+		state.poweredOn = false;
+		Assert.assertTrue(attendant.emptyCoinStorageUnit(state));
+		state.poweredOn = true;
+		Assert.assertFalse(attendant.emptyCoinStorageUnit(state));
 	}
 
 	@Test
 	public void testRefillBanknoteDispenser() throws OverloadException {
-		Banknote banknotes = new Banknote(null, 100);
-		attendant.refillBanknoteDispenser(null, banknotes);
+		State state = scsList.get(0);
+		state.poweredOn = false;
+		Currency currency = Currency.getInstance("USD");
+		Banknote banknotes = new Banknote(currency, 50);
+		Assert.assertTrue(attendant.refillBanknoteDispenser(state, banknotes));
+		state.poweredOn = true;
+		Assert.assertFalse(attendant.refillBanknoteDispenser(state, banknotes));
 	}
 
 	@Test
 	public void testEmptyBanknoteStorageUnit() {
-		attendant.emptyBanknoteStorageUnit(null);
+		State state = scsList.get(0);
+		state.poweredOn = false;
+		Assert.assertTrue(attendant.emptyBanknoteStorageUnit(state));
+		state.poweredOn = true;
+		Assert.assertFalse(attendant.emptyBanknoteStorageUnit(state));
 	}
 
 	@Test
 	public void testAttendantLooksUpProduct() throws OverloadException {
+		State state = scsList.get(0);
+		ItemDatabase itemDatabase = new ItemDatabase();
 		attendant.attendantLooksUpProduct(null);
 	}
 
 	@Test
-	public void testBlockStation() {
+	public void testBlockStation() throws DisabledException, OverloadException {
+		State state = scsList.get(0);
+		Assert.assertTrue(attendant.blockStation(state));
 		
 	}
 
 	@Test
 	public void testAttendantRemoveProduct() {
-		fail("Not yet implemented");
+		Numeral[] temp = {Numeral.one,Numeral.two,Numeral.three};
+		State state = scsList.get(0);
+		Barcode bc1 = new Barcode(temp);
+		BarcodedProduct product = new BarcodedProduct(bc1, "test", new BigDecimal(10), 0.1);
+		Assert.assertTrue(attendant.attendantRemoveProduct(state, product));
 	}
 
 	@Test
-	public void testAttendantApproveWeightDifference() {
-		fail("Not yet implemented");
+	public void testAttendantApproveWeightDifference() throws OverloadException {
+		State state = scsList.get(0);
+		Assert.assertTrue(attendant.attendantApproveWeightDifference(state));
 	}
 
 }
