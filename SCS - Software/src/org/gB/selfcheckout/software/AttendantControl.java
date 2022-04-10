@@ -69,10 +69,9 @@ public class AttendantControl {
 		return true;
 	}
 
-	public boolean startupStation(int stationId) {
-		// scsList.set(stationId, new Main.init());
-
-		state.poweredOn = true;
+	public boolean startupStation(int stationId, int scaleMaxWeight, int scaleSensitivity) throws Exception {
+		new Main();
+		scsList.set(stationId, Main.init(scaleMaxWeight, scaleSensitivity));
 
 		return true;
 	}
