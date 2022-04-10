@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Test;
 import org.lsmr.selfcheckout.Banknote;
 import org.lsmr.selfcheckout.Coin;
+import org.lsmr.selfcheckout.devices.BanknoteSlot;
 import org.lsmr.selfcheckout.devices.DisabledException;
 import org.lsmr.selfcheckout.devices.EmptyException;
 import org.lsmr.selfcheckout.devices.OverloadException;
@@ -64,6 +64,20 @@ public class TestReturnChange{
         }
     }
 
+    public Banknote removeDanglingBanknoteWrapper(BanknoteSlot slot){
+        try{
+            Banknote[] t = slot.removeDanglingBanknotes();
+            //if have some banknote, then we return the 1st one
+            if (t.length >0) return t[0];
+            //else return null
+            return null;
+        }
+        //if exception occurs, return null
+        catch (Exception e){
+            return null;
+        }
+    }
+
     //empty banknote will throw empty exception
 	@Test (expected = EmptyException.class)
     public void testEmptyBanknoteDispenser() throws OverloadException, EmptyException, DisabledException{
@@ -90,9 +104,9 @@ public class TestReturnChange{
         state.returnChange.returnChange(inputSum);
         //removes the banknote 2 times
         ArrayList<Banknote> banknotesRemoved = new ArrayList<Banknote>();
-        banknotesRemoved.add(state.scs.banknoteOutput.removeDanglingBanknote());
+        banknotesRemoved.add(removeDanglingBanknoteWrapper(state.scs.banknoteOutput));
         //currently, we should see a empty exception stack trace printed
-        banknotesRemoved.add(state.scs.banknoteOutput.removeDanglingBanknote());
+        banknotesRemoved.add(removeDanglingBanknoteWrapper(state.scs.banknoteOutput));
         //check if the sum is the same
         BigDecimal actualSum= new BigDecimal(0);
         for (Banknote b : banknotesRemoved){
@@ -125,12 +139,9 @@ public class TestReturnChange{
         BigDecimal actualSum= new BigDecimal(0);
         while (true){
             //since we don't know when to stop remove dangling banknotes, we keep taking it until we can't take anything anymore
-            try{
-                actualSum = actualSum.add(new BigDecimal(state.scs.banknoteOutput.removeDanglingBanknote().getValue()));
-            }
-            catch (Exception e){
-                break;
-            }
+            Banknote note = removeDanglingBanknoteWrapper(state.scs.banknoteOutput);
+            if (note == null) break;
+            actualSum = actualSum.add(new BigDecimal(note.getValue()));
         }
         List<Coin> coinsReturned = state.scs.coinTray.collectCoins();
         for (Coin coin : coinsReturned){
@@ -168,7 +179,6 @@ public class TestReturnChange{
         Assert.assertTrue(ReturnChange.checkSmallerThanEpsilon(expectedSum.subtract(actualSum)));
     }
 
-	@Test 
     public void testCoinOutput2() throws Exception{
         initCoins1();
 
@@ -198,6 +208,10 @@ public class TestReturnChange{
     }
 
 	@Test 
+    public void testCoinOutput2Test() throws Exception{
+        testCoinOutput2();
+    }
+
     public void testBanknoteAndCoinOutput1() throws OverloadException, EmptyException, DisabledException{
         initBanknote1();
         initCoins1();
@@ -222,15 +236,27 @@ public class TestReturnChange{
 
         while (true){
             //since we don't know when to stop remove dangling banknotes, we keep taking it until we can't take anything anymore
-            try{
-                actualSum = actualSum.add(new BigDecimal(state.scs.banknoteOutput.removeDanglingBanknote().getValue()));
-            }
-            catch (Exception e){
-                break;
-            }
+            Banknote note = removeDanglingBanknoteWrapper(state.scs.banknoteOutput);
+            if (note == null) break;
+            actualSum = actualSum.add(new BigDecimal(note.getValue()));
         }
 
         state.returnChange.returnChange(expectedSum);
         Assert.assertTrue(expectedSum.subtract(actualSum).abs().compareTo(coinDenom[0]) <= 0);
+    }
+
+	@Test 
+    public void testBanknoteAndCoinOutput1Test() throws OverloadException, EmptyException, DisabledException{
+        testBanknoteAndCoinOutput1();
+    }
+
+    //we will just copy paste two test cases
+    @Test
+    public void testResetState() throws Exception{
+        //do 1 transaction
+        testCoinOutput2();
+        //the state should be reset inside returnChange() function
+        //do another one
+        testBanknoteAndCoinOutput1();
     }
 }
