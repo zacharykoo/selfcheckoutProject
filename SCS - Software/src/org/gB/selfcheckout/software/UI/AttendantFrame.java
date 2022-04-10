@@ -15,7 +15,7 @@ public class AttendantFrame extends JFrame {
 	
 	LoginScreen login = new LoginScreen(this);
 	AttendantMainMenu main;
-//	AttendantProductLookup lookup;
+	AttendantLookupProduct lookup = new AttendantLookupProduct(this);;
 	AttendantCartScreen cart = new AttendantCartScreen();
 //	AttendantAlert alert;
 	
@@ -43,6 +43,6 @@ public class AttendantFrame extends JFrame {
 		getContentPane().add(cart, "cart");
 
 //		getContentPane().add(alert, "alert");
-//		getContentPane().add(lookup, "lookup");
+		getContentPane().add(lookup, "lookup");
 	}
 }
