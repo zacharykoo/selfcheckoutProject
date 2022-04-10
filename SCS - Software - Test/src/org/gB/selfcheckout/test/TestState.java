@@ -2,9 +2,11 @@ package org.gB.selfcheckout.test;
 
 import java.math.BigDecimal;
 
+import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
 import org.junit.Before;
 import org.junit.Test;
+import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.products.Product;
 
 import junit.framework.Assert;
@@ -55,5 +57,36 @@ public class TestState {
 		st.addProduct(i1);
 		Assert.assertEquals(st.removeProduct(i2), false);
 		Assert.assertEquals(st.getExpectedWeight(), 135.0);
+	}
+	
+	// Ensure that an item can be removed if full payment is done
+	@Test
+	public void TestRemovePurchasedItem() throws Exception {
+		State state = Main.init(100, 10);
+		Item i = new Item(50) {}; 
+		// adds item to scale
+		state.scs.baggingArea.add(i);
+		state.totalToPay = new BigDecimal(10);
+		state.paymentTotal = new BigDecimal(10);
+		Assert.assertTrue(state.removePurchasedItemFromScale(i));
+	}
+	
+	// Ensure that an item cannot be removed if full payment is not done
+	@Test
+	public void TestRemoveUnpurchasedItem() throws Exception {
+		State state = Main.init(100, 10);
+		Item i = new Item(50) {}; 
+		// adds item to scale
+		state.scs.baggingArea.add(i);
+		state.totalToPay = new BigDecimal(10);
+		Assert.assertFalse(state.removePurchasedItemFromScale(i));
+	}
+	
+	@Test
+	public void TestEnterPlasticBagsUsed() {
+		Assert.assertFalse(st.setPlasticBagsUsed(-1));
+		Assert.assertTrue(st.setPlasticBagsUsed(0));
+		Assert.assertTrue(st.setPlasticBagsUsed(1));
+		Assert.assertEquals(st.getPlasticBagsUsed(), 1);
 	}
 }
