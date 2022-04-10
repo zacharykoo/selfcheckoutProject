@@ -22,10 +22,11 @@ public class CustomerFrame extends JFrame {
 	BlockedScreen blockedScreen = new BlockedScreen(this);
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 	StartScreen startScreen = new StartScreen(this);
+//	CustomerLookupProduct lookup = new CustomerLookupProduct(this);
 	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
+	EnterPLUCode enterPLU = new EnterPLUCode(this);
 
 //	CustomerEnterMember enterMember = new CustomerEnterMember();
-//	CustomerProductLookup lookup = new CustomerProductLookup();
 
 
 	public CustomerFrame(int stationIndex) {
@@ -55,9 +56,8 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(shutDown, "shutDown");
 		getContentPane().add(startScreen, "startScreen");
 		getContentPane().add(mainScreen, "mainScreen");
-
+		getContentPane().add(enterPLU, "enterPLU");
 //		getContentPane().add(enterMember, "enterMember");
-//		getContentPane().add(lookup, "lookup");
 	}
 	
 	public void waitingToBag() {

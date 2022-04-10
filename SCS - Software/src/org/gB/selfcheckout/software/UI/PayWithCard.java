@@ -90,6 +90,7 @@ public class PayWithCard extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backButton) {
 			// Go back to ProceedToPayment Panel
+			keypad.setVisible(false);
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "proceedToPay");
 		}
 		else if (e.getSource() == insert) {

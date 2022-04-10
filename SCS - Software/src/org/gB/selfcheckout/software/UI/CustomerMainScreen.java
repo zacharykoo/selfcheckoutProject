@@ -120,10 +120,10 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "scanItem");
 		}
 		else if (e.getSource() == enterCode) {
-			
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "enterPLU");
 		}
 		else if (e.getSource() == lookup) {
-	
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "lookup");
 		}
 		else if (e.getSource() == remove) {
 	

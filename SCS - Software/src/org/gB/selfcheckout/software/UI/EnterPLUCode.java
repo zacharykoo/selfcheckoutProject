@@ -15,31 +15,25 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class CustomerLookupProduct extends JPanel implements ActionListener {
+public class EnterPLUCode extends JPanel implements ActionListener {
 
 	public CustomerFrame customerFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
+	private NumericKeypad keypad = new NumericKeypad("Enter PLU Code");
 	
 	
-	
-	public CustomerLookupProduct(CustomerFrame customerFrame) {
+	public EnterPLUCode(CustomerFrame customerFrame) {
 
 		this.customerFrame = customerFrame;
-		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
 		setUpBackButton();
 		
-		this.bottomPanel.setLayout(new GridLayout(2,1));
-		JLabel lblEnterPluCode = new JLabel("                  Enter PLU code for item:                              ");
-		bottomPanel.add(lblEnterPluCode);
-		JButton lookupButton = new JButton("Look up");
-		bottomPanel.add(lookupButton);
-		JButton showkeypadButton = new JButton("Show Keypad");
-		bottomPanel.add(showkeypadButton);
-		JButton btnAddToCart = new JButton("Add to cart");
-		bottomPanel.add(btnAddToCart);
+//		this.bottomPanel.setLayout(new GridLayout(2,1));
+		
+		bottomPanel.add(keypad);
 	}
 
 	public void setUpBackButton() {
@@ -73,7 +67,11 @@ public class CustomerLookupProduct extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+		if (e.getSource() == backButton) {
+			keypad.enteredInfo = "";
+			keypad.txtField.setText("Enter PLU Code");
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
+		}
 	}
 	
 }
