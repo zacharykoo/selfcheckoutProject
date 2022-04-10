@@ -3,17 +3,11 @@ package org.gB.selfcheckout.software.UI;
 import javax.swing.*;  
 import java.awt.*;  
 import java.awt.event.*; 
-public class Warningpage extends JFrame {
-	public static void main(String[] args) {
-	      JFrame frame = new JFrame("Customer warning");
-	      JPanel panel = new JPanel();
+public class CustomerWarning extends JPanel {
+	public void warningPage() {
 	      JLabel label = new JLabel("Warning Please wait for an employee to attend to you");
-	      panel.setLayout(new GridBagLayout());
-	      panel.add(label);
-	      frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	      frame.add(panel);
-	      frame.setSize(600, 400);
-	      frame.setVisible(true);
+	      this.setLayout(new GridBagLayout());
+	      this.add(label);
 	   }
 	}  
 
