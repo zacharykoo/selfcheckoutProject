@@ -60,6 +60,8 @@ public class State {
 	
 	// A database to contain items for purchase.
 	public ItemDatabase idb = null;
+	// A database to contain card issuer with the corresponding card type
+	public CardIssuerDatabase cardIssuerDatabase = null;
 	// An instance of the self checkout station hardware.
 	public SelfCheckoutStation scs = null;
 	// Instances of the use case handlers.
@@ -74,6 +76,9 @@ public class State {
 	public PrintReceipt printReceipt = null;
 	
 	boolean poweredOn = false;
+
+    //the use case where the membership card information is entered by numpad
+    String membershipCardInfo="";
 	
 	/**
 	 * Returns the current expected weight of the scanned items list.
