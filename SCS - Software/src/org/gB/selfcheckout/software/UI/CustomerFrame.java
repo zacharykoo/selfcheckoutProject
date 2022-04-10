@@ -15,7 +15,9 @@ public class CustomerFrame extends JFrame {
 	public CardLayout cardLayout = new CardLayout();
 	int stationIndex;
 	State st;
-
+	
+	public boolean isBeingUsed = false;
+	
 	CustomerScanItem scanItem = new CustomerScanItem(this);
 	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag(this);
 	ProceedToPayment proceedToPay = new ProceedToPayment(this);

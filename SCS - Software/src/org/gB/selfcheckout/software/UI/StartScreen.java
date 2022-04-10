@@ -28,9 +28,9 @@ public class StartScreen extends JPanel implements ActionListener {
 		this.add(startButton);
 	}
 	
-	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		customerFrame.isBeingUsed = true;
 		customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
 	}
 }
