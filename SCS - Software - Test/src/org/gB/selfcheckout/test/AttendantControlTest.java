@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Currency;
 
 import org.gB.selfcheckout.software.AttendantControl;
-import org.gB.selfcheckout.software.ItemDatabase;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
 import org.lsmr.selfcheckout.Banknote;
@@ -14,13 +13,17 @@ import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
+import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.AbstractDevice;
 import org.lsmr.selfcheckout.devices.BarcodeScanner;
 import org.lsmr.selfcheckout.devices.DisabledException;
 import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
+import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
+import org.lsmr.selfcheckout.products.PLUCodedProduct;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,27 +55,35 @@ public class AttendantControlTest {
 
 	@Test
 	public void testShutdownStation() {
-		class BarcodeScannerObserverStub implements BarcodeScannerObserver { // TODO: Fix this stub, doesn't work.
-			@Override
-			public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
-				// TODO Auto-generated method stub
-			}
+		class BarcodeScannerObserverStub implements BarcodeScannerObserver {
+			public boolean isShutdown = false;
 
 			@Override
-			public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
-				// TODO Auto-generated method stub
-			}
-			
+			public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {}
+
+			@Override
+			public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {}
+
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
-				Assert.fail("Should not receive a call.");
+				if (isShutdown) {
+					Assert.fail("Should not receive a call.");
+				} else {
+					Assert.assertTrue(true);
+				}
 			}
-		} 
-		// scsList.get(0).scs.mainScanner.attach(BarcodeScannerObserverStub);
+		}
 
-		Assert.assertTrue(attendant.shutdownStation(scsList.get(0)));
+		BarcodeScannerObserverStub stub = new BarcodeScannerObserverStub();
+		scsList.get(0).scs.mainScanner.attach(stub);
+
 		Barcode barcode = new Barcode(new Numeral[]{Numeral.one});
         Item item = new BarcodedItem(barcode, 1);
+
+		scsList.get(0).scs.mainScanner.scan(item);
+
+		stub.isShutdown = true;
+		Assert.assertTrue(attendant.shutdownStation(scsList.get(0)));
 		scsList.get(0).scs.mainScanner.scan(item);
 		Assert.assertEquals(false, scsList.get(0).poweredOn);
 	}
@@ -145,32 +156,37 @@ public class AttendantControlTest {
 	}
 
 	@Test
-	public void testAttendantLooksUpProduct() throws OverloadException {
-		State state = scsList.get(0);
-		ItemDatabase itemDatabase = new ItemDatabase();
-		attendant.attendantLooksUpProduct(null);
+	public void testLooksUpProduct() throws OverloadException {
+		PriceLookupCode dataCode = new PriceLookupCode("12345");
+		PLUCodedProduct product = new PLUCodedProduct(dataCode, "cheese", new BigDecimal(1.0));
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(dataCode, product);
+
+		ArrayList<PLUCodedProduct> results = attendant.looksUpProduct("cheese");
+		ArrayList<PLUCodedProduct> results2 = attendant.looksUpProduct("");
+
+		Assert.assertNotNull(results);
+		Assert.assertNotNull(results2);
 	}
 
 	@Test
 	public void testBlockStation() throws DisabledException, OverloadException {
 		State state = scsList.get(0);
 		Assert.assertTrue(attendant.blockStation(state));
-		
 	}
 
 	@Test
-	public void testAttendantRemoveProduct() {
+	public void testRemoveProduct() {
 		Numeral[] temp = {Numeral.one,Numeral.two,Numeral.three};
 		State state = scsList.get(0);
 		Barcode bc1 = new Barcode(temp);
 		BarcodedProduct product = new BarcodedProduct(bc1, "test", new BigDecimal(10), 0.1);
-		Assert.assertTrue(attendant.attendantRemoveProduct(state, product));
+		Assert.assertTrue(attendant.removeProduct(state, product));
 	}
 
 	@Test
-	public void testAttendantApproveWeightDifference() throws OverloadException {
+	public void testApproveWeightDifference() throws OverloadException {
 		State state = scsList.get(0);
-		Assert.assertTrue(attendant.attendantApproveWeightDifference(state));
+		Assert.assertTrue(attendant.approveWeightDifference(state));
 	}
 
 }

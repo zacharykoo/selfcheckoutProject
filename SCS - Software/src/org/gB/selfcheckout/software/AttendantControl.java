@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.lsmr.selfcheckout.Banknote;
 import org.lsmr.selfcheckout.Coin;
-import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
@@ -128,21 +127,28 @@ public class AttendantControl {
 	}
 
 	// create a method to get an item from the item database
-	public ArrayList<PLUCodedProduct> attendantLooksUpProduct(String partialLookUpCode) {
+	public ArrayList<PLUCodedProduct> looksUpProduct(String partialLookUpCode) {
+		productList.clear();
+
 		boolean track = true;
 		char[] charArray = partialLookUpCode.toCharArray();
-		Numeral[] numerals = new Numeral[charArray.length];
 		Set<PriceLookupCode> keys = ProductDatabases.PLU_PRODUCT_DATABASE.keySet();
 		for(PriceLookupCode key : keys) {
-			for(int i = 0; i < partialLookUpCode.length(); i++) {
-				if(key.getNumeralAt(i) != numerals[i]) {
-					track = false;
+			for (int i = 0; i < key.toString().length(); i++) {
+				if (i < charArray.length) {
+					if (key.toString().charAt(i) != charArray[i]) {
+						track = false;
+					}
+				} else {
+					break;
 				}
 			}
+			
 			if (track) {
 				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
 			}
 		}
+		
 		return productList;
 	}
 
@@ -152,13 +158,13 @@ public class AttendantControl {
 		return true;
 	}
 
-	public boolean attendantRemoveProduct(State state, Product product) {
+	public boolean removeProduct(State state, Product product) {
 		// based on removeProduct method in State from another member
 //		state.removeProduct(product);
 		return true;
 	}
 
-    public boolean attendantApproveWeightDifference(State state) throws OverloadException {
+    public boolean approveWeightDifference(State state) throws OverloadException {
         state.expectedWeight = state.scs.baggingArea.getCurrentWeight();
         state.enableScanning();
 		return true;
