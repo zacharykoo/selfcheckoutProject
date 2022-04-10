@@ -1,7 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,6 +14,7 @@ import javax.swing.JTabbedPane;
  */
 public class AttendantMainMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private AttendantFrame attendantFrame;
 	private BorderLayout border = new BorderLayout(); // Outermost layout.
 	// Top contents that contains controls for each self-checkout station:
 	private JTabbedPane tabs = new JTabbedPane();
@@ -30,10 +30,13 @@ public class AttendantMainMenu extends JPanel {
 	 * @param stations
 	 * 		The number of self-checkout stations that this attendant manages.
 	 */
-	public AttendantMainMenu(int stations) {
+
+	public AttendantMainMenu(AttendantFrame attendantFrame, int stations) {
 		super();
 		this.setLayout(border); // Set the outermost layout.
 		// Instantiate the navigation buttons, add them to the bottom panel:
+		
+		this.add(bottomPanel);
 		bottomPanel.add(logoutButton);
 		bottomPanel.add(lookupButton);
 		border.addLayoutComponent(bottomPanel, BorderLayout.SOUTH);
@@ -44,14 +47,10 @@ public class AttendantMainMenu extends JPanel {
 		border.addLayoutComponent(tabs, BorderLayout.SOUTH);
 		
 		// Setup event handlers:
-		logoutButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				Container parent = AttendantMainMenu.this.getParent();
-//				parent.removeAll();
-//				parent.add(((AttendantFrame) parent).login);
-			}});
-		
+		logoutButton.addActionListener(e -> {
+			attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
+		});
+    
 		lookupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -74,12 +73,12 @@ public class AttendantMainMenu extends JPanel {
 		private JButton viewCart = new JButton("View Scanned Items");
 		// Middle row of the interface:
 		private JPanel middle = new JPanel();
-		private JButton refilPaper = new JButton("Refil Printer Paper");
-		private JButton refilInk = new JButton("Refil Printer Ink");
+		private JButton refillPaper = new JButton("refill Printer Paper");
+		private JButton refillInk = new JButton("refill Printer Ink");
 		// Bottom row of the interface:
 		private JPanel bottom = new JPanel();
-		private JMenu refilCoins = new JMenu("Refil Coins");
-		private JMenu refilBanknotes = new JMenu("Refil Banknotes");
+		private JMenu refillCoins = new JMenu("refill Coins");
+		private JMenu refillBanknotes = new JMenu("refill Banknotes");
 		private JButton emptyCoins = new JButton("Empty Coin Storage");
 		private JButton emptyBanknotes = new JButton("Empty Banknote Storage");
 		// The index of the associated self-checkout station.
@@ -102,19 +101,19 @@ public class AttendantMainMenu extends JPanel {
 			top.add(viewCart);
 			border.addLayoutComponent(top, BorderLayout.NORTH);
 			// Setup the middle row UI:
-			middle.add(refilPaper);
-			middle.add(refilInk);
+			middle.add(refillPaper);
+			middle.add(refillInk);
 			border.addLayoutComponent(middle, BorderLayout.CENTER);
 			// Setup the bottom row UI:
-			refilCoins.add("$0.05");
-			refilCoins.add("$0.10");
-			refilCoins.add("$0.25");
-			refilCoins.add("$1.00");
-			refilCoins.add("$2.00");
-			refilBanknotes.add("$5.00");
-			refilBanknotes.add("$10.00");
-			refilBanknotes.add("$20.00");
-			refilBanknotes.add("$50.00");
+			refillCoins.add("$0.05");
+			refillCoins.add("$0.10");
+			refillCoins.add("$0.25");
+			refillCoins.add("$1.00");
+			refillCoins.add("$2.00");
+			refillBanknotes.add("$5.00");
+			refillBanknotes.add("$10.00");
+			refillBanknotes.add("$20.00");
+			refillBanknotes.add("$50.00");
 			middle.add(emptyCoins);
 			middle.add(emptyBanknotes);
 			border.addLayoutComponent(bottom, BorderLayout.SOUTH);
@@ -137,26 +136,26 @@ public class AttendantMainMenu extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 				}});
-			
-			refilPaper.addActionListener(new ActionListener() {
+		
+			refillPaper.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 				}});
 			
-			refilInk.addActionListener(new ActionListener() {
+			refillInk.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 				}});
 			
-			refilCoins.addActionListener(new ActionListener() {
+			refillCoins.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 				}});
 			
-			refilBanknotes.addActionListener(new ActionListener() {
+			refillBanknotes.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub

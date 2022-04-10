@@ -3,12 +3,16 @@ import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.NullPointerSimulationException;
+import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
+import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
+import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Simple database for relating items, products, and barcodes.
@@ -25,10 +29,59 @@ public class ItemDatabase {
     private final ArrayList<Barcode> barcodeList = new ArrayList<>(); //Ordered list of barcodes.
     //added
     private static ItemDatabase p = new ItemDatabase();
-    private ArrayList<BarcodedProduct> scannedProducts;
+    private ArrayList<Product> scannedProducts;
     private SelfCheckoutStation selfCheckout;
     private BigDecimal totalCost;
     private BigDecimal totalPaid;
+    
+    ////////////////////////////////////////////////////////////
+    
+    public void addBarcodedEntry(Barcode barcode, BarcodedProduct product) {
+    	if (barcode == null || product == null)
+    		throw new NullPointerException("Provided barcode or product is null.");
+    	else
+    		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(barcode, product);
+    }
+    
+    public void addPLUCodedEntry(PriceLookupCode pluCode, PLUCodedProduct product) {
+    	if (pluCode == null || product == null)
+    		throw new NullPointerException("Provided pluCode or product is null.");
+    	else
+    		ProductDatabases.PLU_PRODUCT_DATABASE.put(pluCode, product);
+    }
+    
+    public void removeBarcodedEntry(Barcode barcode) {
+    	if (barcode == null)
+    		throw new NullPointerException("Provided barcode or product is null.");
+    	else
+    		ProductDatabases.BARCODED_PRODUCT_DATABASE.remove(barcode);
+    }
+    
+    public void removePLUCodedEntry(PriceLookupCode pluCode) {
+    	if (pluCode == null)
+    		throw new NullPointerException("Provided pluCode or product is null.");
+    	else
+    		ProductDatabases.PLU_PRODUCT_DATABASE.remove(pluCode);
+    }
+    
+    // Returns the PLUCodedProduct object if it exists in the database, else returns null
+    public PLUCodedProduct getPLUCodedProduct(PriceLookupCode pluCode) {
+    	if (pluCode == null)
+    		throw new NullPointerException("Provided pluCode is null.");
+    	else
+    		return ProductDatabases.PLU_PRODUCT_DATABASE.get(pluCode);
+    }
+    
+    // Returns the BarcodedProduct object if it exists in the database, else returns null
+    public BarcodedProduct getBarcodedProduct(Barcode barcode) {
+    	if (barcode == null)
+    		throw new NullPointerException("Provided barcode is null.");
+    	else
+    		return ProductDatabases.BARCODED_PRODUCT_DATABASE.get(barcode);
+    }
+    
+    ///////////////////////////////////
+    
     /**
      * Adds an entry to the database.
      *
@@ -108,7 +161,7 @@ public class ItemDatabase {
         }
         return searchProduct;
     }
-//added
+    //added
 	public static ItemDatabase getInstance() {
 		// TODO Auto-generated method stub
 		return p;
@@ -118,7 +171,7 @@ public class ItemDatabase {
 		return selfCheckout;
 	}
 
-	public ArrayList<BarcodedProduct> getScannedProducts() {
+	public ArrayList<Product> getScannedProducts() {
 		return scannedProducts;
 	}
 
@@ -130,4 +183,4 @@ public class ItemDatabase {
         return totalPaid;
     }
 
-	}
+}
