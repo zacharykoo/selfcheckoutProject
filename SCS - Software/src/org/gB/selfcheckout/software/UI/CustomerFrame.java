@@ -25,7 +25,8 @@ public class CustomerFrame extends JFrame {
 //	CustomerLookupProduct lookup = new CustomerLookupProduct(this);
 	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
 	EnterPLUCode enterPLU = new EnterPLUCode(this);
-
+	VisualCatalogue lookup = new VisualCatalogue(this);
+	
 //	CustomerEnterMember enterMember = new CustomerEnterMember();
 
 
@@ -57,6 +58,7 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(startScreen, "startScreen");
 		getContentPane().add(mainScreen, "mainScreen");
 		getContentPane().add(enterPLU, "enterPLU");
+		getContentPane().add(lookup, "lookup");
 //		getContentPane().add(enterMember, "enterMember");
 	}
 	
