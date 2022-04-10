@@ -255,4 +255,11 @@ public class TestItemDatabase {
         Assert.assertNull(database.getItem(barcode2));
         Assert.assertNull(database.getProduct(barcode2));
     }
+    
+    @Test
+    public void testGetInstance() {
+    	ItemDatabase newDatabase = database.getInstance();
+    	Assert.assertTrue(newDatabase instanceof ItemDatabase);
+    	Assert.assertEquals(null, newDatabase.getProduct(barcode));
+    }
 }

@@ -1,7 +1,9 @@
 package org.gB.selfcheckout.test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
+import org.gB.selfcheckout.software.AttendantControl;
 import org.gB.selfcheckout.software.ItemDatabase;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.PrintReceipt;
@@ -33,6 +35,8 @@ public class TestPrintReceipt {
 	private PriceLookupCode pluCode;
 	private PLUCodedProduct pluProduct;
 	private PrintReceipt printReceipt;
+	private AttendantControl attendant;
+	private ArrayList<State> scsList;
     
     @Before
     public void setup() {
@@ -63,22 +67,24 @@ public class TestPrintReceipt {
  		numeral2[0] = Numeral.one; numeral2[1] = Numeral.one;  // 11
  		barcode2 = new Barcode(numeral2);
  		watermelonProduct = new BarcodedProduct(barcode2, "Watermelon", BigDecimal.valueOf(10), 7000.0);
+ 		
+ 		scsList = new ArrayList<>();
+ 		scsList.add(state);
+ 		attendant = new AttendantControl(scsList);
     }
 
     @Test
     public void testPrintReceipt() {
     	try {
-			state.scs.printer.addInk(ReceiptPrinter.MAXIMUM_INK);
+			attendant.addInkCartridge(state, ReceiptPrinter.MAXIMUM_INK);
 		} catch (OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Main.error("Overload: Added too much ink.");
 		}
     	
     	try {
-			state.scs.printer.addPaper(ReceiptPrinter.MAXIMUM_PAPER);
+			attendant.addPaper(state, ReceiptPrinter.MAXIMUM_PAPER);
 		} catch (OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Main.error("Overload: Added too much paper.");
 		}
     	
     	state.addProduct(appleProduct);
@@ -98,69 +104,130 @@ public class TestPrintReceipt {
     }
     
     @Test
-    public void testOutAndLowOnPaper() {
+    public void testLowOnPaper() {
     	try {
-			state.scs.printer.addInk(ReceiptPrinter.MAXIMUM_INK);
+			attendant.addInkCartridge(state, ReceiptPrinter.MAXIMUM_INK);
 		} catch (OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Main.error("Overload: Added too much ink.");
 		}
     	
     	try {
-			state.scs.printer.addPaper(ReceiptPrinter.MAXIMUM_PAPER);
+    		attendant.addPaper(state, 10);
 		} catch (OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Main.error("Overload: Added too much paper.");
 		}
     	
     	Assert.assertFalse(state.outOfInk);
     	Assert.assertFalse(state.outOfPaper);
+    	Assert.assertFalse(state.lowOnInk);
     	
-    	state.printReceipt.setPaperRemaining(7);
-
-    	state.addProduct(appleProduct);
-    	state.addProduct(appleProduct);
-    	state.addProduct(watermelonProduct);
-    	state.addProduct(pluProduct);
-    	state.addProduct(pluProduct);
-    	state.addProduct(pluProduct);
+    	Assert.assertTrue(state.lowOnPaper);
+    }
+    
+    @Test
+    public void testLowOnInk() {
+    	try {
+			attendant.addInkCartridge(state, 10);
+		} catch (OverloadException e) {
+			Main.error("Overload: Added too much ink.");
+		}
     	
-    	state.enablePayment();
-    	state.paymentTotal = BigDecimal.valueOf(50);
+    	try {
+    		attendant.addPaper(state, ReceiptPrinter.MAXIMUM_PAPER);
+		} catch (OverloadException e) {
+			Main.error("Overload: Added too much paper.");
+		}
     	
-    	printReceipt.printReceipt();
+    	Assert.assertFalse(state.outOfInk);
+    	Assert.assertFalse(state.outOfPaper);
+    	Assert.assertFalse(state.lowOnPaper);
+    	Assert.assertTrue(state.lowOnInk);
+    	
+    }
+    
+    @Test
+    public void testOutOfInkAndPaper() {
+    	try {
+			attendant.addInkCartridge(state, 1);
+		} catch (OverloadException e) {
+			Main.error("Overload: Added too much ink.");
+		}
+    	
+    	try {
+    		attendant.addPaper(state, 1);
+		} catch (OverloadException e) {
+			Main.error("Overload: Added too much paper.");
+		}
+    	
+    	try {
+			state.scs.printer.print('c');
+		} catch (EmptyException e) {
+			Main.error("Printer is out of ink and/or paper.");
+		} catch (OverloadException e) {
+			Main.error("Reached end of line on paper.");
+		}
+    	
+    	Assert.assertTrue(state.outOfInk);
+    	Assert.assertTrue(state.lowOnInk);
+    	
+    	try {
+			state.scs.printer.print('\n');
+		} catch (EmptyException e) {
+			Main.error("Printer is out of ink and/or paper.");
+		} catch (OverloadException e) {
+			Main.error("Reached end of line on paper.");
+		}
     	Assert.assertTrue(state.outOfPaper);
     	Assert.assertTrue(state.lowOnPaper);
     }
     
     @Test
-    public void testOutAndLowOnInk() {
+    public void testObserverStatus() {
+    	state.scs.printer.disable();
+    	state.scs.printer.enable();
+    }
+    
+    // These setters are only used for correcting software estimates of ink/paper amount
+    @Test
+    public void testPaperInkSetters() {
     	try {
-			state.scs.printer.addInk(ReceiptPrinter.MAXIMUM_INK);
+			attendant.addInkCartridge(state, 1);
 		} catch (OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Main.error("Overload: Added too much ink.");
 		}
     	
     	try {
-			state.scs.printer.addPaper(ReceiptPrinter.MAXIMUM_PAPER);
+    		attendant.addPaper(state, 1);
 		} catch (OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Main.error("Overload: Added too much paper.");
 		}
     	
-    	Assert.assertFalse(state.outOfInk);
-    	Assert.assertFalse(state.outOfPaper);
+    	state.printReceipt.setInkRemaining(10);
+    	state.printReceipt.setPaperRemaining(10);
+    	Assert.assertEquals(10, state.charactersOfInkRemaining);
+    	Assert.assertEquals(10, state.linesOfPaperRemaining);
+    }
+    
+    @Test
+    public void testEmptyError() {
+    	try {
+			attendant.addInkCartridge(state, 0);
+		} catch (OverloadException e) {
+			Main.error("Overload: Added too much ink.");
+		}
     	
-    	state.addProduct(appleProduct);
+    	try {
+    		attendant.addPaper(state, 1);
+		} catch (OverloadException e) {
+			Main.error("Overload: Added too much paper.");
+		}
     	
-    	// The receipt will have 37 characters
-    	state.printReceipt.setInkRemaining(37);
-    	state.enablePayment();
-    	state.paymentTotal = BigDecimal.valueOf(50);
-    	
-    	printReceipt.printReceipt();
-    	Assert.assertTrue(state.lowOnInk);
-    	Assert.assertTrue(state.outOfInk);
+    	try {
+			state.scs.printer.print('c');
+		} catch (EmptyException e) {
+			Main.error("Printer is out of ink and/or paper.");
+		} catch (OverloadException e) {
+			Main.error("Reached end of line on paper.");
+		}
     }
 }
