@@ -31,7 +31,7 @@ public class State {
 	// Stores the number of plastic bags used
 	private int plasticBagCount = 0;
 	// Stores the weight of all items in scannedItems.
-	private double expectedWeight = 0;
+	public double expectedWeight = 0;
 	// Stores the weight at the time an item was scanned, excluding it.
 	public double previousWeight = 0;
 	// Stores the value of the money inserted into the system.
@@ -51,6 +51,8 @@ public class State {
 	public double customerBagWeight = 0.0;
 	
 	// States of ink and paper left in the receipt printer hardware
+	public int linesOfPaperRemaining = 0;
+	public int charactersOfInkRemaining = 0;
 	public boolean lowOnInk = true;
 	public boolean outOfInk = true;
 	public boolean lowOnPaper = true;
@@ -71,7 +73,6 @@ public class State {
 	public AddBanknote addBanknote = null;
 	public AddCoin addCoin = null;
 	public AddItemToBag addItemToBag = null;
-	public CustomerDoesNotWantToBagScannedItem customerDoesNotWantToBagScannedItem = null;
 	public AddCustomerBags customerBags = null;
 	public PaymentMode paymentMode = null;
 	public ScanItem scanItem = null;
@@ -79,9 +80,7 @@ public class State {
 	public ReturnChange returnChange = null;
 	public PrintReceipt printReceipt = null;
 	
-	boolean poweredOn = false;
-
-	public String currentTest = "";  // TODO: REMOVE.
+	public boolean poweredOn = false;
 
     //the use case where the membership card information is entered by numpad
     String membershipCardInfo="";
