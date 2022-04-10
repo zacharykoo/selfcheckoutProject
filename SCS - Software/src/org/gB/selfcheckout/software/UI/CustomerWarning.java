@@ -1,17 +1,33 @@
 package org.gB.selfcheckout.software.UI;
 
-import javax.swing.*;  
-import java.awt.*;  
-import java.awt.event.*; 
+import java.awt.GridBagLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * TODO: Complete this comment.
+ */
 public class CustomerWarning extends JPanel {
-	private Jlabel label;
-	public void warningPage() {
+	private static final long serialVersionUID = 1L;
+	private JLabel msg;
+	
+	/**
+	 * TODO: Complete this comment.
+	 */
+	public CustomerWarning() {
 		super();
-	      JLabel label = new JLabel("Warning Please wait for an employee to attend to you");
-	      this.setLayout(new GridBagLayout());
-	      this.add(label);
-	   }
-	public setText(String msg) {
-		this.label.setText(msg);
+		JLabel msg = new JLabel();
+		this.setLayout(new GridBagLayout());
+		this.add(msg);
 	}
-}  
+	
+	/**
+	 * TODO: Complete this comment.
+	 * 
+	 * @param msg
+	 */
+	public void setText(String msg) {
+		this.msg.setText(msg);
+	}
+}

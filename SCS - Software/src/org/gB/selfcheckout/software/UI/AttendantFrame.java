@@ -1,9 +1,6 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.CardLayout;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
-
 import javax.swing.JFrame;
 
 /**
@@ -16,7 +13,7 @@ public class AttendantFrame extends JFrame {
 	AttendantMainMenu main;
 //	AttendantProductLookup lookup;
 	AttendantCartScreen cart = new AttendantCartScreen();
-//	AttendantAlert alert;
+	AlertPage alert = new AlertPage();
 	
 
 	public AttendantFrame (int numStations) {
@@ -40,8 +37,8 @@ public class AttendantFrame extends JFrame {
 		getContentPane().add(login, "login");
 		getContentPane().add(main, "main");
 		getContentPane().add(cart, "cart");
-
-//		getContentPane().add(alert, "alert");
+		getContentPane().add(alert, "alert");
+		
 //		getContentPane().add(lookup, "lookup");
 	}
 }

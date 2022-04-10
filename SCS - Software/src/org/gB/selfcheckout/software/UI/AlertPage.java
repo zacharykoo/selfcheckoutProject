@@ -1,22 +1,34 @@
 package org.gB.selfcheckout.software.UI;
 
-import javax.swing.*;  
-import java.awt.*;  
-import java.awt.event.*; 
-	public class AlertPage extends JPanel {
-		private JLabel label;
-		public void alertPage() {
-			super();
-			    JLabel label;
-			    JButton button = new JButton("accept");  
-			    label=new JLabel("Alert.");  
-			    label.setBounds(50,50, 100,30);   
-			    button.setBounds(50,100, 100,30);  
-			    this.add(label); this.add(button);  
-			    
-		} 
-		public setText(String msg) {
-			this.label.setText(msg);
-		}
-        
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * TODO: Complete this comment.
+ */
+public class AlertPage extends JPanel {
+	private static final long serialVersionUID = 1L;
+	private JLabel msg;
+	
+	/**
+	 * TODO: Complete this comment.
+	 */
+	public AlertPage() {
+		super();
+		msg = new JLabel();
+		JButton button = new JButton("Accept");
+		msg.setBounds(50,50, 100,30);   
+		button.setBounds(50,100, 100,30);  
+		this.add(msg); this.add(button);      
+	} 
+	
+	/**
+	 * TODO: Complete this comment.
+	 * 
+	 * @param msg
+	 */
+	public void setText(String msg) {
+		this.msg.setText(msg);
 	}
+}

@@ -22,8 +22,8 @@ public class CustomerFrame extends JFrame {
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 	StartScreen startScreen = new StartScreen(this);
 	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
-
-//	CustomerEnterMember enterMember = new CustomerEnterMember();
+	MemberInfo enterMember = new MemberInfo();
+	
 //	CustomerProductLookup lookup = new CustomerProductLookup();
 
 
@@ -54,8 +54,8 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(shutDown, "shutDown");
 		getContentPane().add(startScreen, "startScreen");
 		getContentPane().add(mainScreen, "mainScreen");
-
-//		getContentPane().add(enterMember, "enterMember");
+		getContentPane().add(enterMember, "enterMember");
+		
 //		getContentPane().add(lookup, "lookup");
 	}
 	
