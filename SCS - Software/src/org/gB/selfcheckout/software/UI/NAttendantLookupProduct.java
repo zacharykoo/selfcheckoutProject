@@ -15,12 +15,12 @@ import javax.swing.JPanel;
 public class NAttendantLookupProduct extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	public AttendantUI AttendantFrame;
+	public AttendantFrame AttendantFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 	
-	public NAttendantLookupProduct(AttendantUI AttendantFrame) {
+	public NAttendantLookupProduct(AttendantFrame AttendantFrame) {
 
 		this.AttendantFrame = AttendantFrame;
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));

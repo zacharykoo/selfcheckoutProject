@@ -17,14 +17,14 @@ import javax.swing.JPanel;
 
 public class CustomerLookupProduct extends JPanel implements ActionListener {
 
-	public CustomerUI customerFrame;
+	public CustomerFrame customerFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 	
 	
 	
-	public CustomerLookupProduct(CustomerUI customerFrame) {
+	public CustomerLookupProduct(CustomerFrame customerFrame) {
 
 		this.customerFrame = customerFrame;
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));

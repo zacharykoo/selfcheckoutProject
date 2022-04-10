@@ -36,6 +36,9 @@ public class AttendantMainMenu extends JPanel {
 		super();
 		this.setLayout(border); // Set the outermost layout.
 		// Instantiate the navigation buttons, add them to the bottom panel:
+		
+		this.add(bottomPanel);
+		
 		bottomPanel.add(logoutButton);
 		bottomPanel.add(lookupButton);
 		border.addLayoutComponent(bottomPanel, BorderLayout.SOUTH);

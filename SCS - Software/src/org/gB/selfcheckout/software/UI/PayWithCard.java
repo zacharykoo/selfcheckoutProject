@@ -11,41 +11,50 @@ public class PayWithCard extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private JLabel enterCard;
 	
-	
+	private NumericKeypad keypad = new NumericKeypad("Enter PIN");
+	private JPanel panel;
+
 	private JButton backButton;
 	public CustomerFrame customerFrame;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
+	private JButton swipe, tap, insert;
 
 	
 	public PayWithCard(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
 
-		//this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
-		this.setLayout(new GridLayout(2,1));
+		//setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
+		setLayout(new GridLayout(2,1));
 		
 		setUpBackButton();
 		
-		this.bottomPanel.setLayout(new GridLayout(2, 1));
+		bottomPanel.setLayout(new GridLayout(3, 1));
 		
 		enterCard = new JLabel("Please swipe/tap/insert your card", SwingConstants.CENTER);
 		enterCard.setFont(new Font("serif", Font.PLAIN, 20));
 		
-		this.bottomPanel.add(enterCard);
+		bottomPanel.add(enterCard);
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
 		
-		JButton swipe, tap, insert;
 		swipe = new JButton("(SWIPE)");
 		tap = new JButton("(TAP)");
 		insert = new JButton("(INSERT)");
+		swipe.addActionListener(this);
+		tap.addActionListener(this);
+		insert.addActionListener(this);
 		buttonPanel.add(swipe);
 		buttonPanel.add(tap);
 		buttonPanel.add(insert);
 		
-		this.bottomPanel.add(buttonPanel);
+		bottomPanel.add(buttonPanel);
+		
+		keypad.setEnabled(false);
+		keypad.setVisible(false);
+		bottomPanel.add(keypad);
 
 	}
 
@@ -53,7 +62,7 @@ public class PayWithCard extends JPanel implements ActionListener {
 		
 		gbc.insets = new Insets(3, 3, 3, 3);
 		
-		this.setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout());
 		
 		backButton = new JButton("Back");
 		backButton.addActionListener(this);
@@ -81,7 +90,12 @@ public class PayWithCard extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == backButton) {
 			// Go back to ProceedToPayment Panel
-			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "proceedToPay");
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "proceedToPay");
+		}
+		else if (e.getSource() == insert) {
+			// ask for pin
+			keypad.setEnabled(true);
+			keypad.setVisible(true);
 		}
 		
 	}
