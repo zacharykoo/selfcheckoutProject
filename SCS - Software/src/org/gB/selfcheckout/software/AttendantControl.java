@@ -73,6 +73,8 @@ public class AttendantControl {
 	public boolean startupStation(int stationId) {
 		// scsList.set(stationId, new Main.init());
 
+		state.poweredOn = true;
+
 		return true;
 	}
 
@@ -129,7 +131,7 @@ public class AttendantControl {
 					track = false;
 				}
 			}
-			if(track == true) {
+			if(track) {
 				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
 			}
 		}
@@ -138,15 +140,6 @@ public class AttendantControl {
 
 	// disable any user interaction, but allow user unloading/loading
 	public void blockStation(State state) throws DisabledException, OverloadException {
-		// state.scs.cardReader.disable();
-		// state.scs.mainScanner.disable();
-		// state.scs.handheldScanner.disable();
-		// state.scs.scanningArea.disable();
-		// eject bank notes and coins before disabling for customer
-		// state.scs.coinStorage.unload();
-		// state.scs.banknoteInput.emit();
-		// state.scs.coinSlot.disable();
-		// state.scs.banknoteInput.disable();
 		state.enableScanning();
 	}
 
@@ -160,21 +153,3 @@ public class AttendantControl {
         state.enableScanning();
     }
 }
-
-
-// Attendant approves a weight discrepancy: done? double check if you think this is right, since this is all i can imagine it needing.
-// Attendant removes product from purchases: done
-// Attendant looks up a product : done
-// Attendant starts up a station : done
-// Attendant shuts down a station : done
-
-
-// Attendant adds paper to receipt printer : done
-// Attendant adds ink to receipt printer : done
-// Attendant blocks a station : done
-// Attendant empties the coin storage unit : done
-// Attendant empties the banknote storage unit : done
-// Attendant refills the coin dispenser : done
-// Attendant refills the banknote dispenser : done
-// Attendant logs in to their control console : done
-// Attendant logs out from their control console : done

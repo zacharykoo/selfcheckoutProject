@@ -59,6 +59,8 @@ public class State {
 	public ScanItem scanItem = null;
 	public ScanMembershipCard scanMembershipCard = null;
 	public ReturnChange returnChange = null;
+
+	public boolean poweredOn = true;
 	
 	/**
 	 * Returns the current expected weight of the scanned items list.
