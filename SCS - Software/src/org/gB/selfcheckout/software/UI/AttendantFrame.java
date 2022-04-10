@@ -11,7 +11,7 @@ public class AttendantFrame extends JFrame {
 	public CardLayout cardLayout = new CardLayout();
 	LoginScreen login = new LoginScreen(this);
 	AttendantMainMenu main;
-//	AttendantProductLookup lookup;
+	AttendantLookupProduct lookup = new AttendantLookupProduct(this);;
 	AttendantCartScreen cart = new AttendantCartScreen();
 	AlertPage alert;
 	

@@ -29,16 +29,16 @@ public class AttendantMainMenu extends JPanel {
 	 * @param attendantFrame
 	 * 		The instance of AttendantFrame that owns this panel.
 	 */
-
 	public AttendantMainMenu(int stations, AttendantFrame attendantFrame) {
 		super();
+    this.attendantFrame = attendantFrame;
 		this.setLayout(mainBorder); // Set the outermost layout.
 		// Create the tabs to manage each self-checkout station:
 		for (int i = 0; i < stations; i ++) tabs.addTab(
 				"Station " + Integer.toString(i + 1),
 				new StationInterface(i));
 		this.add(tabs, BorderLayout.NORTH);
-		
+
 		// Instantiate the navigation buttons, add them to the bottom panel:
 		bottomPanel.add(logoutButton);
 		bottomPanel.add(lookupButton);
