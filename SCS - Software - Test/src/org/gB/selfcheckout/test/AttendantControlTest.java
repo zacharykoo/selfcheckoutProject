@@ -73,7 +73,7 @@ public class AttendantControlTest {
 				}
 			}
 		}
-		
+
 		BarcodeScannerObserverStub stub = new BarcodeScannerObserverStub();
 		scsList.get(0).scs.mainScanner.attach(stub);
 

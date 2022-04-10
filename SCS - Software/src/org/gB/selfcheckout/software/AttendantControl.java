@@ -126,6 +126,8 @@ public class AttendantControl {
 
 	// create a method to get an item from the item database
 	public ArrayList<PLUCodedProduct> looksUpProduct(String partialLookUpCode) {
+		productList.clear();
+
 		boolean track = true;
 		char[] charArray = partialLookUpCode.toCharArray();
 		Set<PriceLookupCode> keys = ProductDatabases.PLU_PRODUCT_DATABASE.keySet();
@@ -144,6 +146,7 @@ public class AttendantControl {
 				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
 			}
 		}
+		
 		return productList;
 	}
 
