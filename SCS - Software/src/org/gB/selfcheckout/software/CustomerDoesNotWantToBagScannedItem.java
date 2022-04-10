@@ -30,11 +30,6 @@ public class CustomerDoesNotWantToBagScannedItem implements ElectronicScaleObser
 	public void weightChanged(ElectronicScale scale, double weightInGrams) {
 		if (!this.enabled) return;
 
-		if (state.currentTest == "bob") {  // TODO: REMOVE.
-			System.out.println("Bob"); 
-			System.out.println(state.getExpectedWeight() + " " + weightInGrams + " " + state.waitingForBagging);
-		}
-
 		if (state.getExpectedWeight() == weightInGrams && !state.waitingForBagging) {
 			// then re-enable the scanning status.
 			state.scs.mainScanner.enable();
