@@ -129,7 +129,7 @@ public class AttendantControl {
 					track = false;
 				}
 			}
-			if(track) {
+			if (track) {
 				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
 			}
 		}
@@ -143,7 +143,7 @@ public class AttendantControl {
 
 	public void attendantRemoveProduct(State state, Product product) {
 		// based on removeProduct method in State from another member
-		state.scs.removeProduct(product);
+		state.removeProduct(product);
 	}
 
     public void attendantApproveWeightDifference(State state) throws OverloadException {
