@@ -1,36 +1,37 @@
 package org.gB.selfcheckout.software.UI;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 /**
- * TODO: Complete this comment.
+ * JPanel for the customer to enter their membership number.
  */
-public class MemberInfo extends JPanel implements ActionListener{
+public class MemberInfo extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private CustomerFrame cutomerFrame;
+	private NumericKeypad keypad = new NumericKeypad("");
+	private JButton enterButton = new JButton("Enter");
 
 	/**
-	 * TODO: Complete this comment.
+	 * Initializes the interface.
+	 * 
+	 * @param customerFrame
+	 * 		The instance of CustomerFrame that owns this panel.
 	 */
-	public MemberInfo() {
+	public MemberInfo(CustomerFrame cutomerFrame) {
 		super();
+		this.cutomerFrame = cutomerFrame;
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		this.add(new JLabel("Please enter your member number:"));
-		this.add(new NumericKeypad(""));
+		this.add(keypad);
+		this.add(enterButton);
+		
+		// Store the entered member number and return to the main screen.
+		enterButton.addActionListener(e ->{
+			// TODO: Update the state with the member number.
+			cutomerFrame.cardLayout.show(cutomerFrame.getContentPane(), "mainScreen");
+		});
 	}
-	
-	/**
-	 * TODO: Complete this comment.
-	 * 
-	 * @param e
-	 */
-    @Override
-	public void actionPerformed(ActionEvent e) {
-    		
-	} 
 }

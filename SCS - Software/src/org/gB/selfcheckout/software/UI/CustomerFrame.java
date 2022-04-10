@@ -22,14 +22,14 @@ public class CustomerFrame extends JFrame {
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 	StartScreen startScreen = new StartScreen(this);
 	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
-	MemberInfo enterMember = new MemberInfo();
+	MemberInfo enterMember;
 	
 //	CustomerProductLookup lookup = new CustomerProductLookup();
 
 
 	public CustomerFrame(int stationIndex) {
 		super("Self-Checkout Station: " + Integer.toString(stationIndex + 1));
-		
+		enterMember = new MemberInfo(this);
 		addPanels();
 		
 		// First panel
