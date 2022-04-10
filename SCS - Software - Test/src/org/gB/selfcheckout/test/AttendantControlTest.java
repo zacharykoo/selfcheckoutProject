@@ -1,7 +1,5 @@
 package org.gB.selfcheckout.test;
 
-import static org.junit.Assert.*;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Currency;
@@ -16,6 +14,7 @@ import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Coin;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
+import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.devices.AbstractDevice;
 import org.lsmr.selfcheckout.devices.BarcodeScanner;
 import org.lsmr.selfcheckout.devices.DisabledException;
@@ -23,7 +22,7 @@ import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
-import org.lsmr.selfcheckout.products.Product;
+import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -150,16 +149,19 @@ public class AttendantControlTest {
 
 	@Test
 	public void testAttendantLooksUpProduct() throws OverloadException {
-		State state = scsList.get(0);
 		ItemDatabase itemDatabase = new ItemDatabase();
-		attendant.attendantLooksUpProduct(null);
+		PriceLookupCode code = new PriceLookupCode("test");
+		PLUCodedProduct product = new PLUCodedProduct(code, "Test Product", new BigDecimal(10.00));
+		itemDatabase.addPLUCodedEntry(code, product);
+
+
+		attendant.attendantLooksUpProduct("te");
 	}
 
 	@Test
 	public void testBlockStation() throws DisabledException, OverloadException {
 		State state = scsList.get(0);
 		Assert.assertTrue(attendant.blockStation(state));
-		
 	}
 
 	@Test

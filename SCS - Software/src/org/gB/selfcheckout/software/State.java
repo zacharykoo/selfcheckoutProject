@@ -78,7 +78,7 @@ public class State {
 	public ReturnChange returnChange = null;
 	public PrintReceipt printReceipt = null;
 	
-	public boolean poweredOn = false;
+	public boolean poweredOn = true;
 
     //the use case where the membership card information is entered by numpad
     String membershipCardInfo="";
