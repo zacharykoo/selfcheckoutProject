@@ -79,11 +79,13 @@ public class AttendantControl {
 	}
 
 	public boolean addInkCartridge(State state, int inkCartridgeAmount) throws OverloadException {
+		state.charactersOfInkRemaining += inkCartridgeAmount;
 		state.scs.printer.addInk(inkCartridgeAmount);
 		return true;
 	}
 
 	public boolean addPaper(State state, int paperAmount) throws OverloadException {
+		state.linesOfPaperRemaining += paperAmount;
 		state.scs.printer.addPaper(paperAmount);
 		return true;
 	}
