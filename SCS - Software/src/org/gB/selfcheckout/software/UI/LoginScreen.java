@@ -9,7 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class LoginScreen extends JPanel {
-	
+	private static final long serialVersionUID = 1L;
+
 	private AttendantFrame attendantFrame;
 	
 	private JLabel loginlabel, passwordlabel;
@@ -65,8 +66,6 @@ public class LoginScreen extends JPanel {
 		c.gridx = 1;
 		c.gridy = 3;
         loginbutton.addActionListener(e -> {
-    		//TODO: idk it does something though
-        	// Go to main menu
         	attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
     	});
 		subpanel.add(loginbutton, c);

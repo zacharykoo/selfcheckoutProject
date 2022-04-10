@@ -22,7 +22,7 @@ public class AttendantFrame extends JFrame {
 	public AttendantFrame (int numStations) {
 		super("Attendant Station");
 		
-		main = new AttendantMainMenu(numStations);
+		main = new AttendantMainMenu(this, numStations);
 		
 		addPanels();
 		
