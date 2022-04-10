@@ -121,13 +121,6 @@ public class TestScanItem {
     }
 
     @Test
-    public void testItemNotInDatabaseNotAddedToList() {
-        scanner.scan(itemInvalid); //Scan an invalid item.
-        //Ensure the item is still not available to be removed from the scanned items list.
-        Assert.assertFalse(state.removeItem(itemInvalid));
-    }
-
-    @Test
     public void testItemNotInDatabaseDoesNotEnableScaleTimeout() {
         scanner.scan(itemInvalid); //Scan an invalid item.
         // Ensure the scale is not expecting the item.
@@ -140,11 +133,4 @@ public class TestScanItem {
         Assert.assertFalse(enabled); //Ensure the scale is not enabled.
     }
     
-    // Ensures the scanner does nothing when disabled and an item is scanned.
-    @Test
-    public void testScannerDisabled() {
-    	scanner.disable();
-    	scanner.scan(item);
-    	Assert.assertFalse(state.removeItem(item));
-    }
 }

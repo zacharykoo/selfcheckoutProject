@@ -97,14 +97,9 @@ public class State {
 	 * Add the specified item to the scanned items list. The expected weight
 	 * is updated appropriately.
 	 * 
-	 * @param item
+	 * @param product
 	 * 		The item to be added to the scanned items list.
 	 */
-	// public void addItem(Item item) {
-	// 	scannedItems.add(item);
-	// 	expectedWeight += item.getWeight();
-	// }
-	
 	public void addProduct(Product product) {
 		if (productCart.containsKey(product)) {
 			// Increment count of that product
@@ -127,18 +122,10 @@ public class State {
 	 * Removes the specified item from the scanned items list. The expected
 	 * weight is updated appropriately.
 	 * 
-	 * @param item
+	 * @param product
 	 * 		The item to be removed from the scanned items list.
 	 * @return True if the item was removed, false otherwise.
 	 */
-	public boolean removeItem(Item item) {
-		if (scannedItems.remove(item)) {
-			expectedWeight = 0.0;
-			for (Item i : this.scannedItems) expectedWeight += i.getWeight();
-			return true;
-		} else return false;
-	}
-	
 	public boolean removeProduct(Product product) {
 		boolean isProductRemoved = false;
 		// If there is more than 1 reduce count of that product, else remove product
