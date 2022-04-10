@@ -16,6 +16,7 @@ import javax.swing.JTabbedPane;
  */
 public class AttendantMainMenu extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private AttendantFrame attendantFrame;
 	private BorderLayout border = new BorderLayout(); // Outermost layout.
 	// Top contents that contains controls for each self-checkout station:
 	private JTabbedPane tabs = new JTabbedPane();
@@ -32,9 +33,10 @@ public class AttendantMainMenu extends JPanel {
 	 * 		The number of self-checkout stations that this attendant manages.
 	 */
 	
-	public AttendantMainMenu(int stations) {
+	public AttendantMainMenu(int stations, AttendantFrame attendantFrame) {
 		super();
 		this.setLayout(border); // Set the outermost layout.
+		this.attendantFrame = attendantFrame;
 		// Instantiate the navigation buttons, add them to the bottom panel:
 		
 		this.add(bottomPanel);
@@ -55,12 +57,14 @@ public class AttendantMainMenu extends JPanel {
 //				Container parent = AttendantMainMenu.this.getParent();
 //				parent.removeAll();
 //				parent.add(((AttendantFrame) parent).login);
+				attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
 			}});
 		
 		lookupButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "lookup");
 			}});
 		this.setVisible(true);
 	}
