@@ -112,6 +112,7 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
 	
+	@Test
 	public void addItemWhileDisabled() {
 		Item i = new Item(45.6) {};
 		state.scs.baggingArea.disable(); // Disable the scale.
@@ -137,6 +138,4 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		state.customerDoesNotWantToBagScannedItem.disabled(null);
 		Assert.assertFalse(state.scs.baggingArea.isDisabled());
 	}
-	
-	
 }
