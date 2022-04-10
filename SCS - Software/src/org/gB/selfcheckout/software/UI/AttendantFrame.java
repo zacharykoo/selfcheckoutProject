@@ -1,13 +1,19 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.CardLayout;
+import java.util.List;
+
 import javax.swing.JFrame;
+
+import org.gB.selfcheckout.software.State;
 
 /**
  * JFrame to contain the UI used by attendants.
  */
 public class AttendantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
+	List<State> states;
+	List<CustomerFrame> cFrames;
 	public CardLayout cardLayout = new CardLayout();
 	LoginScreen login = new LoginScreen(this);
 	AttendantMainMenu main;
@@ -15,12 +21,12 @@ public class AttendantFrame extends JFrame {
 	AttendantCartScreen cart = new AttendantCartScreen();
 	AttendantStationShutDown shutDown = new AttendantStationShutDown(this);
 	AlertPage alert;
-	
 
-	public AttendantFrame (int numStations) {
+	public AttendantFrame (List<State> states, List<CustomerFrame> cFrames) {
 		super("Attendant Station");
-		
-		main = new AttendantMainMenu(numStations, this);
+		this.states = states;
+		this.cFrames = cFrames;
+		main = new AttendantMainMenu(this, states);
 		alert = new AlertPage(this);
 		
 		addPanels();

@@ -1,10 +1,14 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.BorderLayout;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import org.gB.selfcheckout.software.State;
 
 /**
  * JPanel that implements the main menu interface of the attendant UI.
@@ -29,14 +33,14 @@ public class AttendantMainMenu extends JPanel {
 	 * @param attendantFrame
 	 * 		The instance of AttendantFrame that owns this panel.
 	 */
-	public AttendantMainMenu(int stations, AttendantFrame attendantFrame) {
+	public AttendantMainMenu(AttendantFrame attendantFrame, List<State> states) {
 		super();
     this.attendantFrame = attendantFrame;
 		this.setLayout(mainBorder); // Set the outermost layout.
 		// Create the tabs to manage each self-checkout station:
-		for (int i = 0; i < stations; i ++) tabs.addTab(
+		for (int i = 0; i < states.size(); i ++) tabs.addTab(
 				"Station " + Integer.toString(i + 1),
-				new StationInterface(i));
+				new StationInterface(i, states.get(i)));
 		this.add(tabs, BorderLayout.NORTH);
 
 		// Instantiate the navigation buttons, add them to the bottom panel:
@@ -63,7 +67,7 @@ public class AttendantMainMenu extends JPanel {
 		private BorderLayout border = new BorderLayout(); // Outermost layout.
 		// Top row of the interface:
 		private JPanel top = new JPanel();
-		private JButton power = new JButton("Toggle Station Power");
+		private JButton power = new JButton("Power Station Off");
 		private JButton blockStation = new JButton("Block Station");
 		private JButton viewCart = new JButton("View Scanned Items");
 		// Middle row of the interface:
@@ -78,6 +82,7 @@ public class AttendantMainMenu extends JPanel {
 		private JButton emptyBanknotes = new JButton("Empty Banknote Storage");
 		// The index of the associated self-checkout station.
 		private int stationIndex;
+		private State st;
 
 		/**
 		 * Initialize the self-checkout station attendant controls, relating
@@ -87,10 +92,11 @@ public class AttendantMainMenu extends JPanel {
 		 * 		The "number" of the self-checkout station whose attendant
 		 * 		controls will be manipulated with this instance.
 		 */
-		public StationInterface(int index) {
+		public StationInterface(int index, State state) {
 			super();
 			// Set the station number and main layout.
 			stationIndex = index;
+			st = state;
 			this.setLayout(border);
 			// Setup the top row UI:
 			top.add(power);
@@ -117,11 +123,19 @@ public class AttendantMainMenu extends JPanel {
 			
 			// Set up event handlers:
 			power.addActionListener(e -> {
-				
+				if (power.getText().compareTo("Power Station Off") == 0) {
+					power.setText("Power Station On");
+					// TODO: Power off.
+				} else {
+					power.setText("Power Station Off");
+					// TODO: Power on.
+				}
 			});
 			
 			blockStation.addActionListener(e -> {
-				
+				CustomerFrame cFrame = attendantFrame.cFrames.get(stationIndex);
+				cFrame.cardLayout.show(cFrame.getContentPane(), "blockedScreen");
+				// TODO: Does more need to happen here?
 			});
 			
 			viewCart.addActionListener(e -> {

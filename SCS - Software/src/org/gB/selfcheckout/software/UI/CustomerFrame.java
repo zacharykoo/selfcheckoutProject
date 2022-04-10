@@ -3,7 +3,8 @@ package org.gB.selfcheckout.software.UI;
 import java.awt.CardLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
+import org.gB.selfcheckout.software.State;
 
 /**
  * JFrame to contain the UI used by customers at self-checkout stations.
@@ -12,7 +13,8 @@ public class CustomerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	public CardLayout cardLayout = new CardLayout();
-	public int stationIndex;
+	int stationIndex;
+	State st;
 
 	CustomerScanItem scanItem = new CustomerScanItem(this);
 	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag(this);
@@ -30,16 +32,17 @@ public class CustomerFrame extends JFrame {
 //	CustomerProductLookup lookup = new CustomerProductLookup();
 
 
-	public CustomerFrame(int stationIndex) {
+	public CustomerFrame(int stationIndex, State state) {
 		super("Self-Checkout Station: " + Integer.toString(stationIndex + 1));
 		this.stationIndex = stationIndex;
+		this.st = state;
 		enterMember = new MemberInfo(this);
 		addPanels();
 		
 		// First panel
 		cardLayout.show(getContentPane(), "startScreen");
 
-		this.setSize(1280, 720);
+		this.setSize(1024, 576);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
