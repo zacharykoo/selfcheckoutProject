@@ -9,6 +9,7 @@ import org.lsmr.selfcheckout.Card;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.BanknoteDispenser;
 import org.lsmr.selfcheckout.devices.CoinDispenser;
+import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
@@ -208,13 +209,13 @@ public class State {
 	 * 
 	 * @param item
 	 * 		The item to be removed from the bagging area.
+	 * @throws OverloadException 
 	 */
-	public boolean removePurchasedItemFromScale(Item item) {
+	public boolean removePurchasedItemFromScale(Item item) throws OverloadException {
 		//Check if the due amount is paid
 		if (totalToPay.compareTo(paymentTotal) == 0) {
 			scs.baggingArea.remove(item);
-			expectedWeight = 0.0;
-			for (Item i : this.scannedItems) expectedWeight += i.getWeight();
+			expectedWeight = scs.baggingArea.getCurrentWeight();
 		} else {
 			Main.error("Please finish payment before removing items from the bagging area.");
 			return false;
