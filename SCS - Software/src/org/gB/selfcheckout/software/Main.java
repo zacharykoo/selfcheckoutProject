@@ -74,13 +74,16 @@ public class Main {
         // Create the ReturnChange handler and attach it to the banknote output slot
         state.returnChange = new ReturnChange(state);
 	    scs.banknoteOutput.attach(state.returnChange);
+	    // Instantiate the PrintReceipt observer and attach it to the ReceiptPrinter device
+	    state.printReceipt = new PrintReceipt(state);
+	    scs.printer.attach(state.printReceipt);
 
 		state.scs.scanningArea.disable();
 		state.enableScanning();
 
 		// Create the printer and get it ready
-		scs.printer.addInk(1000);
-		scs.printer.addPaper(1000);
+		// scs.printer.addInk(1000);
+		// scs.printer.addPaper(1000);
 
 		return state;
 	}

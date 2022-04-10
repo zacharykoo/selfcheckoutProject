@@ -77,14 +77,12 @@ public class TestScanItem {
         //Set variables to respective components of State.
         assert state != null;
         scanner = state.scs.mainScanner;
-        scanner.endConfigurationPhase();
         ItemDatabase database = state.idb;
         ElectronicScale scale = state.scs.baggingArea;
 
         //Attach observer stub to scale.
         StubElectronicScaleObserver stubObserver = new StubElectronicScaleObserver();
         scale.attach(stubObserver);
-        scale.endConfigurationPhase();
 
         //Add an entry to database.
         Barcode barcode = new Barcode(new Numeral[]{Numeral.one});
