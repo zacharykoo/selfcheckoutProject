@@ -163,30 +163,4 @@ public class TestPrintReceipt {
     	Assert.assertTrue(state.lowOnInk);
     	Assert.assertTrue(state.outOfInk);
     }
-    
-    @Test
-    public void testLowInk() {
-    	
-    	
-    	
-    	
-    }
-    
-    @Test
-    public void testLowPaper() {
-    	try {
-			state.scs.printer.addInk(ReceiptPrinter.MAXIMUM_INK);
-		} catch (OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	try {
-			state.scs.printer.addPaper(ReceiptPrinter.MAXIMUM_PAPER);
-		} catch (OverloadException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    }
 }
