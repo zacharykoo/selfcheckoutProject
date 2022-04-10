@@ -13,18 +13,20 @@ public class AttendantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	public CardLayout cardLayout = new CardLayout();
 	
-	LoginScreen login = new LoginScreen();
-	AttendantMainMenu main = new AttendantMainMenu(8);
+	LoginScreen login = new LoginScreen(this);
+	AttendantMainMenu main;
 //	AttendantProductLookup lookup;
 	AttendantCartScreen cart = new AttendantCartScreen();
 //	AttendantAlert alert;
 	
-	public AttendantFrame () {
+	public AttendantFrame (int numStations) {
 		super("Attendant Station");
+		
+		main = new AttendantMainMenu(numStations);
 		
 		addPanels();
 		
-		cardLayout.show(this.getContentPane(), "cart");
+		cardLayout.show(this.getContentPane(), "login");
 		this.setLayout(cardLayout);
 		this.setSize(1280, 720);
 		this.pack();

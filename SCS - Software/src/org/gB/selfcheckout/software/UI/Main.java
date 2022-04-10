@@ -1,10 +1,11 @@
 package org.gB.selfcheckout.software.UI;
 
 public class Main {
-	
-	public static final AttendantFrame ATTENDANT_FRAME = new AttendantFrame();
-	
-	public static void main(String[] args) {		
+		
+	public static void main(String[] args) {
+		
+		AttendantFrame attendantFrame = new AttendantFrame(8);
+
 		CustomerFrame customerFrame = new CustomerFrame(0);
 		customerFrame.setSize(500,400);
 	}
