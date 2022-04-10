@@ -39,7 +39,7 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 	@Test
 	public void testValidWeightChange() {
 		state.customerDoesNotWantToBagScannedItem.enabled(null);
-		//Make sure the scale is enabled.
+		// Make sure the scale is enabled.
 		// "Apple" product, barcode = 10, price = 2, weight = 100.0
         
         Item a = new Item(25.0) {};
@@ -127,7 +127,7 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
 		// Put a spurious overloading item on the scale.
-		state.addProduct(heavyProduct);
+		
 		state.scs.baggingArea.add(a2);
 		
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
@@ -138,7 +138,7 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
-		state.removeProduct(heavyProduct);
+		
 		state.scs.baggingArea.remove(a2); // Remove the spurious item.
 		// Ensure the state is correctly updated.
 		
