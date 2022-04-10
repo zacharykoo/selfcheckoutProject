@@ -2,6 +2,7 @@ package org.gB.selfcheckout.test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
 import java.util.Map;
@@ -90,9 +91,11 @@ public class TestReturnChange{
         state.returnChange.returnChange(inputSum);
         //removes the banknote 2 times
         ArrayList<Banknote> banknotesRemoved = new ArrayList<Banknote>();
-        banknotesRemoved.add(state.scs.banknoteOutput.removeDanglingBanknote());
+        Banknote[] temp= state.scs.banknoteOutput.removeDanglingBanknotes();
+        banknotesRemoved = new ArrayList<>(Arrays.asList(temp));
         //currently, we should see a empty exception stack trace printed
-        banknotesRemoved.add(state.scs.banknoteOutput.removeDanglingBanknote());
+        temp = state.scs.banknoteOutput.removeDanglingBanknotes();
+        banknotesRemoved = new ArrayList<>(Arrays.asList(temp));
         //check if the sum is the same
         BigDecimal actualSum= new BigDecimal(0);
         for (Banknote b : banknotesRemoved){
@@ -126,7 +129,7 @@ public class TestReturnChange{
         while (true){
             //since we don't know when to stop remove dangling banknotes, we keep taking it until we can't take anything anymore
             try{
-                actualSum = actualSum.add(new BigDecimal(state.scs.banknoteOutput.removeDanglingBanknote().getValue()));
+                actualSum = actualSum.add(new BigDecimal(state.scs.banknoteOutput.removeDanglingBanknotes().getValue()));
             }
             catch (Exception e){
                 break;
@@ -223,7 +226,7 @@ public class TestReturnChange{
         while (true){
             //since we don't know when to stop remove dangling banknotes, we keep taking it until we can't take anything anymore
             try{
-                actualSum = actualSum.add(new BigDecimal(state.scs.banknoteOutput.removeDanglingBanknote().getValue()));
+                actualSum = actualSum.add(new BigDecimal(state.scs.banknoteOutput.removeDanglingBanknotes().getValue()));
             }
             catch (Exception e){
                 break;
