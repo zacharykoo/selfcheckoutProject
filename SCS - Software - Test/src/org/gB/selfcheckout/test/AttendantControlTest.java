@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Currency;
 
 import org.gB.selfcheckout.software.AttendantControl;
-import org.gB.selfcheckout.software.ItemDatabase;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
 import org.lsmr.selfcheckout.Banknote;
@@ -56,27 +55,35 @@ public class AttendantControlTest {
 
 	@Test
 	public void testShutdownStation() {
-		class BarcodeScannerObserverStub implements BarcodeScannerObserver { // TODO: Fix this stub, doesn't work.
-			@Override
-			public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
-				// TODO Auto-generated method stub
-			}
+		class BarcodeScannerObserverStub implements BarcodeScannerObserver {
+			public boolean isShutdown = false;
 
 			@Override
-			public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
-				// TODO Auto-generated method stub
-			}
+			public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {}
+
+			@Override
+			public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {}
 
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
-				Assert.fail("Should not receive a call.");
+				if (isShutdown) {
+					Assert.fail("Should not receive a call.");
+				} else {
+					Assert.assertTrue(true);
+				}
 			}
 		}
-		// scsList.get(0).scs.mainScanner.attach(BarcodeScannerObserverStub);
+		
+		BarcodeScannerObserverStub stub = new BarcodeScannerObserverStub();
+		scsList.get(0).scs.mainScanner.attach(stub);
 
-		Assert.assertTrue(attendant.shutdownStation(scsList.get(0)));
 		Barcode barcode = new Barcode(new Numeral[]{Numeral.one});
         Item item = new BarcodedItem(barcode, 1);
+
+		scsList.get(0).scs.mainScanner.scan(item);
+
+		stub.isShutdown = true;
+		Assert.assertTrue(attendant.shutdownStation(scsList.get(0)));
 		scsList.get(0).scs.mainScanner.scan(item);
 		Assert.assertEquals(false, scsList.get(0).poweredOn);
 	}
@@ -150,24 +157,21 @@ public class AttendantControlTest {
 
 	@Test
 	public void testLooksUpProduct() throws OverloadException {
-		// ProductDatabases.PLU_PRODUCT_DATABASE.clear();
-		// ArrayList<PLUCodedProduct> productList = new ArrayList<PLUCodedProduct>();
 		PriceLookupCode dataCode = new PriceLookupCode("12345");
 		PLUCodedProduct product = new PLUCodedProduct(dataCode, "cheese", new BigDecimal(1.0));
-		// productList.add(product);
 		ProductDatabases.PLU_PRODUCT_DATABASE.put(dataCode, product);
 
-		attendant.looksUpProduct("cheese");
-		attendant.looksUpProduct("");
+		ArrayList<PLUCodedProduct> results = attendant.looksUpProduct("cheese");
+		ArrayList<PLUCodedProduct> results2 = attendant.looksUpProduct("");
 
-		Assert.assertEquals(product, ProductDatabases.PLU_PRODUCT_DATABASE.get(dataCode));
+		Assert.assertNotNull(results);
+		Assert.assertNotNull(results2);
 	}
 
 	@Test
 	public void testBlockStation() throws DisabledException, OverloadException {
 		State state = scsList.get(0);
 		Assert.assertTrue(attendant.blockStation(state));
-
 	}
 
 	@Test
