@@ -150,6 +150,7 @@ public class ReturnChange implements BanknoteSlotObserver{
         --banknoteChangeList[curBanknoteIndex];
     }
 
+
     /**
         * Returns the change with the given ammOfChange.
         * Precondition: ammOfChange is non-negative
@@ -172,12 +173,14 @@ public class ReturnChange implements BanknoteSlotObserver{
         resetBanknoteChangeState();
         //set the bank notes change list
         banknoteChangeList = pair.first;
+
         //starts to return a banknote
         returnABanknote();
+        //returnBanknotes(pair.first);
     }
 
     //this function can be used to reset the states
-    private void resetBanknoteChangeState(){
+    public void resetBanknoteChangeState(){
         //0 initialize the array
         for (int i=0;i<banknoteChangeList.length;++i)
             banknoteChangeList[i]=0;
