@@ -38,7 +38,7 @@ public class CustomerDoesNotWantToBagScannedItem implements ElectronicScaleObser
 		// Issue an error to the interface for an unprompted weight change.
 		else if (state.getExpectedWeight() != weightInGrams)
 			Main.error("Unexpected weight detected.");
-		else if (state.waitingForBagging)
+		else
 			Main.error("Station should not be expecting the item to be bagged");
 	}
 		
