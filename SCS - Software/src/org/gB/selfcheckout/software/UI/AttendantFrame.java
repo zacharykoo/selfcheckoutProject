@@ -19,7 +19,7 @@ public class AttendantFrame extends JFrame {
 	AttendantMainMenu main;
 	AttendantLookupProduct lookup = new AttendantLookupProduct(this);;
 	AttendantCartScreen cart = new AttendantCartScreen();
-	AttendantStationShutDown shutDown = new AttendantStationShutDown(this);
+	AttendantStationShutDown shutDown;
 	AlertPage alert;
 
 	public AttendantFrame (List<State> states, List<CustomerFrame> cFrames) {
@@ -28,10 +28,11 @@ public class AttendantFrame extends JFrame {
 		this.cFrames = cFrames;
 		main = new AttendantMainMenu(this, states);
 		alert = new AlertPage(this);
+		shutDown = new AttendantStationShutDown(this);
 		
 		addPanels();
 		
-		cardLayout.show(this.getContentPane(), "shutDown");
+		cardLayout.show(this.getContentPane(), "login");
 		this.setLayout(cardLayout);
 		this.setSize(1280, 720);
 		this.pack();

@@ -28,7 +28,7 @@ public class LoginScreen extends JPanel {
         subpanel.setPreferredSize(new Dimension(200, 100));
 		GridBagConstraints c = new GridBagConstraints();
 		
-		loginlabel = new JLabel("Login: ", SwingConstants.RIGHT);
+		loginlabel = new JLabel("ID: ", SwingConstants.RIGHT);
 		c.weightx = 0.5;
 		c.anchor = GridBagConstraints.LINE_END;
 		c.gridx = 0;
@@ -66,9 +66,27 @@ public class LoginScreen extends JPanel {
 		c.gridx = 1;
 		c.gridy = 3;
         loginbutton.addActionListener(e -> {
+        	for (CustomerFrame cf : attendantFrame.cFrames) {
+    			cf.cardLayout.show(cf.getContentPane(), "mainScreen");
+    		}
         	attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
     	});
 		subpanel.add(loginbutton, c);
+		
+		JButton poweroff = new JButton("Power Off");
+		c.ipady = 0;
+		c.weighty = 1.0;
+		c.anchor = GridBagConstraints.PAGE_END;
+		c.insets = new Insets(10,0,5,5);
+		c.gridx = 0;
+		c.gridy = 3;
+        poweroff.addActionListener(e -> {
+    		attendantFrame.shutDown.shutDown();
+        	attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "shutDown");
+    	});
+		subpanel.add(poweroff, c);
+		
         this.add(subpanel);
+        
     }
 }

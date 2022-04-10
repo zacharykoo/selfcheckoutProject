@@ -37,6 +37,15 @@ public class AttendantStationShutDown extends JPanel implements ActionListener {
 		
 		msg.setAlignmentX(Component.CENTER_ALIGNMENT);
 		powerOn.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		shutDown();
+	}
+	
+	public void shutDown() {
+		for (CustomerFrame cf : attendantFrame.cFrames) {
+			cf.cardLayout.show(cf.getContentPane(), "blockedScreen");
+		}
+		
 	}
 
 	@Override
