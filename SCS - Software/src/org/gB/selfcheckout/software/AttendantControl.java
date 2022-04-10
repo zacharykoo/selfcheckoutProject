@@ -157,6 +157,7 @@ public class AttendantControl {
 
     public void attendantApproveWeightDifference(State state) throws OverloadException {
         state.expectedWeight = state.scs.baggingArea.getCurrentWeight();
+        state.enableScanning();
     }
 }
 
