@@ -126,7 +126,7 @@ public class AttendantControl {
 	}
 
 	// create a method to get an item from the item database
-	public ArrayList<PLUCodedProduct> attendantLooksUpProduct(String partialLookUpCode) {
+	public ArrayList<PLUCodedProduct> looksUpProduct(String partialLookUpCode) {
 		boolean track = true;
 		char[] charArray = partialLookUpCode.toCharArray();
 		Numeral[] numerals = new Numeral[charArray.length];
@@ -150,13 +150,13 @@ public class AttendantControl {
 		return true;
 	}
 
-	public boolean attendantRemoveProduct(State state, Product product) {
+	public boolean removeProduct(State state, Product product) {
 		// based on removeProduct method in State from another member
 //		state.removeProduct(product);
 		return true;
 	}
 
-    public boolean attendantApproveWeightDifference(State state) throws OverloadException {
+    public boolean approveWeightDifference(State state) throws OverloadException {
         state.expectedWeight = state.scs.baggingArea.getCurrentWeight();
         state.enableScanning();
 		return true;

@@ -21,6 +21,7 @@ import org.lsmr.selfcheckout.devices.DisabledException;
 import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
+import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.junit.Assert;
@@ -148,35 +149,37 @@ public class AttendantControlTest {
 	}
 
 	@Test
-	public void testAttendantLooksUpProduct() throws OverloadException {
-		ItemDatabase itemDatabase = new ItemDatabase();
-		PriceLookupCode code = new PriceLookupCode("test");
-		PLUCodedProduct product = new PLUCodedProduct(code, "Test Product", new BigDecimal(10.00));
-		itemDatabase.addPLUCodedEntry(code, product);
+	public void testLooksUpProduct() throws OverloadException {
+		// ProductDatabases.PLU_PRODUCT_DATABASE.clear();
+		// ArrayList<PLUCodedProduct> productList = new ArrayList<PLUCodedProduct>();
+		PriceLookupCode dataCode = new PriceLookupCode("12345");
+		PLUCodedProduct product = new PLUCodedProduct(dataCode, "cheese", new BigDecimal(1.0));
+		// productList.add(product);
+		ProductDatabases.PLU_PRODUCT_DATABASE.put(product.getPLUCode(), product);
 
-
-		attendant.attendantLooksUpProduct("te");
+		attendant.looksUpProduct("cheese");
 	}
 
 	@Test
 	public void testBlockStation() throws DisabledException, OverloadException {
 		State state = scsList.get(0);
 		Assert.assertTrue(attendant.blockStation(state));
+		
 	}
 
 	@Test
-	public void testAttendantRemoveProduct() {
+	public void testRemoveProduct() {
 		Numeral[] temp = {Numeral.one,Numeral.two,Numeral.three};
 		State state = scsList.get(0);
 		Barcode bc1 = new Barcode(temp);
 		BarcodedProduct product = new BarcodedProduct(bc1, "test", new BigDecimal(10), 0.1);
-		Assert.assertTrue(attendant.attendantRemoveProduct(state, product));
+		Assert.assertTrue(attendant.removeProduct(state, product));
 	}
 
 	@Test
-	public void testAttendantApproveWeightDifference() throws OverloadException {
+	public void testApproveWeightDifference() throws OverloadException {
 		State state = scsList.get(0);
-		Assert.assertTrue(attendant.attendantApproveWeightDifference(state));
+		Assert.assertTrue(attendant.approveWeightDifference(state));
 	}
 
 }
