@@ -1,4 +1,3 @@
-
 package org.gB.selfcheckout.software.UI;
 
 import javax.swing.JPanel;
@@ -7,17 +6,17 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-public class LookupProduct extends JPanel {
+public class AttendantLookupProduct extends JPanel {
 	private JTextField txtLookupItem;
 
 
-	public LookupProduct() {
+	public AttendantLookupProduct() {
 		
 		JButton backButton = new JButton("Back");
 		backButton.setHorizontalAlignment(SwingConstants.LEFT);
 		add(backButton);
 		
-		JLabel lblEnterPluCode = new JLabel("                  Enter PLU code for item:                              ");
+		JLabel lblEnterPluCode = new JLabel("                  Enter the product's name:                         ");
 		add(lblEnterPluCode);
 		
 		txtLookupItem = new JTextField();
@@ -26,12 +25,6 @@ public class LookupProduct extends JPanel {
 		
 		JButton BLookup = new JButton("Look up");
 		add(BLookup);
-		
-		JButton BShowKeypad = new JButton("Show Keypad");
-		add(BShowKeypad);
-		
-		JButton btnAddToCart = new JButton("Add to cart");
-		add(btnAddToCart);
 
 	}
 

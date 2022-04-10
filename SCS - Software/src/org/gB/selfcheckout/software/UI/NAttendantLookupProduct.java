@@ -1,8 +1,5 @@
-
 package org.gB.selfcheckout.software.UI;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -15,34 +12,28 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class CustomerLookupProduct extends JPanel implements ActionListener {
+public class NAttendantLookupProduct extends JPanel implements ActionListener {
 
-	public CustomerUI customerFrame;
+	private static final long serialVersionUID = 1L;
+	public AttendantUI AttendantFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 	
-	
-	
-	public CustomerLookupProduct(CustomerUI customerFrame) {
+	public NAttendantLookupProduct(AttendantUI AttendantFrame) {
 
-		this.customerFrame = customerFrame;
+		this.AttendantFrame = AttendantFrame;
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
-		
 		setUpBackButton();
-		
 		this.bottomPanel.setLayout(new GridLayout(2,1));
-		JLabel lblEnterPluCode = new JLabel("                  Enter PLU code for item:                              ");
+		
+		JLabel lblEnterPluCode = new JLabel("Enter the product's name:");
 		bottomPanel.add(lblEnterPluCode);
-		JButton lookupButton = new JButton("Look up");
-		bottomPanel.add(lookupButton);
-		JButton showkeypadButton = new JButton("Show Keypad");
-		bottomPanel.add(showkeypadButton);
-		JButton btnAddToCart = new JButton("Add to cart");
-		bottomPanel.add(btnAddToCart);
+		JButton BLookup = new JButton("Look up");
+		bottomPanel.add(BLookup);
 	}
 
-	public void setUpBackButton() {
+public void setUpBackButton() {
 		
 		gbc.insets = new Insets(3, 3, 3, 3);
 		
@@ -69,11 +60,10 @@ public class CustomerLookupProduct extends JPanel implements ActionListener {
 		this.add(bottomPanel, gbc);
 		
 	}
-
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }
