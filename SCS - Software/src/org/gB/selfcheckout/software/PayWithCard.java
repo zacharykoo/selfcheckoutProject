@@ -63,13 +63,11 @@ public class PayWithCard implements CardReaderObserver {
 		// Check that card data isn't corrupted?
 		// Send error back to main & return if it is
 
-        //TODO: should I take out money from the card here?
         //try to actually take out the money from the card
         //we first need to query the card issuer from state
-
         CardIssuer issuer = state.cardIssuerDatabase.getCardIssuer(data.getType());
         if (issuer == null){
-            //TODO: if the issuer don't exist, probably should print some error in front end from here
+            //if the issuer don't exist
             Main.error("card issuer is empty!");
             //System.out.println("card issuer is empty!");
             return;
@@ -86,7 +84,7 @@ public class PayWithCard implements CardReaderObserver {
         }
         //if the transaction was successful 
         if (!issuer.postTransaction(data.getNumber(), holdNum, amountToPay)){
-            //TODO: if the transaction failed, probably should print some error in front end
+            //if the transaction failed
             Main.error("transaction failed!");
             //System.out.println("transaction failed!");
             return;

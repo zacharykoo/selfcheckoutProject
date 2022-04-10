@@ -160,7 +160,7 @@ public class ItemDatabase {
         return searchProduct;
     }
     
-	public static ItemDatabase getInstance() {
+	public ItemDatabase getInstance() {
 		return p;
 	}
 }
