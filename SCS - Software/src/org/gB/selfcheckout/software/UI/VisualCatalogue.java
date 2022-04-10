@@ -17,7 +17,7 @@ import java.util.Map;
 
 import javax.swing.*;
 
-import org.gB.selfcheckout.software.backend.ItemDatabase;
+import org.gB.selfcheckout.software.ItemDatabase;
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.PriceLookupCode;

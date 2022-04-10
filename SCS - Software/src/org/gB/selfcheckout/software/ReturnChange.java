@@ -1,4 +1,4 @@
-package org.gB.selfcheckout.software.backend;
+package org.gB.selfcheckout.software;
 
 import java.math.BigDecimal;
 import org.lsmr.selfcheckout.devices.AbstractDevice;

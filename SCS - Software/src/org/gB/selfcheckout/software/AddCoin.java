@@ -6,7 +6,7 @@
 // SENG 300, Winter 2022
 // ==========================================================
 
-package org.gB.selfcheckout.software.backend;
+package org.gB.selfcheckout.software;
 
 import java.math.BigDecimal;
 

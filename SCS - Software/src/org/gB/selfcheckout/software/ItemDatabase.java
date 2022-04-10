@@ -1,4 +1,4 @@
-package org.gB.selfcheckout.software.backend;
+package org.gB.selfcheckout.software;
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Item;

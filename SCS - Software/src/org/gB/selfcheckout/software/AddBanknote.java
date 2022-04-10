@@ -1,4 +1,4 @@
-package org.gB.selfcheckout.software.backend;
+package org.gB.selfcheckout.software;
 
 import java.util.Currency;
 import java.math.BigDecimal;

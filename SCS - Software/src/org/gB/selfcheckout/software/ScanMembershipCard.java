@@ -1,4 +1,4 @@
-package org.gB.selfcheckout.software.backend;
+package org.gB.selfcheckout.software;
 
 import org.lsmr.selfcheckout.Card.CardData;
 import org.lsmr.selfcheckout.devices.AbstractDevice;

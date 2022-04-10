@@ -1,4 +1,4 @@
-package org.gB.selfcheckout.software.backend;
+package org.gB.selfcheckout.software;
 
 /**
  * Class to handle the use case where the user has finished adding items, and they're ready to checkout. (aka. "Payment Mode")
