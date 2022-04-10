@@ -26,13 +26,14 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 	public void testValidWeightChange() {
 		state.customerDoesNotWantToBagScannedItem.enabled(null);
 		//Make sure the scale is enabled.
-		//Product i = new Product(new BigDecimal(25.7), true) {};
+		Product i = new Product(new BigDecimal(25.7), true) {};
 		Item a = new Item(25.7) {};
 		// "Scan" an item.
-		//state.addProduct(i);
+		state.addProduct(i);
 		state.waitingForBagging = false;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
+		state.currentTest = "bob"; // TODO: REMOVE.
 		// Put the item on the scale.
 		state.scs.baggingArea.add(a);
 		// Ensure the state is correctly updated.

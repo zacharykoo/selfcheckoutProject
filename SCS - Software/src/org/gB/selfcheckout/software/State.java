@@ -81,6 +81,8 @@ public class State {
 	
 	boolean poweredOn = false;
 
+	public String currentTest = "";  // TODO: REMOVE.
+
     //the use case where the membership card information is entered by numpad
     String membershipCardInfo="";
 	
