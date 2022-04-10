@@ -21,6 +21,8 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 	
 	@Test
 	public void testValidWeightChange() {
+		state.customerDoesNotWantToBagScannedItem.enabled(null);
+		// Make sure the scale is enabled.
 		Item i = new Item(25.7) {};
 		// "Scan" an item.
 		state.addItem(i);
@@ -32,6 +34,19 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		// Ensure the state is correctly updated.
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
+	}
+	
+	@Test
+	public void testValidWeightChangeButBaggingExpected() {
+		Item i = new Item(25.7) {};
+		// "Scan" an item.
+		state.addItem(i);
+		state.waitingForBagging = true;
+		state.scs.mainScanner.disable();
+		state.scs.handheldScanner.disable();
+		// Put the item on the scale.
+		state.scs.baggingArea.add(i);
+		// Ensure the state is correctly updated.
 	}
 	
 	@Test
@@ -125,18 +140,18 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
 	}
-	
+	/**
 	@Test
 	public void testEnabled() {
 		state.customerDoesNotWantToBagScannedItem.enabled(null);
-		Assert.assertTrue(state.scs.baggingArea.isDisabled());
+		Assert.assertFalse(state.scs.baggingArea.isDisabled());
 	}
 	
 	@Test
 	public void testNotEnabled() {
 		state.customerDoesNotWantToBagScannedItem.disabled(null);
 		Assert.assertFalse(state.scs.baggingArea.isDisabled());
-	}
+	}**/
 	
 	
 }
