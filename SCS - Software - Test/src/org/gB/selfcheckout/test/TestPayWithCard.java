@@ -76,20 +76,15 @@ public class TestPayWithCard {
         validTestCard2 = new Card("MASTERCARD", "8976650412338276", "Jeff MacDonald", "344", "8923", true, true);
         validTestCard3 = new Card("GIFT_DEBIT", "6666666666666666", "Jeff MacDonald", "344", "8923", true, true);
         
-        new Card("MASTERCARD", "7822123412349999", "John Doe", "842", "7790", false, false);
-        
         //Initialize test class
         amountToPay = new BigDecimal(13.75);
         
         BigDecimal tTP  = new BigDecimal(55.15);
         state.totalToPay = tTP;
-        new BigDecimal(55.15-13.75);
-        
 
         //we need to initialize the card issuer database here
         //Initialize database.
         database = new CardIssuerDatabase();
-
 
         //create issuers
         visa_issuer = new CardIssuer("VISA_ISSUER");

@@ -21,7 +21,6 @@ import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 public class TestPrintReceipt {
     private State state; // Stores a program state for testing.
-    
     private Numeral[] numeral1;
 	private Numeral[] numeral2;
 	private Barcode barcode1;
