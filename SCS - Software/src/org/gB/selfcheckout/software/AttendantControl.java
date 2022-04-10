@@ -34,8 +34,7 @@ public class AttendantControl {
 	}
 
 	// Allow attendant to logout with supervisor on the current state
-	public void attendantLogout(ArrayList<State> scsList) {
-		this.scsList = scsList;
+	public void attendantLogout() {
 		for (State state : scsList) {
 			supervisionStation.remove(state.scs);
 		}
