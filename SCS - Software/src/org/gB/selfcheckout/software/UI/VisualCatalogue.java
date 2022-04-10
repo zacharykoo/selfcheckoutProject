@@ -222,32 +222,30 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		else if (e.getSource() == leftArrow) {
-			// Rotate 
+			// Rotate back
 			if (startingOffset >= 3) {
 				startingOffset -= 3;
 			}
 			updateCatalogue();
 		}
 		else if (e.getSource() == rightArrow) {
+			// Rotate forward
 			if (itemMenu.size() - startingOffset > 3) {
 				startingOffset += 3;
 			}
 			updateCatalogue();
 		}
 		else if (e.getSource() == firstB) {
-			// 
+			// Select product and add to cart - backend integration required
+			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		else if (e.getSource() == secondB) {
-			if (itemMenu.size() - startingOffset > 3) {
-				startingOffset += 3;
-			}
-			updateCatalogue();
+			// Select product and add to cart
+			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		else if (e.getSource() == thirdB) {
-			if (itemMenu.size() - startingOffset > 3) {
-				startingOffset += 3;
-			}
-			updateCatalogue();
+			// Select product and add to cart
+			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		
 	}
