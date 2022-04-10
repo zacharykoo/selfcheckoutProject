@@ -2,10 +2,8 @@ package org.gB.selfcheckout.test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Currency;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Test;
 import org.lsmr.selfcheckout.Banknote;
