@@ -23,7 +23,7 @@ public class TestAddCustomerBags {
 	// an an instance of the AddItemToBage use case class.
 	@Before
 	public void setup() throws Exception {
-		state = Main.init(500, 10);
+		state = new Main().createState(500, 10);
 	}
 	
 	// Ensures loading the bagging area scale with valid weight

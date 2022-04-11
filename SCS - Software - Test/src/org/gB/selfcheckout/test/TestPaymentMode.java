@@ -15,7 +15,7 @@ public class TestPaymentMode {
     public void setup() {
         //Initialize State.
         try {
-        	state = Main.init(100, 1);
+        	state = new Main().createState(100, 1);
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
