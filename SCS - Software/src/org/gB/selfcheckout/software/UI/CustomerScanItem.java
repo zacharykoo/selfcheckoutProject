@@ -18,6 +18,7 @@ import javax.swing.*;
 
 import org.gB.selfcheckout.software.ItemDatabase;
 import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.external.ProductDatabases;
@@ -42,6 +43,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	private JComboBox itemMenu = new JComboBox();
 	private JButton scanButton;
 	private HashMap<String, BarcodedProduct> indexMap = new HashMap();
+	public BarcodedItem currentItem;
 	
 	public CustomerScanItem(CustomerFrame customerFrame) {
 		
@@ -116,6 +118,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 			Item item = customerFrame.st.idb.getInstance().getItem(bcp.getBarcode());
 			//System.out.println("Item: "+item+" of type: "+item.getClass());
 			customerFrame.st.scs.mainScanner.scan(item);
+			currentItem = new BarcodedItem(bcp.getBarcode(), item.getWeight());
 			// Go to "place your item in bagging area" panel
 			customerFrame.waitingToBag();
 		}

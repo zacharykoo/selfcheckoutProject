@@ -70,7 +70,7 @@ public class AddItemToBag implements ElectronicScaleObserver {
 				state.scs.handheldScanner.enable();
 				state.waitingForBagging = false;
 			}
-			
+		
 		// Issue an error to the interface for an unprompted weight change.
 		} else if (state.getExpectedWeight() != weightInGrams)
 			Main.error("Unexpected weight detected.");

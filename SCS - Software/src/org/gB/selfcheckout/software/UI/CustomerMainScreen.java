@@ -159,7 +159,6 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		paidLabel.setText(String.format("Paid: $%.2f", customerFrame.st.paymentTotal.floatValue()));
 		totalLabel.setText(String.format("Total: $%.2f", customerFrame.st.totalToPay.floatValue()));
 
-		
 	}
 	
 	@Override

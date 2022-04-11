@@ -36,7 +36,7 @@ public class CustomerWaitingToBag extends JPanel {
 	 */
 	public CustomerWaitingToBag(CustomerFrame customerFrame) {
 		super();
-
+		
 		this.customerFrame = customerFrame;
 		setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -60,6 +60,7 @@ public class CustomerWaitingToBag extends JPanel {
 				// Reset the timer.
 				attendantTimer.cancel();
 				attendantTimer.purge();
+				customerFrame.st.scs.scanningArea.add(customerFrame.scanItem.currentItem);
 				customerFrame.mainScreen.displayProductCart();
 				customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen"); // Handle the item not being bagged.
 			}});
