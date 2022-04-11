@@ -51,6 +51,8 @@ public class AttendantMainMenu extends JPanel {
 		// Setup event handlers:
 		logoutButton.addActionListener(e -> {
 			attendantFrame.shutDown.shutDown();
+			attendantFrame.login.loginfield.setText("");
+			attendantFrame.login.passwordfield.setText("");
 			attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
 		});
     

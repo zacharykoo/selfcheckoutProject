@@ -22,7 +22,7 @@ public class EnterPLUCode extends JPanel implements ActionListener {
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 	private NumericKeypad keypad = new NumericKeypad("Enter PLU Code");
-	
+	private JButton enterButton = new JButton("Enter");
 	
 	public EnterPLUCode(CustomerFrame customerFrame) {
 
@@ -34,6 +34,8 @@ public class EnterPLUCode extends JPanel implements ActionListener {
 //		this.bottomPanel.setLayout(new GridLayout(2,1));
 		
 		bottomPanel.add(keypad);
+		bottomPanel.add(enterButton);
+		enterButton.addActionListener(this);
 	}
 
 	public void setUpBackButton() {
@@ -66,8 +68,12 @@ public class EnterPLUCode extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == backButton) {
+			keypad.enteredInfo = "";
+			keypad.txtField.setText("Enter PLU Code");
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
+		} else if (e.getSource() == enterButton) {
+			// TODO: add item to cart
 			keypad.enteredInfo = "";
 			keypad.txtField.setText("Enter PLU Code");
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");

@@ -14,8 +14,8 @@ public class LoginScreen extends JPanel {
 	private AttendantFrame attendantFrame;
 	
 	private JLabel loginlabel, passwordlabel;
-	private JTextField loginfield;
-	private JPasswordField passwordfield;
+	public JTextField loginfield;
+	public JPasswordField passwordfield;
 	private JButton loginbutton;
 
     public LoginScreen(AttendantFrame attendantFrame) {
@@ -85,6 +85,8 @@ public class LoginScreen extends JPanel {
 		c.gridx = 0;
 		c.gridy = 3;
         poweroff.addActionListener(e -> {
+			loginfield.setText("");
+			passwordfield.setText("");
     		attendantFrame.shutDown.shutDown();
         	attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "shutDown");
     	});
