@@ -61,7 +61,7 @@ public class State {
 	// Stores the payments made for each card transactions.
 	public ArrayList<Pair<Card.CardData, BigDecimal>> cardPayments =
 		new ArrayList<Pair<Card.CardData, BigDecimal>>();
-	
+	public CustomerDoesNotWantToBagScannedItem customerDoesNotWantToBagScannedItem = null;
 	// A database to contain items for purchase.
 	public ItemDatabase idb = null;
 	// A database to contain card issuer with the corresponding card type
