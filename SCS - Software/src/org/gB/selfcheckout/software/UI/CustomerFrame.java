@@ -31,7 +31,7 @@ public class CustomerFrame extends JFrame {
 	VisualCatalogue lookup = new VisualCatalogue(this);
 	CustomerAddBags addBags = new CustomerAddBags(this);
 	MemberInfo enterMember;
-//	CustomerProductLookup lookup = new CustomerProductLookup();
+	EnterAmountToPay paymentAmount = new EnterAmountToPay(this);
 
 
 	public CustomerFrame(int stationIndex, State state) {
@@ -67,6 +67,8 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(lookup, "lookup");
 		getContentPane().add(addBags, "addBags");
 		getContentPane().add(enterMember, "enterMember");
+		getContentPane().add(paymentAmount, "paymentAmount");
+
 	}
 	
 	public void waitingToBag() {

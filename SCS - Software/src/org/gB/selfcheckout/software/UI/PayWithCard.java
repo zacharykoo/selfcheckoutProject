@@ -17,7 +17,7 @@ public class PayWithCard extends JPanel implements ActionListener {
 	public CustomerFrame customerFrame;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
-	private JButton swipe, tap, insert;
+	private JButton swipe, tap, insert, enter;
 
 	
 	public PayWithCard(CustomerFrame customerFrame) {
@@ -29,12 +29,16 @@ public class PayWithCard extends JPanel implements ActionListener {
 		
 		setUpBackButton();
 		
-		bottomPanel.setLayout(new GridLayout(3, 1));
+		bottomPanel.setLayout(new GridBagLayout());
+		
+		gbc.insets = new Insets(3, 3, 3, 3);
+		gbc.gridx = 0;
+		gbc.gridy = 0;
 		
 		enterCard = new JLabel("Please swipe/tap/insert your card", SwingConstants.CENTER);
 		enterCard.setFont(new Font("serif", Font.PLAIN, 20));
 		
-		bottomPanel.add(enterCard);
+		bottomPanel.add(enterCard, gbc);
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
@@ -47,11 +51,27 @@ public class PayWithCard extends JPanel implements ActionListener {
 		buttonPanel.add(swipe);
 		buttonPanel.add(tap);
 		buttonPanel.add(insert);
-		bottomPanel.add(buttonPanel);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		
+		bottomPanel.add(buttonPanel, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 2;
+		gbc.weighty = 0.5;
 		
 		keypad.setEnabled(false);
 		keypad.setVisible(false);
-		bottomPanel.add(keypad);
+		bottomPanel.add(keypad, gbc);
+		enter = new JButton("Enter");
+		enter.addActionListener(this);
+		enter.setVisible(false);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 3;
+		gbc.weighty = 0.0;
+		bottomPanel.add(enter, gbc);
 
 	}
 
@@ -95,6 +115,18 @@ public class PayWithCard extends JPanel implements ActionListener {
 			// ask for PIN
 			keypad.setEnabled(true);
 			keypad.setVisible(true);
+			enter.setVisible(true);
+		}
+		else if (e.getSource() == swipe) {
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "paymentAmount");
+		}
+		else if (e.getSource() == tap) {
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "paymentAmount");
+		} else if (e.getSource() == enter) {
+			//check PIN
+			
+			// if pin is okay:
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "paymentAmount");
 		}
 		
 	}

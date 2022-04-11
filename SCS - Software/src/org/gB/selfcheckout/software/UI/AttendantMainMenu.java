@@ -3,6 +3,7 @@ package org.gB.selfcheckout.software.UI;
 import java.awt.BorderLayout;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
@@ -35,7 +36,8 @@ public class AttendantMainMenu extends JPanel {
 	 */
 	public AttendantMainMenu(AttendantFrame attendantFrame, List<State> states) {
 		super();
-    this.attendantFrame = attendantFrame;
+		this.attendantFrame = attendantFrame;
+		this.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		this.setLayout(mainBorder); // Set the outermost layout.
 		// Create the tabs to manage each self-checkout station:
 		for (int i = 0; i < states.size(); i ++) tabs.addTab(
