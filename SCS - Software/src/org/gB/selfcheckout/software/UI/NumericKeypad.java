@@ -141,17 +141,18 @@ public class NumericKeypad extends JPanel {
 				txtField.setText(enteredInfo);
 			}
 		});
-		/*
-		JButton BEnter = new JButton("Enter");
-		BEnter.addActionListener(new ActionListener() {
+		
+		JButton BDecimal = new JButton(".");
+		BDecimal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// Do stuff
+				enteredInfo = enteredInfo + ".";
+				txtField.setText(enteredInfo);
 			}
 		});
-		add(BEnter);
-		*/
+		add(BDecimal);
+		
 		otherPanel.add(BBackspace);
-		//otherPanel.add(BEnter);
+		otherPanel.add(BDecimal);
 		
 		add(otherPanel);
 		
