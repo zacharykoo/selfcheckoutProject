@@ -31,7 +31,6 @@ public class AttendantMainMenu extends JPanel {
 	// Bottom layout for navigation controls:
 	private JPanel bottomPanel = new JPanel();
 	private JButton logoutButton = new JButton("Logout");
-	private JButton lookupButton = new JButton("Lookup Product");
 	
 	/**
 	 * Initializes the main menu interface with the specified number of
@@ -53,9 +52,8 @@ public class AttendantMainMenu extends JPanel {
 				new StationInterface(i, states.get(i)));
 		this.add(tabs, BorderLayout.NORTH);
 
-		// Instantiate the navigation buttons, add them to the bottom panel:
+		// Instantiate the navigation button, add them to the bottom panel:
 		bottomPanel.add(logoutButton);
-		bottomPanel.add(lookupButton);
 		this.add(bottomPanel, BorderLayout.SOUTH);
 		
 		// Setup event handlers:
@@ -64,10 +62,6 @@ public class AttendantMainMenu extends JPanel {
 			attendantFrame.login.loginfield.setText("");
 			attendantFrame.login.passwordfield.setText("");
 			attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
-		});
-    
-		lookupButton.addActionListener(e -> {
-			// TODO:
 		});
 	}
 	
@@ -167,7 +161,9 @@ public class AttendantMainMenu extends JPanel {
 			});
 			
 			viewCart.addActionListener(e -> {
-				
+				AttendantMainMenu.this.attendantFrame.cardLayout.show(
+						attendantFrame.getContentPane(),
+						"cart" + Integer.toString(stationIndex));
 			});
 		
 			refillPaper.addActionListener(e -> {

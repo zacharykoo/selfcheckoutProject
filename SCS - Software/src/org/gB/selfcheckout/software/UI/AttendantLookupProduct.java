@@ -12,17 +12,20 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class AttendantLookupProduct extends JPanel implements ActionListener {
+import org.gB.selfcheckout.software.State;
 
+public class AttendantLookupProduct extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
+	private State st;
 	public AttendantFrame attendantFrame;
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
 	
-	public AttendantLookupProduct(AttendantFrame attendantFrame) {
-
+	public AttendantLookupProduct(AttendantFrame attendantFrame, State state) {
+		super();
 		this.attendantFrame = attendantFrame;
+		this.st = state;
 		this.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 0));
 		setUpBackButton();
 		this.bottomPanel.setLayout(new GridLayout(2,1));
@@ -62,7 +65,6 @@ public void setUpBackButton() {
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == backButton) {
 			attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
 		}
