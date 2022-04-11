@@ -6,8 +6,10 @@ import java.util.Currency;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JMenu;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -75,22 +77,26 @@ public class AttendantMainMenu extends JPanel {
 	 */
 	private class StationInterface extends JPanel {
 		private static final long serialVersionUID = 1L;
-		private BorderLayout border = new BorderLayout(); // Outermost layout.
-		// Top row of the interface:
-		private JPanel top = new JPanel();
+		private BoxLayout layout; // Outermost layout.
+		// General management items:
+		private JPanel managePanel = new JPanel();
 		private JButton power = new JButton("Power Station Off");
 		private JButton blockStation = new JButton("Block Station");
 		private JButton viewCart = new JButton("View Scanned Items");
-		// Middle row of the interface:
-		private JPanel middle = new JPanel();
-		private JButton refillPaper = new JButton("refill Printer Paper");
-		private JButton refillInk = new JButton("refill Printer Ink");
-		// Bottom row of the interface:
-		private JPanel bottom = new JPanel();
-		private JMenu refillCoins = new JMenu("refill Coins");
-		private JMenu refillBanknotes = new JMenu("refill Banknotes");
+		// Printer management:
+		private JPanel printerPanel = new JPanel();
+		private JButton refillPaper = new JButton("Refill Printer Paper");
+		private JButton refillInk = new JButton("Refill Printer Ink");
+		// Money storage management:
+		private JPanel emptyMoneyPanel = new JPanel();
 		private JButton emptyCoins = new JButton("Empty Coin Storage");
 		private JButton emptyBanknotes = new JButton("Empty Banknote Storage");
+		// Money refill panel:
+		private JPanel refillMoneyPanel = new JPanel();
+		private JButton refillCoinsButton = new JButton("Refil Coins");
+		private JButton refillBanknotesButton = new JButton("Refil Banknotes");
+		private JComboBox<String> refillCoins = new JComboBox<String>();
+		private JComboBox<String> refillBanknotes = new JComboBox<String>();
 		// The index of the associated self-checkout station.
 		private int stationIndex;
 		private State st;
@@ -108,29 +114,39 @@ public class AttendantMainMenu extends JPanel {
 			// Set the station number and main layout.
 			stationIndex = index;
 			st = state;
-			this.setLayout(border);
-			// Setup the top row UI:
-			top.add(power);
-			top.add(blockStation);
-			top.add(viewCart);
-			this.add(top, BorderLayout.NORTH);
-			// Setup the middle row UI:
-			middle.add(refillPaper);
-			middle.add(refillInk);
-			this.add(middle, BorderLayout.CENTER);
-			// Setup the bottom row UI:
-			refillCoins.add("$0.05");
-			refillCoins.add("$0.10");
-			refillCoins.add("$0.25");
-			refillCoins.add("$1.00");
-			refillCoins.add("$2.00");
-			refillBanknotes.add("$5.00");
-			refillBanknotes.add("$10.00");
-			refillBanknotes.add("$20.00");
-			refillBanknotes.add("$50.00");
-			middle.add(emptyCoins);
-			middle.add(emptyBanknotes);
-			this.add(bottom, BorderLayout.SOUTH);
+			layout = new BoxLayout(this, BoxLayout.Y_AXIS);
+			this.setLayout(layout);
+			// Setup the general UI:
+			managePanel.add(new JLabel("General"));
+			managePanel.add(power);
+			managePanel.add(blockStation);
+			managePanel.add(viewCart);
+			this.add(managePanel);
+			// Setup the printer handling UI:
+			printerPanel.add(new JLabel("Recipt Printer Tools"));
+			printerPanel.add(refillPaper);
+			printerPanel.add(refillInk);
+			this.add(printerPanel);
+			// Setup the money handling UI:
+			refillCoins.addItem("$0.05");
+			refillCoins.addItem("$0.10");
+			refillCoins.addItem("$0.25");
+			refillCoins.addItem("$1.00");
+			refillCoins.addItem("$2.00");
+			refillBanknotes.addItem("$5.00");
+			refillBanknotes.addItem("$10.00");
+			refillBanknotes.addItem("$20.00");
+			refillBanknotes.addItem("$50.00");
+			emptyMoneyPanel.add(new JLabel("Empty Money"));
+			emptyMoneyPanel.add(emptyCoins);
+			emptyMoneyPanel.add(emptyBanknotes);
+			this.add(emptyMoneyPanel);
+			refillMoneyPanel.add(new JLabel("Restock Money"));
+			refillMoneyPanel.add(refillCoins);
+			refillMoneyPanel.add(refillCoinsButton);
+			refillMoneyPanel.add(refillBanknotes);
+			refillMoneyPanel.add(refillBanknotesButton);
+			this.add(refillMoneyPanel);
 			
 			// Set up event handlers:
 			power.addActionListener(e -> {
@@ -139,7 +155,7 @@ public class AttendantMainMenu extends JPanel {
 					AttendantMainMenu.this.attendantFrame
 					.ac.shutdownStation(st);
 				} else {
-//					power.setText("Power Station Off");
+					power.setText("Power Station Off");
 //					AttendantMainMenu.this.attendantFrame
 //					.ac.startupStation(st);
 				}
@@ -148,7 +164,6 @@ public class AttendantMainMenu extends JPanel {
 			blockStation.addActionListener(e -> {
 				CustomerFrame cFrame = attendantFrame.cFrames.get(stationIndex);
 				cFrame.cardLayout.show(cFrame.getContentPane(), "blockedScreen");
-				// TODO: Does more need to happen here?
 			});
 			
 			viewCart.addActionListener(e -> {
@@ -177,18 +192,25 @@ public class AttendantMainMenu extends JPanel {
 				}
 			});
 			
-			refillCoins.addActionListener(e -> {
+			refillCoinsButton.addActionListener(e -> {
 				BigDecimal value;
-				if (e.getSource() == refillBanknotes.getComponent(0)) {
-					value = new BigDecimal("0.05");
-				} else if (e.getSource() == refillBanknotes.getComponent(1)) {
-					value = new BigDecimal("0.10");
-				} else if (e.getSource() == refillBanknotes.getComponent(2)) {
-					value = new BigDecimal("0.25");
-				} else if (e.getSource() == refillBanknotes.getComponent(3)) {
-					value = new BigDecimal("1.00");
-				} else value = new BigDecimal("2.00");
-				
+				switch (refillBanknotes.getSelectedIndex()) {
+				case 0:
+					value = new BigDecimal(0.05);
+					break;
+				case 1:
+					value = new BigDecimal(0.10);
+					break;
+				case 2:
+					value = new BigDecimal(0.25);
+					break;
+				case 3:
+					value = new BigDecimal(1.0);
+					break;
+				default:
+					value = new BigDecimal(2.0);
+				}
+
 				int delta = st.scs.coinDispensers.get(value).getCapacity()
 						- st.scs.coinDispensers.get(value).size();
 				for (int i = 0; i < delta; i ++) {
@@ -202,16 +224,22 @@ public class AttendantMainMenu extends JPanel {
 				}
 			});
 			
-			refillBanknotes.addActionListener(e -> {
+			refillBanknotesButton.addActionListener(e -> {
 				int value;
-				if (e.getSource() == refillBanknotes.getComponent(0)) {
+				switch (refillBanknotes.getSelectedIndex()) {
+				case 0:
 					value = 5;
-				} else if (e.getSource() == refillBanknotes.getComponent(1)) {
+					break;
+				case 1:
 					value = 10;
-				} else if (e.getSource() == refillBanknotes.getComponent(2)) {
+					break;
+				case 2:
 					value = 20;
-				} else value = 50;
-				
+					break;
+				default:
+					value = 50;
+				}
+
 				int delta = st.scs.banknoteDispensers.get(value).getCapacity()
 						- st.scs.banknoteDispensers.get(value).size();
 				for (int i = 0; i < delta; i ++) {
