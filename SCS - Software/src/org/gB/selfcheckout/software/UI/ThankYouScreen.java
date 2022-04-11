@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.math.BigDecimal;
+import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -50,10 +52,15 @@ public class ThankYouScreen extends JPanel {
 		gbc.gridx = 0;
 		gbc.gridy = 2;
 		add(next, gbc);
-				
+		
 		next.addActionListener(e ->{
 			// Tell attendant station to restart this station
 			customerFrame.isBeingUsed = false;
+			customerFrame.st.expectedWeight = 0;
+			customerFrame.st.productCart = new HashMap<>();
+			customerFrame.st.totalToPay = new BigDecimal(0.0);
+			customerFrame.st.paymentTotal = new BigDecimal(0.0);
+			customerFrame.mainScreen.displayProductCart();
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "startScreen");
 		});
 	}
