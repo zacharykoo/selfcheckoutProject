@@ -87,22 +87,22 @@ public class Main {
 		Barcode bc1 = new Barcode(new Numeral[] {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one});
 		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Froot Loops", new BigDecimal(5.35), 15.5);
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc1, bcp1);
-		idbInit.getInstance().addEntry(new BarcodedItem(bc1, 15.60), bcp1);
+		idbInit.getInstance().addEntry(new BarcodedItem(bc1, 15.5), bcp1);
 		
 		Barcode bc2 = new Barcode(new Numeral[] {Numeral.three, Numeral.two, Numeral.zero, Numeral.nine, Numeral.one});
-		BarcodedProduct bcp2 = new BarcodedProduct(bc2, "Salt Shaker", new BigDecimal(9.99), 5.00);
+		BarcodedProduct bcp2 = new BarcodedProduct(bc2, "Salt Shaker", new BigDecimal(9.99), 11.3);
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc2, bcp2);
 		idbInit.getInstance().addEntry(new BarcodedItem(bc2, 11.3), bcp2);
 		
 		Barcode bc3 = new Barcode(new Numeral[] {Numeral.nine, Numeral.one, Numeral.zero, Numeral.eight, Numeral.three});
 		BarcodedProduct bcp3 = new BarcodedProduct(bc3, "Chips", new BigDecimal(3.00), 8.10);
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc3, bcp3);
-		idbInit.getInstance().addEntry(new BarcodedItem(bc3, 8.44), bcp3);
+		idbInit.getInstance().addEntry(new BarcodedItem(bc3, 8.10), bcp3);
 		
 		Barcode bc4 = new Barcode(new Numeral[] {Numeral.four, Numeral.two, Numeral.one, Numeral.two, Numeral.two});
 		BarcodedProduct bcp4 = new BarcodedProduct(bc4, "Hair Brush", new BigDecimal(13.45), 22.50);
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc4, bcp4);
-		idbInit.getInstance().addEntry(new BarcodedItem(bc4, 22.2), bcp4);
+		idbInit.getInstance().addEntry(new BarcodedItem(bc4, 22.50), bcp4);
 
     }
 }
