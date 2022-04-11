@@ -106,9 +106,5 @@ public class Main {
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc4, bcp4);
 		idbInit.getInstance().addEntry(new BarcodedItem(bc4, 22.50), bcp4);
 
-		CardIssuerDatabase cidInit = new CardIssuerDatabase();
-		cidInit.c.addEntry("DEBIT", new CardIssuer("MasterCard"));
-		cidInit.c.getCardIssuer("DEBIT").addCardData("3234896546378965", "John Doe", Calendar.getInstance(), "111", new BigDecimal(1000));
-		
     }
 }

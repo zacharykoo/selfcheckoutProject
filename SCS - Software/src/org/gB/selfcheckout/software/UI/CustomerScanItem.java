@@ -25,7 +25,7 @@ import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 
 /* 
- * Backend integration required:
+ * Backend integration:
  *  Hardware:
  *  	barcode scanner
  *  Software:
@@ -101,7 +101,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 				indexMap.put(barcodedProduct.getDescription(), barcodedProduct));
 		indexMap.forEach((description, product) -> 	itemMenu.addItem(description));
 	}
-		
+	
 
 
 	@Override
@@ -115,8 +115,9 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 			// Scan item
 			BarcodedProduct bcp = indexMap.get(itemMenu.getSelectedItem());
 			Item item = customerFrame.st.idb.getInstance().getItem(bcp.getBarcode());
-			customerFrame.st.scs.mainScanner.scan(item);
 			customerFrame.currentItem = new BarcodedItem(bcp.getBarcode(), item.getWeight());
+
+			customerFrame.st.scs.mainScanner.scan(item);
 			// Go to "place your item in bagging area" panel
 			customerFrame.waitingToBag();
 		}

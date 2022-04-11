@@ -66,35 +66,28 @@ public class EnterAmountToPay extends JPanel {
 		// Store the entered member number and return to the main screen.
 		enterButton.addActionListener(e ->{
 			// TODO: Update the state with the paid amount.
-			PayWithCard pwc = new PayWithCard(customerFrame.st, new BigDecimal(keypad.enteredInfo));
+			PayWithCard pwc = new PayWithCard(customerFrame.st, customerFrame.st.totalToPay);
+			customerFrame.st.paymentTotal = new BigDecimal(keypad.enteredInfo);
 			customerFrame.st.scs.cardReader.attach(pwc);
-			try {
-				customerFrame.st.scs.cardReader.swipe(card);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			keypad.enteredInfo = "";
 			keypad.txtField.setText("");
 			customerFrame.mainScreen.displayProductCart();
-			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
+			if (customerFrame.st.paymentTotal.subtract(customerFrame.st.totalToPay).floatValue() >= 0.0) {
+				customerFrame.cardLayout.show(customerFrame.getContentPane(), "thankYou");
+			} else {
+				customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
+			}
 		});
 		
 		entireAmount.addActionListener(e ->{
 			// TODO: Update the state with the paid amount.
 			PayWithCard pwc = new PayWithCard(customerFrame.st, customerFrame.st.totalToPay);
+			customerFrame.st.paymentTotal = customerFrame.st.totalToPay;
 			customerFrame.st.scs.cardReader.attach(pwc);
-			try {
-				System.out.println("cardreader disabled: "+customerFrame.st.scs.cardReader.isDisabled());
-				customerFrame.st.scs.cardReader.swipe(card);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			keypad.enteredInfo = "";
 			keypad.txtField.setText("");
 			customerFrame.mainScreen.displayProductCart();
-			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "thankYou");
 		});
 	}
 	

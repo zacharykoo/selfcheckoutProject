@@ -22,7 +22,7 @@ import java.util.Map;
 public class ItemDatabase {
     //Objects with the same indices are related in the following lists.
     //Null represents no corresponding object for that entry.
-    private final ArrayList<Item> itemList = new ArrayList<>(); 	  //Ordered list of items.
+    public final ArrayList<Item> itemList = new ArrayList<>(); 	  //Ordered list of items.
     private final ArrayList<Product> productList = new ArrayList<>(); //Ordered list of products.
     private final ArrayList<Barcode> barcodeList = new ArrayList<>(); //Ordered list of barcodes.
     //added

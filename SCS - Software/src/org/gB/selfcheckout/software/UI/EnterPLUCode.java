@@ -74,6 +74,7 @@ public class EnterPLUCode extends JPanel implements ActionListener {
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
 		} else if (e.getSource() == enterButton) {
 			// TODO: add item to cart
+			
 			keypad.enteredInfo = "";
 			keypad.txtField.setText("Enter PLU Code");
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
