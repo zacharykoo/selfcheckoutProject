@@ -9,6 +9,7 @@ public class Main {
     public static ArrayList<State> states = new ArrayList<State>();
     static AttendantFrame aFrame;
     static ArrayList<CustomerFrame> cFrames = new ArrayList<CustomerFrame>();
+    static AttendantControl ac;
     
     public static State init(int scaleMaxWeight, int scaleSensitivity) throws Exception {
         State state = new SCSMain().init(scaleMaxWeight, scaleSensitivity);
@@ -31,6 +32,7 @@ public class Main {
                 e.printStackTrace();
             }
         }
-        aFrame = new AttendantFrame(states, cFrames);
+        ac = new AttendantControl(states);
+        aFrame = new AttendantFrame(states, cFrames, ac);
     }
 }

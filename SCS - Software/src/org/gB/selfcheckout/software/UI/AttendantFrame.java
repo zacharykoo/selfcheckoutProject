@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
+import org.gB.selfcheckout.software.AttendantControl;
 import org.gB.selfcheckout.software.State;
 
 /**
@@ -14,6 +15,7 @@ public class AttendantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	List<State> states;
 	List<CustomerFrame> cFrames;
+	AttendantControl ac;
 	public CardLayout cardLayout = new CardLayout();
 	LoginScreen login = new LoginScreen(this);
 	AttendantMainMenu main;
@@ -22,10 +24,11 @@ public class AttendantFrame extends JFrame {
 	AttendantStationShutDown shutDown = new AttendantStationShutDown(this);
 	AlertPage alert;
 
-	public AttendantFrame (List<State> states, List<CustomerFrame> cFrames) {
+	public AttendantFrame (List<State> states, List<CustomerFrame> cFrames, AttendantControl ac) {
 		super("Attendant Station");
 		this.states = states;
 		this.cFrames = cFrames;
+		this.ac = ac;
 		main = new AttendantMainMenu(this, states);
 		alert = new AlertPage(this);
 		

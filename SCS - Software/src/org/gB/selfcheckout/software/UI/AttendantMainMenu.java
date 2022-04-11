@@ -1,6 +1,8 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.BorderLayout;
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -9,6 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import org.gB.selfcheckout.software.State;
+import org.lsmr.selfcheckout.Banknote;
+import org.lsmr.selfcheckout.Coin;
+import org.lsmr.selfcheckout.devices.OverloadException;
+import org.lsmr.selfcheckout.devices.ReceiptPrinter;
 
 /**
  * JPanel that implements the main menu interface of the attendant UI.
@@ -125,10 +131,12 @@ public class AttendantMainMenu extends JPanel {
 			power.addActionListener(e -> {
 				if (power.getText().compareTo("Power Station Off") == 0) {
 					power.setText("Power Station On");
-					// TODO: Power off.
+					AttendantMainMenu.this.attendantFrame
+					.ac.shutdownStation(st);
 				} else {
-					power.setText("Power Station Off");
-					// TODO: Power on.
+//					power.setText("Power Station Off");
+//					AttendantMainMenu.this.attendantFrame
+//					.ac.startupStation(st);
 				}
 			});
 			
@@ -143,27 +151,83 @@ public class AttendantMainMenu extends JPanel {
 			});
 		
 			refillPaper.addActionListener(e -> {
-				
+				int delta = ReceiptPrinter.MAXIMUM_PAPER
+						- st.linesOfPaperRemaining;
+				try {
+					AttendantMainMenu.this.attendantFrame
+					.ac.addPaper(st, delta);
+				} catch (OverloadException err) {
+					err.printStackTrace();
+				}
 			});
 			
 			refillInk.addActionListener(e -> {
-				
+				int delta = ReceiptPrinter.MAXIMUM_INK
+						- st.charactersOfInkRemaining;
+				try {
+					AttendantMainMenu.this.attendantFrame
+					.ac.addInkCartridge(st, delta);
+				} catch (OverloadException err) {
+					err.printStackTrace();
+				}
 			});
 			
 			refillCoins.addActionListener(e -> {
+				BigDecimal value;
+				if (e.getSource() == refillBanknotes.getComponent(0)) {
+					value = new BigDecimal("0.05");
+				} else if (e.getSource() == refillBanknotes.getComponent(1)) {
+					value = new BigDecimal("0.10");
+				} else if (e.getSource() == refillBanknotes.getComponent(2)) {
+					value = new BigDecimal("0.25");
+				} else if (e.getSource() == refillBanknotes.getComponent(3)) {
+					value = new BigDecimal("1.00");
+				} else value = new BigDecimal("2.00");
 				
+				int delta = st.scs.coinDispensers.get(value).getCapacity()
+						- st.scs.coinDispensers.get(value).size();
+				for (int i = 0; i < delta; i ++) {
+					try {
+						AttendantMainMenu.this.attendantFrame
+						.ac.refillCoinDispenser(st, new Coin(
+								Currency.getInstance("CAD"), value));
+					} catch (OverloadException err) {
+						err.printStackTrace();
+					}
+				}
 			});
 			
 			refillBanknotes.addActionListener(e -> {
+				int value;
+				if (e.getSource() == refillBanknotes.getComponent(0)) {
+					value = 5;
+				} else if (e.getSource() == refillBanknotes.getComponent(1)) {
+					value = 10;
+				} else if (e.getSource() == refillBanknotes.getComponent(2)) {
+					value = 20;
+				} else value = 50;
 				
+				int delta = st.scs.banknoteDispensers.get(value).getCapacity()
+						- st.scs.banknoteDispensers.get(value).size();
+				for (int i = 0; i < delta; i ++) {
+					try {
+						AttendantMainMenu.this.attendantFrame
+						.ac.refillBanknoteDispenser(st, new Banknote(
+								Currency.getInstance("CAD"), value));
+					} catch (OverloadException err) {
+						err.printStackTrace();
+					}
+				}
 			});
 			
 			emptyCoins.addActionListener(e -> {
-				
+				AttendantMainMenu.this.attendantFrame
+					.ac.emptyCoinStorageUnit(st);
 			});
 			
 			emptyBanknotes.addActionListener(e -> {
-				
+				AttendantMainMenu.this.attendantFrame
+					.ac.emptyBanknoteStorageUnit(st);
 			});
 		}
 	}
