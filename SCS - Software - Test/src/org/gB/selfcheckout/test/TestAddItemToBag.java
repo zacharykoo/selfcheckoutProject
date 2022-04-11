@@ -21,7 +21,7 @@ public class TestAddItemToBag {
 	// an an instance of the AddItemToBage use case class.
 	@Before
 	public void setup() throws Exception {
-		state = new Main().createState(10000, 10);
+		state = Main.init(10000, 10);
 		AddItemToBag addItemToBag = new AddItemToBag(state);
 		state.scs.baggingArea.attach(addItemToBag);
 		state.addItemToBag = addItemToBag;

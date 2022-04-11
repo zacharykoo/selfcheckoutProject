@@ -36,7 +36,7 @@ public class AttendantControlTest {
 	public void setup() throws Exception {
 		scsList = new ArrayList<State>();
 		for (int i = 0; i < 8; i++) {
-			State state = new Main().createState(1000, 1);
+			State state = Main.init(1000, 1);
 			scsList.add(state);
 		}
 

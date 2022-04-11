@@ -37,7 +37,7 @@ public class TestPrintReceipt {
     public void setup() {
         //Initialize State.
         try {
-        	state = new Main().createState(10000, 10);
+        	state = Main.init(10000, 10);
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
