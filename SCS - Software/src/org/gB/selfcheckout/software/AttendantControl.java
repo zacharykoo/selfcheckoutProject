@@ -67,7 +67,8 @@ public class AttendantControl {
 	}
 
 	public boolean startupStation(int stationId, int scaleMaxWeight, int scaleSensitivity) throws Exception {
-		this.scsList.set(stationId, new Main().createState(scaleMaxWeight, scaleSensitivity));
+		new Main();
+		this.scsList.set(stationId, Main.init(scaleMaxWeight, scaleSensitivity));
 
 		return true;
 	}

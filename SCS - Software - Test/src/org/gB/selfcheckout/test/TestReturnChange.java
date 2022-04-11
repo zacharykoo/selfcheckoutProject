@@ -33,7 +33,7 @@ public class TestReturnChange{
     // test coin tray not empty
     @Before
     public void setup() throws Exception {
-		state = new Main().createState(2000, 1);
+		state = Main.init(2000, 1);
         state.enablePayment();
         this.coinDenom = state.scs.coinDenominations.toArray(new BigDecimal[0]);
 
