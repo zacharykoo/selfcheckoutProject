@@ -24,7 +24,7 @@ public class CustomerFrame extends JFrame {
 	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag(this);
 	ProceedToPayment proceedToPay = new ProceedToPayment(this);
 	PayWithCard payWithCard = new PayWithCard(this);
-	PayWithCash payWithCash = new PayWithCash(this);
+	PayWithCash payWithCash;
 	BlockedScreen blockedScreen = new BlockedScreen(this);
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 	StartScreen startScreen = new StartScreen(this);
@@ -34,6 +34,7 @@ public class CustomerFrame extends JFrame {
 	CustomerAddBags addBags = new CustomerAddBags(this);
 	MemberInfo enterMember;
 	EnterAmountToPay paymentAmount = new EnterAmountToPay(this);
+	ThankYouScreen thankYou = new ThankYouScreen(this);
 
 
 	public CustomerFrame(int stationIndex, State state) {
@@ -42,6 +43,7 @@ public class CustomerFrame extends JFrame {
 		this.st = state;
 		enterMember = new MemberInfo(this);
 		mainScreen = new CustomerMainScreen(this);
+		payWithCash  = new PayWithCash(this);
 		addPanels();
 		
 		// First panel
@@ -71,6 +73,7 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(addBags, "addBags");
 		getContentPane().add(enterMember, "enterMember");
 		getContentPane().add(paymentAmount, "paymentAmount");
+		getContentPane().add(thankYou, "thankYou");
 
 	}
 	
