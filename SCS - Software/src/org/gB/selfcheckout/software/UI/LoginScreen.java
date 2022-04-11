@@ -8,6 +8,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import org.gB.selfcheckout.software.LoginDB;
+
 public class LoginScreen extends JPanel {
 	private static final long serialVersionUID = 1L;
 
@@ -17,18 +19,18 @@ public class LoginScreen extends JPanel {
 	public JTextField loginfield;
 	public JPasswordField passwordfield;
 	private JButton loginbutton;
-
-    public LoginScreen(AttendantFrame attendantFrame) {
+  
+    public LoginScreen(AttendantFrame attendantFrame, LoginDB logindatabase) {
     	this.attendantFrame = attendantFrame;
-    	
-		this.setLayout(new GridBagLayout());
+
+		    this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(200, 100));
         JPanel subpanel = new JPanel();;
         subpanel.setLayout(new GridBagLayout());
         subpanel.setPreferredSize(new Dimension(200, 100));
 		GridBagConstraints c = new GridBagConstraints();
 		
-		loginlabel = new JLabel("ID: ", SwingConstants.RIGHT);
+		loginlabel = new JLabel("Username: ", SwingConstants.RIGHT);
 		c.weightx = 0.5;
 		c.anchor = GridBagConstraints.LINE_END;
 		c.gridx = 0;
@@ -66,14 +68,12 @@ public class LoginScreen extends JPanel {
 		c.gridx = 1;
 		c.gridy = 3;
         loginbutton.addActionListener(e -> {
-        	for (CustomerFrame cf : attendantFrame.cFrames) {
-    			if (cf.isBeingUsed) {
-    				cf.cardLayout.show(cf.getContentPane(), "mainScreen");
-    			} else {
-    				cf.cardLayout.show(cf.getContentPane(), "startScreen");
-    			}
-    		}
-        	attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
+			String username = new String(loginfield.getText());
+			String password = new String(passwordfield.getPassword());
+			if (logindatabase.login(username, password)) {
+				//TODO: Change Screens
+				//AttendantControl(scsList);
+			}
     	});
 		subpanel.add(loginbutton, c);
 		
