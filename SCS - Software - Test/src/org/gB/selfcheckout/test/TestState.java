@@ -62,7 +62,7 @@ public class TestState {
 	// Ensure that an item can be removed if full payment is done
 	@Test
 	public void TestRemovePurchasedItem() throws Exception {
-		State state = Main.init(100, 10);
+		State state = new Main().createState(100, 10);
 		Item i = new Item(50) {}; 
 		// adds item to scale
 		state.scs.baggingArea.add(i);
@@ -74,7 +74,7 @@ public class TestState {
 	// Ensure that an item cannot be removed if full payment is not done
 	@Test
 	public void TestRemoveUnpurchasedItem() throws Exception {
-		State state = Main.init(100, 10);
+		State state = new Main().createState(100, 10);
 		Item i = new Item(50) {}; 
 		// adds item to scale
 		state.scs.baggingArea.add(i);
