@@ -22,7 +22,7 @@ public class Main {
         // System.out.println(message);
     }
 
-    public static void main(String[] args) { // Not sure how we want to create all the stations, so just added this as a temporary thing.
+    public static void main(String[] args) {
         for (int i = 0; i < 4; i++) {
             try {
                 // init(100, 10);
@@ -31,5 +31,7 @@ public class Main {
                 e.printStackTrace();
             }
         }
+        ac = new AttendantControl(states);
+        aFrame = new AttendantFrame(states, cFrames, ac);
     }
 }

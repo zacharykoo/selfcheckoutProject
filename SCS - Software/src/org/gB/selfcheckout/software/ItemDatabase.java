@@ -4,6 +4,7 @@ import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.NullPointerSimulationException;
 import org.lsmr.selfcheckout.PriceLookupCode;
+import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
@@ -11,6 +12,7 @@ import org.lsmr.selfcheckout.products.Product;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Simple database for relating items, products, and barcodes.
@@ -159,7 +161,7 @@ public class ItemDatabase {
         }
         return searchProduct;
     }
-    
+
 	public ItemDatabase getInstance() {
 		return p;
 	}
