@@ -2,6 +2,7 @@ package org.gB.selfcheckout.software;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.gB.selfcheckout.software.UI.AttendantFrame;
 import org.gB.selfcheckout.software.UI.CustomerFrame;
@@ -11,6 +12,7 @@ import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.PLUCodedItem;
 import org.lsmr.selfcheckout.PriceLookupCode;
+import org.lsmr.selfcheckout.external.CardIssuer;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
@@ -31,7 +33,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-    	populateDatabase();
+    	populateDatabases();
         for (int i = 0; i < 4; i++) {
             try {
             	State s = init(100, 1);
@@ -45,7 +47,7 @@ public class Main {
         aFrame = new AttendantFrame(states, cFrames);
     }
     
-    private static void populateDatabase() {
+    private static void populateDatabases() {
     	
     	ItemDatabase idbInit = new ItemDatabase();
     	
@@ -104,5 +106,9 @@ public class Main {
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc4, bcp4);
 		idbInit.getInstance().addEntry(new BarcodedItem(bc4, 22.50), bcp4);
 
+		CardIssuerDatabase cidInit = new CardIssuerDatabase();
+		cidInit.c.addEntry("DEBIT", new CardIssuer("MasterCard"));
+		cidInit.c.getCardIssuer("DEBIT").addCardData("3234896546378965", "John Doe", Calendar.getInstance(), "111", new BigDecimal(1000));
+		
     }
 }

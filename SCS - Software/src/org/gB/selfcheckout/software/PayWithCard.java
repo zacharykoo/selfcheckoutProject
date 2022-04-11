@@ -53,6 +53,7 @@ public class PayWithCard implements CardReaderObserver {
 
 	@Override
 	public void cardDataRead(CardReader reader, CardData data) {
+
 		cardData = data;
 
 		// If the amount to pay is greater than what is left to pay, only pay what's left
@@ -72,6 +73,9 @@ public class PayWithCard implements CardReaderObserver {
             //System.out.println("card issuer is empty!");
             return;
         }
+        
+		System.out.println("not null");
+
         //otherwise, issuer is not null
         //quote from CardIssuer.java: 
         //``to debit a purchase, a hold is first placed on the amount and then the
@@ -80,8 +84,10 @@ public class PayWithCard implements CardReaderObserver {
         int holdNum = issuer.authorizeHold(data.getNumber(), amountToPay);
         if (holdNum == -1){
             Main.error("authorizeHold failed!");
-            //System.out.println("authorizeHold failed!");
         }
+        
+		System.out.println("authorizedm holdnum = "+holdNum);
+
         //if the transaction was successful 
         if (!issuer.postTransaction(data.getNumber(), holdNum, amountToPay)){
             //if the transaction failed
@@ -90,11 +96,15 @@ public class PayWithCard implements CardReaderObserver {
             return;
         }
         //else the transaction was successful!
+        
+        
+		System.out.println("successful");
 
 
-		// Update total if it isn't corrupted
+		// Update total
 		state.paymentTotal = state.paymentTotal.add(amountToPay);
-		
+		System.out.println("total now: "+state.paymentTotal);
+
 		// Check if this card has been used before
 		int i = 0;
 		for (Pair<CardData, BigDecimal> pair : state.cardPayments) {
