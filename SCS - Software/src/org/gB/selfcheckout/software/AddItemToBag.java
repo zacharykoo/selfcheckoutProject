@@ -64,6 +64,7 @@ public class AddItemToBag implements ElectronicScaleObserver {
 		if (!this.enabled) return;
 		if (state.waitingForBagging) { // If an item is expected,
 			// and the weight is as expected,
+			state.expectedWeight = weightInGrams;
 			if (state.getExpectedWeight() == weightInGrams) {
 				// then re-enable the scanning status.
 				state.scs.mainScanner.enable();

@@ -126,6 +126,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleObserver> {
 
 		if(Math.abs(currentWeightInGrams - weightAtLastEvent) > sensitivity)
 			notifyWeightChanged();
+		
 	}
 
 	/**

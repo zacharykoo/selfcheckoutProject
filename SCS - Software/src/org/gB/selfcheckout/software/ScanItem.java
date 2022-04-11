@@ -67,10 +67,14 @@ public class ScanItem implements BarcodeScannerObserver {
 	 */
 	@Override
 	public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
+		System.out.println("ScanItem notified");
 		if (!this.enabled) return;
+		System.out.println("ScanItem enabled");
+
 		// Grab the product from the database, if it exists
 		BarcodedProduct product = state.idb.getBarcodedProduct(barcode);
 		if (product != null) {
+			System.out.println("ScanItem adding product");
 			state.addProduct(product);
 			state.waitingForBagging = true;
 			state.scs.mainScanner.disable();

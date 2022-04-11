@@ -115,6 +115,7 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 			// Scan item
 			BarcodedProduct bcp = indexMap.get(itemMenu.getSelectedItem());
 			Item item = customerFrame.st.idb.getInstance().getItem(bcp.getBarcode());
+			System.out.println("CSI scanned");
 			customerFrame.st.scs.mainScanner.scan(item);
 			customerFrame.currentItem = new BarcodedItem(bcp.getBarcode(), item.getWeight());
 			// Go to "place your item in bagging area" panel
