@@ -11,13 +11,19 @@ import javax.swing.SwingConstants;
 import org.gB.selfcheckout.software.LoginDB;
 
 public class LoginScreen extends JPanel {
-	private JLabel loginlabel, passwordlabel;
-	private JTextField loginfield;
-	private JPasswordField passwordfield;
-	private JButton loginbutton;
+	private static final long serialVersionUID = 1L;
 
-    public LoginScreen(LoginDB logindatabase) {
-		this.setLayout(new GridBagLayout());
+	private AttendantFrame attendantFrame;
+	
+	private JLabel loginlabel, passwordlabel;
+	public JTextField loginfield;
+	public JPasswordField passwordfield;
+	private JButton loginbutton;
+  
+    public LoginScreen(AttendantFrame attendantFrame, LoginDB logindatabase) {
+    	this.attendantFrame = attendantFrame;
+
+		    this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(200, 100));
         JPanel subpanel = new JPanel();;
         subpanel.setLayout(new GridBagLayout());
@@ -70,6 +76,23 @@ public class LoginScreen extends JPanel {
 			}
     	});
 		subpanel.add(loginbutton, c);
+		
+		JButton poweroff = new JButton("Power Off");
+		c.ipady = 0;
+		c.weighty = 1.0;
+		c.anchor = GridBagConstraints.PAGE_END;
+		c.insets = new Insets(10,0,5,5);
+		c.gridx = 0;
+		c.gridy = 3;
+        poweroff.addActionListener(e -> {
+			loginfield.setText("");
+			passwordfield.setText("");
+    		attendantFrame.shutDown.shutDown();
+        	attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "shutDown");
+    	});
+		subpanel.add(poweroff, c);
+		
         this.add(subpanel);
+        
     }
 }

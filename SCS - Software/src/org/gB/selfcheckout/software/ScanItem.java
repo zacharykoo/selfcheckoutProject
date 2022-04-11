@@ -1,9 +1,9 @@
 package org.gB.selfcheckout.software;
 import org.lsmr.selfcheckout.Barcode;
-import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.*;
 import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
 
 /**
  * Scans an item and records information about the item.
@@ -68,15 +68,15 @@ public class ScanItem implements BarcodeScannerObserver {
 	@Override
 	public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
 		if (!this.enabled) return;
-		// Grab the item from the item database, if it exists.
-		Item currentItem = state.idb.getItem(barcode);
-		if(currentItem != null)	{ // If it does exist, expect its weight.
-			state.addItem(currentItem);
+		// Grab the product from the database, if it exists
+		BarcodedProduct product = state.idb.getBarcodedProduct(barcode);
+		if (product != null) {
+			state.addProduct(product);
 			state.waitingForBagging = true;
 			state.scs.mainScanner.disable();
 			state.scs.handheldScanner.disable();
-		
-		// If the item does not exist, report the error.
-		} else Main.error("Unknown item.");
+		} else {
+			Main.error("Unknown product.");
+		}
 	}
 }

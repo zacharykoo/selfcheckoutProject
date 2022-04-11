@@ -2,14 +2,12 @@ package org.gB.selfcheckout.test;
 
 import static org.junit.Assert.*;
 
-import org.gB.selfcheckout.software.AddCustomerBags;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
 import org.junit.Before;
 import org.junit.Test;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.devices.OverloadException;
-import org.lsmr.selfcheckout.SimulationException;
 
 public class TestAddCustomerBags {
 
