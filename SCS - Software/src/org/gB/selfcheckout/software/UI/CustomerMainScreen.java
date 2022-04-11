@@ -16,7 +16,10 @@ import java.util.Vector;
 
 import javax.swing.*;
 
+import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.PriceLookupCode;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
@@ -68,8 +71,13 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		PLUCodedProduct plup1 = new PLUCodedProduct(plu1, "Apple", new BigDecimal(5.35));
 		PriceLookupCode plu2 = new PriceLookupCode("7733");
 		PLUCodedProduct plup2 = new PLUCodedProduct(plu2, "Strawberry", new BigDecimal(2.25));
+		Numeral[] num = {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one};
+		Barcode bc1 = new Barcode(num);
+		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Froot Loops", new BigDecimal(5.35), 15.5);
 		productCart.put(plup1,  15);
 		productCart.put(plup2,  10);
+		productCart.put(bcp1,  12);
+
 		
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -142,14 +150,27 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 	}
 	
 	public void displayProductCart() {
+		
 		cartDisplay.setListData(new Object[0]);
 		Vector<String> cartString = new Vector<String>();
+		Vector<Product> cartProducts = new Vector<Product>();
 		
 		cartString.add("Cart Contains:");
 		
-		productCart.forEach((product, integer) -> cartString.add(String.format("Description: $%.2f", product.getPrice())));
+		productCart.forEach((product, integer) -> cartProducts.add(product));
+		
+		for (Product p : cartProducts) {
+			try {
+				BarcodedProduct bp = (BarcodedProduct) p;
+				cartString.add(String.format("%s: $%.2f", bp.getDescription(), bp.getPrice()));
+			} catch (Exception e) {
+				PLUCodedProduct pp = (PLUCodedProduct) p;
+				cartString.add(String.format("%s: $%.2f", pp.getDescription(), pp.getPrice()));
+			}
+		}
 		
 		cartDisplay.setListData(cartString);
+		
 	}
 	
 	@Override
