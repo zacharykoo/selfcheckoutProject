@@ -160,41 +160,6 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 	// This is hardcoded for now, will be integrated with backend later
 	private void setUpItemOptions() {
 		
-		PriceLookupCode plu1 = new PriceLookupCode("7654");
-		PLUCodedProduct plup1 = new PLUCodedProduct(plu1, "Red Pepper", new BigDecimal(5.35));
-		
-		idb.addPLUCodedEntry(plu1, plup1);
-		
-		PriceLookupCode plu2 = new PriceLookupCode("8889");
-		PLUCodedProduct plup2 = new PLUCodedProduct(plu2, "Carrot", new BigDecimal(2.25));
-		
-		idb.addPLUCodedEntry(plu2, plup2);
-		
-		PriceLookupCode plu3 = new PriceLookupCode("9087");
-		PLUCodedProduct plup3 = new PLUCodedProduct(plu3, "Orange", new BigDecimal(7.99));
-		
-		idb.addPLUCodedEntry(plu3, plup3);
-		
-		PriceLookupCode plu4 = new PriceLookupCode("4567");
-		PLUCodedProduct plup4 = new PLUCodedProduct(plu4, "Pistachio", new BigDecimal(12.10));
-		
-		idb.addPLUCodedEntry(plu4, plup4);
-		
-		PriceLookupCode plu5 = new PriceLookupCode("1243");
-		PLUCodedProduct plup5 = new PLUCodedProduct(plu5, "Geranium", new BigDecimal(8.50));
-		
-		idb.addPLUCodedEntry(plu5, plup5);
-		
-		PriceLookupCode plu6 = new PriceLookupCode("2837");
-		PLUCodedProduct plup6 = new PLUCodedProduct(plu6, "Seed", new BigDecimal(3.79));
-		
-		idb.addPLUCodedEntry(plu6, plup6);
-		
-		PriceLookupCode plu7 = new PriceLookupCode("8886");
-		PLUCodedProduct plup7 = new PLUCodedProduct(plu7, "Avocado", new BigDecimal(9.98));
-		
-		idb.addPLUCodedEntry(plu7, plup7);
-		
 		// Add barcoded products to drop down menu
 		ProductDatabases.PLU_PRODUCT_DATABASE.forEach((plu, pluCodedProduct) -> itemMenu.add(pluCodedProduct.getDescription()));
 	}

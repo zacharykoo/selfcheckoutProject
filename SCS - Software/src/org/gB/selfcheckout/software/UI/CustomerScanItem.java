@@ -18,6 +18,7 @@ import javax.swing.*;
 
 import org.gB.selfcheckout.software.ItemDatabase;
 import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
@@ -38,9 +39,9 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	private JButton backButton;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
-	private ItemDatabase idb = new ItemDatabase();
 	private JComboBox itemMenu = new JComboBox();
-	private JButton scanButton; 
+	private JButton scanButton;
+	private HashMap<String, BarcodedProduct> indexMap = new HashMap();
 	
 	public CustomerScanItem(CustomerFrame customerFrame) {
 		
@@ -92,24 +93,14 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 		this.add(bottomPanel, gbc);
 		
 	}
+	
 	private void setUpItemOptions() {
-		
-		Numeral[] num = {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one};
-		Barcode bc1 = new Barcode(num);
-		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Lucky Charms", new BigDecimal(5.35), 15.5);
-		
-		idb.addBarcodedEntry(bc1, bcp1);
-		
-		Numeral[] num2 = {Numeral.seven, Numeral.nine, Numeral.four, Numeral.zero, Numeral.four};
-		Barcode bc2 = new Barcode(num2);
-		BarcodedProduct bcp2 = new BarcodedProduct(bc2, "Greek Yogurt", new BigDecimal(7.99), 13.75);
-		
-		idb.addBarcodedEntry(bc2, bcp2);
-		
 		// Add barcoded products to drop down menu
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.forEach((barcode, barcodedProduct) -> 
-				itemMenu.addItem(barcodedProduct.getDescription()));
+				indexMap.put(barcodedProduct.getDescription(), barcodedProduct));
+		indexMap.forEach((description, product) -> 	itemMenu.addItem(description));
 	}
+		
 
 
 	@Override
@@ -120,6 +111,11 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		else if (e.getSource() == scanButton) {
+			// Scan item
+			BarcodedProduct bcp = indexMap.get(itemMenu.getSelectedItem());
+			Item item = customerFrame.st.idb.getInstance().getItem(bcp.getBarcode());
+			//System.out.println("Item: "+item+" of type: "+item.getClass());
+			customerFrame.st.scs.mainScanner.scan(item);
 			// Go to "place your item in bagging area" panel
 			customerFrame.waitingToBag();
 		}

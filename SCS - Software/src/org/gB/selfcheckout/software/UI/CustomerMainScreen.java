@@ -65,18 +65,6 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		
 		this.setLayout(new GridBagLayout());
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		
-				
-		PriceLookupCode plu1 = new PriceLookupCode("3474");
-		PLUCodedProduct plup1 = new PLUCodedProduct(plu1, "Apple", new BigDecimal(5.35));
-		PriceLookupCode plu2 = new PriceLookupCode("7733");
-		PLUCodedProduct plup2 = new PLUCodedProduct(plu2, "Strawberry", new BigDecimal(2.25));
-		Numeral[] num = {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one};
-		Barcode bc1 = new Barcode(num);
-		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Froot Loops", new BigDecimal(5.35), 15.5);
-		productCart.put(plup1,  15);
-		productCart.put(plup2,  10);
-		productCart.put(bcp1,  12);
 
 		
 		gbc.gridx = 0;
