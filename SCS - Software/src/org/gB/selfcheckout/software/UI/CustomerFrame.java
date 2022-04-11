@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 
 import org.gB.selfcheckout.software.State;
+import org.lsmr.selfcheckout.Item;
 
 /**
  * JFrame to contain the UI used by customers at self-checkout stations.
@@ -17,6 +18,7 @@ public class CustomerFrame extends JFrame {
 	State st;
 	
 	public boolean isBeingUsed = false;
+	public Item currentItem;
 	
 	CustomerScanItem scanItem = new CustomerScanItem(this);
 	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag(this);

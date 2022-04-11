@@ -15,6 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import org.lsmr.selfcheckout.BarcodedItem;
+import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.PLUCodedItem;
+
 /**
  * JPanel that implements the interface shown to the customer when the system is
  * waiting for them to bag an item.
@@ -60,7 +64,13 @@ public class CustomerWaitingToBag extends JPanel {
 				// Reset the timer.
 				attendantTimer.cancel();
 				attendantTimer.purge();
-				customerFrame.st.scs.scanningArea.add(customerFrame.scanItem.currentItem);
+				try {
+					BarcodedItem bi = (BarcodedItem) customerFrame.currentItem;
+					customerFrame.st.scs.baggingArea.add(bi);
+				} catch (Exception e2) {
+					PLUCodedItem bi = (PLUCodedItem) customerFrame.currentItem;
+					customerFrame.st.scs.baggingArea.add(bi);
+				}
 				customerFrame.mainScreen.displayProductCart();
 				customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen"); // Handle the item not being bagged.
 			}});

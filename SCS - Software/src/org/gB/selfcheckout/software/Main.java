@@ -27,14 +27,14 @@ public class Main {
     }
 
     public static void error(String message) {
-        // System.out.println(message);
+        System.out.println(message);
     }
 
     public static void main(String[] args) {
     	populateDatabase();
         for (int i = 0; i < 4; i++) {
             try {
-            	State s = init(100, 10);
+            	State s = init(100, 1);
                 states.add(s);
                 cFrames.add(new CustomerFrame(i, states.get(i)));
                 

@@ -43,7 +43,6 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 	private JComboBox itemMenu = new JComboBox();
 	private JButton scanButton;
 	private HashMap<String, BarcodedProduct> indexMap = new HashMap();
-	public BarcodedItem currentItem;
 	
 	public CustomerScanItem(CustomerFrame customerFrame) {
 		
@@ -116,9 +115,8 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 			// Scan item
 			BarcodedProduct bcp = indexMap.get(itemMenu.getSelectedItem());
 			Item item = customerFrame.st.idb.getInstance().getItem(bcp.getBarcode());
-			//System.out.println("Item: "+item+" of type: "+item.getClass());
 			customerFrame.st.scs.mainScanner.scan(item);
-			currentItem = new BarcodedItem(bcp.getBarcode(), item.getWeight());
+			customerFrame.currentItem = new BarcodedItem(bcp.getBarcode(), item.getWeight());
 			// Go to "place your item in bagging area" panel
 			customerFrame.waitingToBag();
 		}
