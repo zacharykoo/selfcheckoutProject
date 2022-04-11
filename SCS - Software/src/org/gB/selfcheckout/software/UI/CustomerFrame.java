@@ -26,7 +26,7 @@ public class CustomerFrame extends JFrame {
 	BlockedScreen blockedScreen = new BlockedScreen(this);
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 	StartScreen startScreen = new StartScreen(this);
-	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
+	CustomerMainScreen mainScreen;
 	EnterPLUCode enterPLU = new EnterPLUCode(this);
 	VisualCatalogue lookup = new VisualCatalogue(this);
 	CustomerAddBags addBags = new CustomerAddBags(this);
@@ -39,6 +39,7 @@ public class CustomerFrame extends JFrame {
 		this.stationIndex = stationIndex;
 		this.st = state;
 		enterMember = new MemberInfo(this);
+		mainScreen = new CustomerMainScreen(this);
 		addPanels();
 		
 		// First panel

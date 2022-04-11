@@ -60,6 +60,7 @@ public class CustomerWaitingToBag extends JPanel {
 				// Reset the timer.
 				attendantTimer.cancel();
 				attendantTimer.purge();
+				customerFrame.mainScreen.displayProductCart();
 				customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen"); // Handle the item not being bagged.
 			}});
 		this.add(msg);
