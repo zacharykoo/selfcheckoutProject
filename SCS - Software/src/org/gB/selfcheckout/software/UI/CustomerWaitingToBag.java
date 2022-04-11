@@ -15,6 +15,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import org.lsmr.selfcheckout.BarcodedItem;
+import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.PLUCodedItem;
+
 /**
  * JPanel that implements the interface shown to the customer when the system is
  * waiting for them to bag an item.
@@ -26,6 +30,7 @@ public class CustomerWaitingToBag extends JPanel {
 			new JLabel("Please place the scanned item in the bagging area", SwingConstants.CENTER);
 	// Button to for the user to indicate they don't want to bag the item.
 	private JButton doNotBag = new JButton("Skip Bagging This Item");
+	private JButton bag = new JButton("(BAG ITEM)");
 	private Timer attendantTimer; // A 5 second timeout for the bagging.
 	private CustomerFrame customerFrame;
 	
@@ -35,14 +40,13 @@ public class CustomerWaitingToBag extends JPanel {
 	 */
 	public CustomerWaitingToBag(CustomerFrame customerFrame) {
 		super();
-
+		
 		this.customerFrame = customerFrame;
 		setBorder(BorderFactory.createEmptyBorder(100, 0, 0, 0));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		doNotBag.setAlignmentX(Component.CENTER_ALIGNMENT);
+		bag.setAlignmentX(Component.CENTER_ALIGNMENT);
 		msg.setAlignmentX(Component.CENTER_ALIGNMENT);
-		doNotBag.setAlignmentY(Component.CENTER_ALIGNMENT);
-		msg.setAlignmentY(Component.CENTER_ALIGNMENT);
 		msg.setFont(new Font("serif", Font.PLAIN, 20));
 		
 		// Have the button press cancel the timer and call the attendant.
@@ -54,8 +58,25 @@ public class CustomerWaitingToBag extends JPanel {
 				attendantTimer.purge();
 				itemNotBagged(); // Handle the item not being bagged.
 			}});
+		bag.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// Reset the timer.
+				attendantTimer.cancel();
+				attendantTimer.purge();
+				try {
+					BarcodedItem bi = (BarcodedItem) customerFrame.currentItem;
+					customerFrame.st.scs.baggingArea.add(bi);
+				} catch (Exception e2) {
+					PLUCodedItem bi = (PLUCodedItem) customerFrame.currentItem;
+					customerFrame.st.scs.baggingArea.add(bi);
+				}
+				customerFrame.mainScreen.displayProductCart();
+				customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen"); // Handle the item not being bagged.
+			}});
 		this.add(msg);
 		this.add(doNotBag);
+		this.add(bag);
 	}
 	
 	/**

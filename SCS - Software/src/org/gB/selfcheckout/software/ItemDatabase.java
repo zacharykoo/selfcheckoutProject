@@ -21,6 +21,7 @@ import java.util.HashMap;
  *
  * Further functionality can be added or replaced in later iterations.
  */
+
 public class ItemDatabase {
     //Objects with the same indices are related in the following lists.
     //Null represents no corresponding object for that entry.

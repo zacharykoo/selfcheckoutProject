@@ -49,11 +49,8 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 
 	private JLabel paidLabel = new JLabel();
 	private JLabel totalLabel = new JLabel();
-	
-	private double paid = 0.0;
-	private double total = 0.0;
-	
-	public Map<Product, Integer> productCart = new HashMap<>();
+		
+	//public Map<Product, Integer> productCart = new HashMap<>();
 	private JList cartDisplay = new JList();
 
 	
@@ -65,18 +62,6 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		
 		this.setLayout(new GridBagLayout());
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-		
-				
-		PriceLookupCode plu1 = new PriceLookupCode("3474");
-		PLUCodedProduct plup1 = new PLUCodedProduct(plu1, "Apple", new BigDecimal(5.35));
-		PriceLookupCode plu2 = new PriceLookupCode("7733");
-		PLUCodedProduct plup2 = new PLUCodedProduct(plu2, "Strawberry", new BigDecimal(2.25));
-		Numeral[] num = {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one};
-		Barcode bc1 = new Barcode(num);
-		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Froot Loops", new BigDecimal(5.35), 15.5);
-		productCart.put(plup1,  15);
-		productCart.put(plup2,  10);
-		productCart.put(bcp1,  12);
 
 		
 		gbc.gridx = 0;
@@ -106,8 +91,8 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		
 		paidLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		totalLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		paidLabel.setText(String.format("Paid: $%.2f", paid));
-		totalLabel.setText(String.format("Total: $%.2f", total));
+		paidLabel.setText(String.format("Paid: $%.2f", customerFrame.st.paymentTotal.floatValue()));
+		totalLabel.setText(String.format("Total: $%.2f", customerFrame.st.totalToPay.floatValue()));
 		
 		subtotalsPanel.add(paidLabel);
 		subtotalsPanel.add(totalLabel);
@@ -157,20 +142,23 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		
 		cartString.add("Cart Contains:");
 		
-		productCart.forEach((product, integer) -> cartProducts.add(product));
+		customerFrame.st.productCart.forEach((product, integer) -> cartProducts.add(product));
 		
 		for (Product p : cartProducts) {
 			try {
 				BarcodedProduct bp = (BarcodedProduct) p;
-				cartString.add(String.format("%s: $%.2f", bp.getDescription(), bp.getPrice()));
+				cartString.add(String.format("%s x %d: $%.2f", bp.getDescription(), customerFrame.st.productCart.get(bp), customerFrame.st.productCart.get(bp)*bp.getPrice().floatValue()));
 			} catch (Exception e) {
 				PLUCodedProduct pp = (PLUCodedProduct) p;
-				cartString.add(String.format("%s: $%.2f", pp.getDescription(), pp.getPrice()));
+				cartString.add(String.format("%s x %d: $%.2f", pp.getDescription(), customerFrame.st.productCart.get(pp), customerFrame.st.productCart.get(pp)*pp.getPrice().floatValue()));
 			}
 		}
 		
 		cartDisplay.setListData(cartString);
 		
+		paidLabel.setText(String.format("Paid: $%.2f", customerFrame.st.paymentTotal.floatValue()));
+		totalLabel.setText(String.format("Total: $%.2f", customerFrame.st.totalToPay.floatValue()));
+
 	}
 	
 	@Override
