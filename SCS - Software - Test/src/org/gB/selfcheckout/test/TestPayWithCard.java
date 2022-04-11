@@ -81,7 +81,7 @@ public class TestPayWithCard {
     public void setup() throws IOException {
         //Initialize State.
         try {
-        	state = Main.init(100, 1);
+        	state = new Main().createState(100, 1);
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
