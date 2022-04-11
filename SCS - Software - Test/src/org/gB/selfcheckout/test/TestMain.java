@@ -21,31 +21,31 @@ public class TestMain {
 	// Ensure an exception is thrown on negative max weight.
 	@Test (expected = SimulationException.class)
 	public void testNegativeMaxWeight() throws Exception {
-		Main.init(-5, 5);
+		new Main().createState(-5, 5);
 	}
 	
 	// Ensure an exception is thrown on negative sensitivity.
 	@Test (expected = SimulationException.class)
 	public void testNegativeSensitivity() throws Exception {
-		Main.init(5, -5);
+		new Main().createState(5, -5);
 	}
 	
 	// Ensure an exception is thrown on 0 max weight.
 	@Test (expected = SimulationException.class)
 	public void testZeroMaxWeight() throws Exception {
-		Main.init(0, 5);
+		new Main().createState(0, 5);
 	}
 	
 	// Ensure an exception is thrown on 0 sensitivity.
 	@Test (expected = SimulationException.class)
 	public void testZeroSensitivity() throws Exception {
-		Main.init(5, 0);
+		new Main().createState(5, 0);
 	}
 	
 	// With valid scale parameters, ensure the state is correctly initialized.
 	@Test
 	public void testNormalParameters() throws Exception {
-		State state = Main.init(2000, 1);
+		State state = new Main().createState(2000, 1);
 		// Ensure members are initialized.
 		Assert.assertNotNull(state.idb);
 		Assert.assertNotNull(state.scs);
