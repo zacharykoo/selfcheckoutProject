@@ -158,10 +158,15 @@ public class TestAddItemToBag {
 	@Test
 	public void addItemWhileDisabled() {
 		Item i = new Item(45.6) {};
-		Product p = new Product(new BigDecimal(45.6), true) {};
+		
+		Numeral[] numeral1 = new Numeral[2];
+        numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
+        Barcode barcode1 = new Barcode(numeral1); // barcode is 10
+        this.sampleProduct = new BarcodedProduct(barcode1, "Sample", BigDecimal.valueOf(2), 45.6);
+        
 		state.scs.baggingArea.disable(); // Disable the scale.
 		// "Scan" an item.
-		state.addProduct(p);
+		state.addProduct(this.sampleProduct);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
