@@ -20,6 +20,7 @@ import org.lsmr.selfcheckout.products.Product;
 public class TestAddItemToBag {
 	private State state; // Stores a program state for testing.
 	private BarcodedProduct sampleProduct;
+	private BarcodedProduct heavyProduct;
 	
 	
 	// Initializes a state for testing with a sensible weight limits
@@ -40,7 +41,8 @@ public class TestAddItemToBag {
         numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
         Barcode barcode1 = new Barcode(numeral1); // barcode is 10
         this.sampleProduct = new BarcodedProduct(barcode1, "Sample", BigDecimal.valueOf(2), 45.6);
-		Item i = new Item(45.6) {};
+		
+        Item i = new Item(45.6) {};
 		// "Scan" an item.
 		state.addProduct(sampleProduct);
 		state.waitingForBagging = true;
@@ -107,11 +109,16 @@ public class TestAddItemToBag {
 	// Ensure a valid item added during an overload is correctly handled.
 	@Test
 	public void testValidAfterOverload() {
-		Product p1 = new Product(new BigDecimal(45.6), true) {};
+		Numeral[] numeral1 = new Numeral[2];
+        numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
+        Barcode barcode1 = new Barcode(numeral1); // barcode is 10
+        this.sampleProduct = new BarcodedProduct(barcode1, "Sample", BigDecimal.valueOf(2), 45.6);
+        
+		//Product p1 = new Product(new BigDecimal(45.6), true) {};
 		Item i1 = new Item(45.6) {};
 		Item i2 = new Item(20000) {};
 		// "Scan" an item.
-		state.addProduct(p1);
+		state.addProduct(sampleProduct);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
