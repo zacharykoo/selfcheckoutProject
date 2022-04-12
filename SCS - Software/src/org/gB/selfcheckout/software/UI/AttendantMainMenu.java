@@ -3,6 +3,7 @@ package org.gB.selfcheckout.software.UI;
 import java.awt.BorderLayout;
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -144,14 +145,18 @@ public class AttendantMainMenu extends JPanel {
 			
 			// Set up event handlers:
 			power.addActionListener(e -> {
+				CustomerFrame cFrame = attendantFrame.cFrames.get(stationIndex);
 				if (power.getText().compareTo("Power Station Off") == 0) {
+					cFrame.cardLayout.show(cFrame.getContentPane(), "shutDown");
 					power.setText("Power Station On");
-					AttendantMainMenu.this.attendantFrame
-					.ac.shutdownStation(st);
+					cFrame.st.expectedWeight = 0;
+					cFrame.st.productCart = new HashMap<>();
+					cFrame.st.totalToPay = new BigDecimal(0.0);
+					cFrame.st.paymentTotal = new BigDecimal(0.0);
+					cFrame.mainScreen.displayProductCart();
 				} else {
+					cFrame.cardLayout.show(cFrame.getContentPane(), "startScreen");
 					power.setText("Power Station Off");
-//					AttendantMainMenu.this.attendantFrame
-//					.ac.startupStation(st);
 				}
 			});
 			
@@ -161,10 +166,12 @@ public class AttendantMainMenu extends JPanel {
 					cFrame.cardLayout.show(cFrame.getContentPane(), "blockedScreen");
 					blockStation.setText("Unblock Station");
 				} else {
-					cFrame.cardLayout.show(cFrame.getContentPane(), "startScreen");
+					if (cFrame.isBeingUsed)
+						cFrame.cardLayout.show(cFrame.getContentPane(), "scanItem");
+					else
+						cFrame.cardLayout.show(cFrame.getContentPane(), "startScreen");
 					blockStation.setText("Block Station");
 				}
-				cFrame.cardLayout.show(cFrame.getContentPane(), "blockedScreen");
 			});
 			
 			viewCart.addActionListener(e -> {
