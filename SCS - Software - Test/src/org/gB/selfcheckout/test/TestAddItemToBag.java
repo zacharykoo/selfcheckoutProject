@@ -36,7 +36,9 @@ public class TestAddItemToBag {
 	// Ensures that a scanned item added to the bagging scale is handled
 	// correctly by the state being reset to a scannable mode.
 	@Test
-	public void testVaidWeightChange() {
+	public void testValidWeightChange() {
+		state.addItemToBag.enabled(null);
+		
 		Numeral[] numeral1 = new Numeral[2];
         numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
         Barcode barcode1 = new Barcode(numeral1); // barcode is 10
