@@ -40,6 +40,7 @@ public class CustomerAddBags extends JPanel implements ActionListener {
 	private JPanel bottomPanel;
 	private JButton ownBags, useBags; 
 	private NumericKeypad keypad = new NumericKeypad("Enter # Bags Used");
+	JButton enter = new JButton("Enter");
 	
 	public CustomerAddBags(CustomerFrame customerFrame) {
 		
@@ -62,6 +63,10 @@ public class CustomerAddBags extends JPanel implements ActionListener {
 		keypad.setEnabled(false);
 		keypad.setVisible(false);
 		bottomPanel.add(keypad);
+		
+		enter.addActionListener(this);
+		enter.setVisible(false);
+		bottomPanel.add(enter);
 		
 	}
 	
@@ -102,6 +107,7 @@ public class CustomerAddBags extends JPanel implements ActionListener {
 			// Go back to main customer menu
 			keypad.setEnabled(false);
 			keypad.setVisible(false);
+			enter.setVisible(false);
 			keypad.enteredInfo = "";
 			keypad.txtField.setText("Enter # Bags Used");
 			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
@@ -114,7 +120,15 @@ public class CustomerAddBags extends JPanel implements ActionListener {
 		else if (e.getSource() == useBags) {
 			keypad.setEnabled(true);
 			keypad.setVisible(true);
+			enter.setVisible(true);
 			
+		} else if (e.getSource() == enter) {
+			keypad.setEnabled(false);
+			keypad.setVisible(false);
+			enter.setVisible(false);
+			keypad.enteredInfo = "";
+			keypad.txtField.setText("Enter # Bags Used");
+			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		
 	}

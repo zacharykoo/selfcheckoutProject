@@ -76,7 +76,8 @@ public class AttendantMainMenu extends JPanel {
 		// General management items:
 		private JPanel managePanel = new JPanel();
 		private JButton power = new JButton("Power Station Off");
-		private JButton blockStation = new JButton("Block Station");
+		private JButton blockStation = new JButton("Block");
+		private JButton unblockStation = new JButton("Unblock");
 		private JButton viewCart = new JButton("View Scanned Items");
 		// Printer management:
 		private JPanel printerPanel = new JPanel();
@@ -115,6 +116,7 @@ public class AttendantMainMenu extends JPanel {
 			managePanel.add(new JLabel("General"));
 			managePanel.add(power);
 			managePanel.add(blockStation);
+			managePanel.add(unblockStation);
 			managePanel.add(viewCart);
 			this.add(managePanel);
 			// Setup the printer handling UI:
@@ -160,18 +162,18 @@ public class AttendantMainMenu extends JPanel {
 				}
 			});
 			
+			unblockStation.addActionListener(e -> {
+				CustomerFrame cFrame = attendantFrame.cFrames.get(stationIndex);
+				if (cFrame.isBeingUsed)
+					cFrame.cardLayout.show(cFrame.getContentPane(), "mainScreen");
+				else
+					cFrame.cardLayout.show(cFrame.getContentPane(), "startScreen");
+				blockStation.setText("Block");
+			});
+			
 			blockStation.addActionListener(e -> {
 				CustomerFrame cFrame = attendantFrame.cFrames.get(stationIndex);
-				if (blockStation.getText().compareTo("Block Station") == 0) {
-					cFrame.cardLayout.show(cFrame.getContentPane(), "blockedScreen");
-					blockStation.setText("Unblock Station");
-				} else {
-					if (cFrame.isBeingUsed)
-						cFrame.cardLayout.show(cFrame.getContentPane(), "scanItem");
-					else
-						cFrame.cardLayout.show(cFrame.getContentPane(), "startScreen");
-					blockStation.setText("Block Station");
-				}
+				cFrame.cardLayout.show(cFrame.getContentPane(), "blockedScreen");
 			});
 			
 			viewCart.addActionListener(e -> {
@@ -180,7 +182,7 @@ public class AttendantMainMenu extends JPanel {
 						attendantFrame.getContentPane(),
 						"cart" + Integer.toString(stationIndex));
 			});
-		
+			
 			refillPaper.addActionListener(e -> {
 				int delta = ReceiptPrinter.MAXIMUM_PAPER
 						- st.linesOfPaperRemaining;
