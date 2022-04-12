@@ -2,9 +2,7 @@ package org.gB.selfcheckout.software;
 
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.Map.Entry;
 
-import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;

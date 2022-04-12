@@ -17,7 +17,6 @@ public class CustomerDoesNotWantToBagScannedItem implements ElectronicScaleObser
 	@Override
 	public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
 		this.enabled = true;
-		
 	}
 
 	@Override
