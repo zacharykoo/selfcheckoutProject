@@ -19,6 +19,7 @@ import org.lsmr.selfcheckout.products.Product;
  * Stores the state of the self-checkout program. The members scs, addBanknote,
  * addCoin, addItemToBag, checkout, and scanItem are uninitialized by default.
  */
+
 public class State {
 	// Stores all items scanned into the machine.
 	public ArrayList<Item> scannedItems = new ArrayList<Item>();
@@ -39,6 +40,7 @@ public class State {
 	public BigDecimal totalToPay = new BigDecimal(0.0);
 	
 	public boolean isCardInserted = false;
+	public boolean itemScanned = false;
 	
 	// Indicates if scanning/bagging or paying is enabled (the latter is true).
 	public boolean paymentEnabled = false;
@@ -61,7 +63,6 @@ public class State {
 	// Stores the payments made for each card transactions.
 	public ArrayList<Pair<Card.CardData, BigDecimal>> cardPayments =
 		new ArrayList<Pair<Card.CardData, BigDecimal>>();
-	//public CustomerDoesNotWantToBagScannedItem customerDoesNotWantToBagScannedItem = null;
 	// A database to contain items for purchase.
 	public ItemDatabase idb = null;
 	// A database to contain card issuer with the corresponding card type

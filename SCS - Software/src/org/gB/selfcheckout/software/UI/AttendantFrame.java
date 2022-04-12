@@ -1,10 +1,13 @@
 package org.gB.selfcheckout.software.UI;
 
 import java.awt.CardLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 
+import org.gB.selfcheckout.software.AttendantControl;
+import org.gB.selfcheckout.software.LoginDB;
 import org.gB.selfcheckout.software.State;
 
 /**
@@ -14,21 +17,32 @@ public class AttendantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	List<State> states;
 	List<CustomerFrame> cFrames;
+	AttendantControl ac;
 	public CardLayout cardLayout = new CardLayout();
-	LoginScreen login = new LoginScreen(this);
+	LoginScreen login;
 	AttendantMainMenu main;
-	AttendantLookupProduct lookup = new AttendantLookupProduct(this);;
-	AttendantCartScreen cart = new AttendantCartScreen();
+	ArrayList<AttendantLookupProduct> lookups = new ArrayList<AttendantLookupProduct>();
+	ArrayList<AttendantCartScreen> carts = new ArrayList<AttendantCartScreen>();
 	AttendantStationShutDown shutDown;
 	AlertPage alert;
 
-	public AttendantFrame (List<State> states, List<CustomerFrame> cFrames) {
+	public AttendantFrame (List<State> states, List<CustomerFrame> cFrames, AttendantControl ac) {
 		super("Attendant Station");
 		this.states = states;
 		this.cFrames = cFrames;
+		this.ac = ac;
+		LoginDB ldb = new LoginDB();
+		ldb.addUser("", "");
+		login = new LoginScreen(this, ldb);
 		main = new AttendantMainMenu(this, states);
 		alert = new AlertPage(this);
 		shutDown = new AttendantStationShutDown(this);
+		
+		for (State state : states)
+			carts.add(new AttendantCartScreen(this, state));
+		
+		for (State state : states)
+			lookups.add(new AttendantLookupProduct(this, state));
 		
 		addPanels();
 		
@@ -45,9 +59,11 @@ public class AttendantFrame extends JFrame {
 
 		getContentPane().add(login, "login");
 		getContentPane().add(main, "main");
-		getContentPane().add(cart, "cart");
+		for (int i = 0; i < carts.size(); i ++)
+			getContentPane().add(carts.get(i), "cart" + Integer.toString(i));
 		getContentPane().add(shutDown, "shutDown");
-		getContentPane().add(lookup, "lookup");
+		for (int i = 0; i < lookups.size(); i ++)
+			getContentPane().add(lookups.get(i), "lookup" + Integer.toString(i));
 		getContentPane().add(alert, "alert");
 	}
 }
