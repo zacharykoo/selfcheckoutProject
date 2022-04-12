@@ -1,17 +1,17 @@
 package org.gB.selfcheckout.test;
 
-import org.gB.selfcheckout.software.CardIssuerDatabase;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.lsmr.selfcheckout.*;
-import org.lsmr.selfcheckout.Card.CardData;
-import org.lsmr.selfcheckout.external.CardIssuer;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import org.gB.selfcheckout.software.CardIssuerDatabase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.lsmr.selfcheckout.Card;
+import org.lsmr.selfcheckout.Card.CardData;
+import org.lsmr.selfcheckout.external.CardIssuer;
 
 public class TestCardIssuerDatabase{
 

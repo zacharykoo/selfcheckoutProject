@@ -12,7 +12,6 @@ import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
-import org.lsmr.selfcheckout.products.Product;
 
 /**
  * A test suite for org.g30.selfcheckout.AddItemToBag.

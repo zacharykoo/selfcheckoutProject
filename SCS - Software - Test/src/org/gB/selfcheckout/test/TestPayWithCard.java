@@ -1,5 +1,9 @@
 package org.gB.selfcheckout.test;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Calendar;
+
 import org.gB.selfcheckout.software.CardIssuerDatabase;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.Pair;
@@ -12,10 +16,6 @@ import org.lsmr.selfcheckout.Card;
 import org.lsmr.selfcheckout.Card.CardData;
 import org.lsmr.selfcheckout.devices.CardReader;
 import org.lsmr.selfcheckout.external.CardIssuer;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Calendar;
 
 public class TestPayWithCard {
 

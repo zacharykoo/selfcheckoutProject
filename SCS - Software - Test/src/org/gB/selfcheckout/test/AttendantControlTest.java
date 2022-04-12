@@ -7,6 +7,9 @@ import java.util.Currency;
 import org.gB.selfcheckout.software.AttendantControl;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.lsmr.selfcheckout.Banknote;
 import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.BarcodedItem;
@@ -23,10 +26,6 @@ import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 public class AttendantControlTest {
 	private ArrayList<State> scsList;

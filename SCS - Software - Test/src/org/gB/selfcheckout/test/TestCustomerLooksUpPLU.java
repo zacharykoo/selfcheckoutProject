@@ -1,12 +1,11 @@
 package org.gB.selfcheckout.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import org.gB.selfcheckout.software.CustomerEntersPLU;
-import org.gB.selfcheckout.software.CustomerLooksUpProduct;
 import org.junit.Test;
 import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.external.ProductDatabases;

@@ -1,5 +1,7 @@
 package org.gB.selfcheckout.test;
 
+import java.math.BigDecimal;
+
 import org.gB.selfcheckout.software.ItemDatabase;
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.ScanItem;
@@ -18,8 +20,6 @@ import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.ElectronicScaleObserver;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.Product;
-
-import java.math.BigDecimal;
 
 /**
  * A test suite for org.g30.selfcheckout.ScanItem.

@@ -1,18 +1,23 @@
 package org.gB.selfcheckout.test;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Map;
+
 import org.gB.selfcheckout.software.ItemDatabase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.lsmr.selfcheckout.*;
+import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.BarcodedItem;
+import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.Numeral;
+import org.lsmr.selfcheckout.PLUCodedItem;
+import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * A test suite for org.g30.selfcheckout.ItemDatabase.

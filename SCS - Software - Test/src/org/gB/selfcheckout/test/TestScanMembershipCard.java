@@ -1,11 +1,11 @@
 package org.gB.selfcheckout.test;
 
-import org.junit.Test;
-import org.lsmr.selfcheckout.Card.CardData;
 import org.gB.selfcheckout.software.ScanMembershipCard;
 import org.gB.selfcheckout.software.State;
 import org.junit.Assert;
-import org.junit.Before;    
+import org.junit.Before;
+import org.junit.Test;
+import org.lsmr.selfcheckout.Card.CardData;    
     
 public class TestScanMembershipCard {
     private State state;

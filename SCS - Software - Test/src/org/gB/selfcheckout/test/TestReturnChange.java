@@ -5,17 +5,19 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
+import org.gB.selfcheckout.software.Main;
+import org.gB.selfcheckout.software.ReturnChange;
+import org.gB.selfcheckout.software.State;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.lsmr.selfcheckout.Banknote;
 import org.lsmr.selfcheckout.Coin;
+import org.lsmr.selfcheckout.SimulationException;
 import org.lsmr.selfcheckout.devices.BanknoteSlot;
 import org.lsmr.selfcheckout.devices.DisabledException;
 import org.lsmr.selfcheckout.devices.EmptyException;
 import org.lsmr.selfcheckout.devices.OverloadException;
-import org.lsmr.selfcheckout.SimulationException;
-import org.gB.selfcheckout.software.*;
-import org.junit.Assert;
-import org.junit.Before;
 
 public class TestReturnChange{
     private State state;

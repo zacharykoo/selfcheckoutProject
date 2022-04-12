@@ -1,6 +1,8 @@
 package org.gB.selfcheckout.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.gB.selfcheckout.software.Main;
 import org.gB.selfcheckout.software.State;
