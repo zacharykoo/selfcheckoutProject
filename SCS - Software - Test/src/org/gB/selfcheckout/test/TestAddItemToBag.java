@@ -58,31 +58,6 @@ public class TestAddItemToBag {
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
 	
-	// Ensures a disabled scale does not change the state in response to a
-	// barcode scanning event.
-	@Test
-	public void testValidDisabledWeightChange() {
-		Numeral[] numeral1 = new Numeral[2];
-        numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
-        Barcode barcode1 = new Barcode(numeral1); // barcode is 10
-        this.sampleProduct = new BarcodedProduct(barcode1, "Sample", BigDecimal.valueOf(2), 45.6);
-        
-		Item i = new Item(45.6) {};
-		// "Scan" an item.
-		state.addProduct(this.sampleProduct);
-		state.waitingForBagging = true;
-		state.scs.mainScanner.disable();
-		state.scs.handheldScanner.disable();
-		// Disable the scale.
-		state.addItemToBag.disabled(null);
-		// Put the item on the scale.
-		state.scs.baggingArea.add(i);
-		// Ensure the state is not changed.
-		Assert.assertTrue(state.waitingForBagging);
-		Assert.assertTrue(state.scs.mainScanner.isDisabled());
-		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
-	}
-	
 	// Ensure that placing the wrong item on the scale after scanning an item
 	// does not reset the state.
 	@Test
