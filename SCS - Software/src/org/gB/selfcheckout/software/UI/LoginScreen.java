@@ -76,6 +76,15 @@ public class LoginScreen extends JPanel {
 			String username = new String(loginfield.getText());
 			String password = new String(passwordfield.getPassword());
 			if (logindatabase.login(username, password)) {
+				for (CustomerFrame cf : attendantFrame.cFrames) {
+					if (cf.isBeingUsed) {
+						cf.cardLayout.show(cf.getContentPane(), "mainScreen");
+					}
+					else {
+						cf.cardLayout.show(cf.getContentPane(), "startScreen");
+					}
+						
+				}
 				attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
 			}
     	});
