@@ -23,7 +23,7 @@ public class LoginScreen extends JPanel {
     public LoginScreen(AttendantFrame attendantFrame, LoginDB logindatabase) {
     	this.attendantFrame = attendantFrame;
 
-		    this.setLayout(new GridBagLayout());
+		this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(200, 100));
         JPanel subpanel = new JPanel();;
         subpanel.setLayout(new GridBagLayout());
