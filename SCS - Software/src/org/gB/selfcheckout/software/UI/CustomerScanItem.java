@@ -119,7 +119,8 @@ public class CustomerScanItem extends JPanel implements ActionListener {
 
 			customerFrame.st.scs.mainScanner.scan(item);
 			// Go to "place your item in bagging area" panel
-			customerFrame.waitingToBag();
+			if (customerFrame.st.itemScanned)
+				customerFrame.waitingToBag();
 		}
 
 	}
