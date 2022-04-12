@@ -26,7 +26,7 @@ public class State {
 
 	// We need products in order to get the price for printing the receipt
 	//public ArrayList<Product> scannedProducts = new ArrayList<Product>();
-	public Map<Product, Integer> productCart = new HashMap<>();
+	public HashMap<Product, Integer> productCart = new HashMap<>();
 	
 	// Stores the number of plastic bags used
 	private int plasticBagCount = 0;
