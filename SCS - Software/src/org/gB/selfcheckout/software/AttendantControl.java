@@ -28,9 +28,9 @@ public class AttendantControl {
 	public AttendantControl(ArrayList<State> scsList) {
 		this.scsList = scsList;
 		supervisionStation = new SupervisionStation();
-		for (State state : this.scsList) {
-			supervisionStation.add(state.scs);
-		}
+//		for (State state : this.scsList) {
+//			supervisionStation.add(state.scs);
+//		}
 	}
 
 	/**

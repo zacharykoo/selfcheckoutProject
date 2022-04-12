@@ -126,6 +126,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleObserver> {
 
 		if(Math.abs(currentWeightInGrams - weightAtLastEvent) > sensitivity)
 			notifyWeightChanged();
+		
 	}
 
 	/**
@@ -140,6 +141,7 @@ public class ElectronicScale extends AbstractDevice<ElectronicScaleObserver> {
 	 * @throws SimulationException
 	 *             If the device is not in the normal phase.
 	 */
+	
 	public void remove(Item item) {
 		if(phase == Phase.ERROR)
 			throw new IllegalErrorPhaseSimulationException();

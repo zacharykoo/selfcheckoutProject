@@ -16,7 +16,7 @@ public class CardIssuerDatabase {
     //doesn't matter really, depends how it is used
     //
     private final Map<String, CardIssuer> cardToCardIssuerMap = new HashMap<String, CardIssuer>();
-
+    public static CardIssuerDatabase c = new CardIssuerDatabase();
     //similar style to ItemDatabase
 
     /**
@@ -47,7 +47,6 @@ public class CardIssuerDatabase {
     }
 
     /**
-     * Gets an item given its barcode.
      * @param card Card to search for.
      * @return CardIssuer corresponding to the card or NULL if no item found.
      */

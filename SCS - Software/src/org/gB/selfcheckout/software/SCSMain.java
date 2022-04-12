@@ -3,6 +3,8 @@ package org.gB.selfcheckout.software;
 import java.math.BigDecimal;
 import java.util.Currency;
 import org.lsmr.selfcheckout.Coin;
+import org.lsmr.selfcheckout.devices.EmptyException;
+import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 
 /**
@@ -57,7 +59,7 @@ public class SCSMain {
 		scs.coinValidator.attach(state.addCoin);
 		// Create the AddItemToBag handler and attach to a device.
 		state.addItemToBag = new AddItemToBag(state);
-		scs.scanningArea.attach(state.addItemToBag);
+		scs.baggingArea.attach(state.addItemToBag);
 		// Create the UseCustomerBags handler and attach to a device.
 		state.customerBags = new AddCustomerBags(state);
 		scs.baggingArea.attach(state.customerBags);
@@ -75,8 +77,94 @@ public class SCSMain {
 	    scs.printer.attach(state.printReceipt);
 
 		state.scs.scanningArea.disable();
+		state.scs.baggingArea.disable();
 		state.enableScanning();
 
+		// Create the printer and get it ready
+		// scs.printer.addInk(1000);
+		// scs.printer.addPaper(1000);
+
 		return state;
+	}
+
+	/**
+	 * Stub error method that will be used to announce errors to the user when
+	 * a UI becomes available.
+	 *
+	 * @param type
+	 *		The type of error that took place.
+	 */
+	public static void error(String type) {
+		System.out.println(type);
+	}
+
+	/**
+	 *
+	 */
+	public static void checkout() {
+
+	}
+
+	/**
+	 *
+	 */
+	public static void proceedToPay() {
+
+	}
+
+	public static void payWithCard(BigDecimal amountToPay) {
+		/*
+		// Check that the user can pay
+		if (!state.paymentEnabled) {
+			error("Cannot pay without payment mode enabled");
+			return;
+		}
+		*/
+
+
+	}
+
+
+	public static void payWithCash() {
+
+	}
+
+	/**
+	 *
+	 */
+	public static void addCustomerBags() {
+
+	}
+
+	/**
+	 *
+	 */
+	public static void endAddCustomerBags() {
+
+	}
+
+	/** Prints a receipt to the customer
+	 * @throws OverloadException
+	 * @throws EmptyException
+	 *
+	 */
+	public void printReceipt(double totalForPrinting) throws EmptyException, OverloadException {
+
+		String printString = new String("Receipt: \n");
+		printString = printString.concat("Total: " + totalForPrinting);
+
+		for (int i = 0; i < printString.length(); i++) {
+			scs.printer.print(printString.charAt(i));
+		}
+
+		scs.printer.cutPaper();
+		scs.printer.removeReceipt();
+	}
+
+	/**
+	 *
+	 */
+	public static void dispenseChange() {
+
 	}
 }

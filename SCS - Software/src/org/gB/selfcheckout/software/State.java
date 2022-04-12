@@ -19,13 +19,14 @@ import org.lsmr.selfcheckout.products.Product;
  * Stores the state of the self-checkout program. The members scs, addBanknote,
  * addCoin, addItemToBag, checkout, and scanItem are uninitialized by default.
  */
+
 public class State {
 	// Stores all items scanned into the machine.
 	public ArrayList<Item> scannedItems = new ArrayList<Item>();
 
 	// We need products in order to get the price for printing the receipt
 	//public ArrayList<Product> scannedProducts = new ArrayList<Product>();
-	public Map<Product, Integer> productCart = new HashMap<>();
+	public HashMap<Product, Integer> productCart = new HashMap<>();
 	
 	// Stores the number of plastic bags used
 	private int plasticBagCount = 0;
@@ -39,6 +40,7 @@ public class State {
 	public BigDecimal totalToPay = new BigDecimal(0.0);
 	// Indiciates if a card has been inserted.
 	public boolean isCardInserted = false;
+	public boolean itemScanned = false;
 	
 	// Indicates if scanning/bagging or paying is enabled (the latter is true).
 	public boolean paymentEnabled = false;
@@ -61,11 +63,10 @@ public class State {
 	// Stores the payments made for each card transactions.
 	public ArrayList<Pair<Card.CardData, BigDecimal>> cardPayments =
 		new ArrayList<Pair<Card.CardData, BigDecimal>>();
-	public CustomerDoesNotWantToBagScannedItem customerDoesNotWantToBagScannedItem = null;
 	// A database to contain items for purchase.
 	public ItemDatabase idb = null;
 	// A database to contain card issuer with the corresponding card type
-	public CardIssuerDatabase cardIssuerDatabase = null;
+	public CardIssuerDatabase cardIssuerDatabase = CardIssuerDatabase.c;
 	// An instance of the self checkout station hardware.
 	public SelfCheckoutStation scs = null;
 	// Instances of the use case handlers.
@@ -278,7 +279,7 @@ public class State {
 		scs.mainScanner.disable();
 		scs.handheldScanner.disable();
 		scs.printer.disable();
-		scs.cardReader.disable();
+		scs.cardReader.enable();
 		scs.banknoteInput.enable();
 		scs.banknoteOutput.enable();
 		scs.banknoteValidator.enable();
