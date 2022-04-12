@@ -3,8 +3,6 @@ package org.gB.selfcheckout.software;
 import java.math.BigDecimal;
 import java.util.Currency;
 import org.lsmr.selfcheckout.Coin;
-import org.lsmr.selfcheckout.devices.EmptyException;
-import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 
 /**
