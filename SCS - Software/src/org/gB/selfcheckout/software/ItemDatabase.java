@@ -4,7 +4,6 @@ import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.NullPointerSimulationException;
 import org.lsmr.selfcheckout.PriceLookupCode;
-import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
@@ -12,7 +11,6 @@ import org.lsmr.selfcheckout.products.Product;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Simple database for relating items, products, and barcodes.
@@ -24,7 +22,7 @@ import java.util.HashMap;
 public class ItemDatabase {
     //Objects with the same indices are related in the following lists.
     //Null represents no corresponding object for that entry.
-    private final ArrayList<Item> itemList = new ArrayList<>(); 	  //Ordered list of items.
+    public final ArrayList<Item> itemList = new ArrayList<>(); 	  //Ordered list of items.
     private final ArrayList<Product> productList = new ArrayList<>(); //Ordered list of products.
     private final ArrayList<Barcode> barcodeList = new ArrayList<>(); //Ordered list of barcodes.
     //added

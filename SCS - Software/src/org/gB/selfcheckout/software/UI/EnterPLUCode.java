@@ -15,6 +15,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.PLUCodedItem;
+import org.lsmr.selfcheckout.PriceLookupCode;
+
 public class EnterPLUCode extends JPanel implements ActionListener {
 
 	public CustomerFrame customerFrame;
@@ -74,9 +78,30 @@ public class EnterPLUCode extends JPanel implements ActionListener {
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
 		} else if (e.getSource() == enterButton) {
 			// TODO: add item to cart
-			keypad.enteredInfo = "";
-			keypad.txtField.setText("Enter PLU Code");
-			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
+			// Only valid PLU codes are 4 numbers long
+			if (keypad.enteredInfo.toCharArray().length == 4) {
+				boolean isValidProduct = false;
+				double weight = 0.0;
+				String pluCode = keypad.enteredInfo;
+				
+				// new item of that product
+				for (Item it : customerFrame.st.idb.getInstance().itemList) {
+					if (it instanceof PLUCodedItem) {
+						PLUCodedItem pluItem = (PLUCodedItem) it;
+						if (pluItem.getPLUCode().toString().compareTo(pluCode) == 0) {
+							isValidProduct = true;
+							weight = pluItem.getWeight();
+						}
+					}
+				}
+				if (isValidProduct) {
+					customerFrame.currentItem = new PLUCodedItem(new PriceLookupCode(pluCode), weight);
+					customerFrame.st.addProduct(customerFrame.st.idb.getInstance().getPLUCodedProduct(new PriceLookupCode(pluCode)));
+					customerFrame.waitingToBag();
+					keypad.enteredInfo = "";
+					keypad.txtField.setText("Enter PLU Code");
+				}
+			}
 		}
 	}
 	

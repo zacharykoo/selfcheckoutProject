@@ -59,7 +59,7 @@ public class SCSMain {
 		scs.coinValidator.attach(state.addCoin);
 		// Create the AddItemToBag handler and attach to a device.
 		state.addItemToBag = new AddItemToBag(state);
-		scs.scanningArea.attach(state.addItemToBag);
+		scs.baggingArea.attach(state.addItemToBag);
 		// Create the UseCustomerBags handler and attach to a device.
 		state.customerBags = new AddCustomerBags(state);
 		scs.baggingArea.attach(state.customerBags);
@@ -77,6 +77,7 @@ public class SCSMain {
 	    scs.printer.attach(state.printReceipt);
 
 		state.scs.scanningArea.disable();
+		state.scs.baggingArea.disable();
 		state.enableScanning();
 
 		// Create the printer and get it ready
@@ -94,7 +95,7 @@ public class SCSMain {
 	 *		The type of error that took place.
 	 */
 	public static void error(String type) {
-
+		System.out.println(type);
 	}
 
 	/**

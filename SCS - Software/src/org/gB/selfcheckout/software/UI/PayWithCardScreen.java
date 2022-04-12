@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class PayWithCard extends JPanel implements ActionListener {
+import org.gB.selfcheckout.software.PayWithCard;
+
+public class PayWithCardScreen extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JLabel enterCard;
@@ -20,7 +22,7 @@ public class PayWithCard extends JPanel implements ActionListener {
 	private JButton swipe, tap, insert, enter;
 
 	
-	public PayWithCard(CustomerFrame customerFrame) {
+	public PayWithCardScreen(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
 

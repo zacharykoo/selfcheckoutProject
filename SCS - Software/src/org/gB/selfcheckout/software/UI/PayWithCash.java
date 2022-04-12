@@ -7,13 +7,21 @@ import java.awt.*;
  * 	Hardware: 
  * 		access coin and banknote slots
  *  Software:
- *  	amount paid so far
+ *  	amount customerFrame.st.paymentTotal so far
  *  	total amount to pay
  */
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.Currency;
 
 import javax.swing.*;
+
+import org.lsmr.selfcheckout.Banknote;
+import org.lsmr.selfcheckout.Coin;
+import org.lsmr.selfcheckout.devices.DisabledException;
+import org.lsmr.selfcheckout.devices.EmptyException;
+import org.lsmr.selfcheckout.devices.OverloadException;
 
 public class PayWithCash extends JPanel implements ActionListener {
 
@@ -25,6 +33,7 @@ public class PayWithCash extends JPanel implements ActionListener {
 	public CustomerFrame customerFrame;
 	private GridBagConstraints gbc = new GridBagConstraints();
 	private JPanel bottomPanel;
+	private JButton finish;
 	
 	JButton c5 = new JButton("¢5");
 	JButton c10 = new JButton("¢10");
@@ -39,12 +48,7 @@ public class PayWithCash extends JPanel implements ActionListener {
 	
 	JLabel paidLabel;
 	JLabel totalLabel;
-	
-	// Update these to work with the backend
-	private double paid = 0.0;
-	private double total = 54.99;
-	
-	
+		
 	public PayWithCash(CustomerFrame customerFrame) {
 		
 		this.customerFrame = customerFrame;
@@ -122,8 +126,8 @@ public class PayWithCash extends JPanel implements ActionListener {
 		bottomPanel.add(banknotesPanel, gbc);
 		
 		// Set up bottom buttons
-		paidLabel = new JLabel("Paid: $"+paid);
-		totalLabel = new JLabel("Total: "+total);
+		paidLabel = new JLabel("Paid: $"+customerFrame.st.paymentTotal.floatValue());
+		totalLabel = new JLabel("Total: "+customerFrame.st.totalToPay.floatValue());
 		
 		
 		gbc.gridx = 0;
@@ -133,12 +137,25 @@ public class PayWithCash extends JPanel implements ActionListener {
 		gbc.anchor = GridBagConstraints.CENTER;
 		
 		JPanel labelPanel = new JPanel();
-		labelPanel.setLayout(new GridLayout(2, 1));
+		labelPanel.setLayout(new GridLayout(3, 1));
 		
 		bottomPanel.add(labelPanel, gbc);
 		labelPanel.add(paidLabel);
 		labelPanel.add(totalLabel);
 		
+		finish = new JButton("Finish");
+		finish.addActionListener(this);
+		labelPanel.add(finish);
+		finish.setVisible(false);
+		
+	}
+	
+	public void updateLabels() {
+		paidLabel.setText(String.format("Paid: $%.2f", customerFrame.st.paymentTotal.floatValue()));
+		totalLabel.setText(String.format("Total: $%.2f", customerFrame.st.totalToPay.floatValue()));
+		if (customerFrame.st.paymentTotal.subtract(customerFrame.st.totalToPay).floatValue() >= 0.0) {
+			finish.setVisible(true);
+		}
 	}
 
 	public void setUpBackButton() {
@@ -175,49 +192,106 @@ public class PayWithCash extends JPanel implements ActionListener {
 			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "proceedToPay");
 		}
 		else if (e.getSource() == c5) {
-			// update amount in Paid
-			paid += 0.05;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
-		}
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.coinSlot.accept(new Coin(new BigDecimal(0.05)));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
+			}
 		else if (e.getSource() == c10) {
-			// update amount in Paid
-			paid += 0.10;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.coinSlot.accept(new Coin(new BigDecimal(0.10)));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
 		}
 		else if (e.getSource() == c25) {
-			// update amount in Paid
-			paid += 0.25;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.coinSlot.accept(new Coin(new BigDecimal(0.25)));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
 		}
 		else if (e.getSource() == d1) {
-			// update amount in Paid
-			paid += 1.0;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.coinSlot.accept(new Coin(new BigDecimal(1)));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
 		}
 		else if (e.getSource() == d2) {
-			// update amount in Paid
-			paid += 2.0;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.coinSlot.accept(new Coin(new BigDecimal(2)));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
 		}
 		else if (e.getSource() == b5) {
-			// update amount in Paid
-			paid += 5.0;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.banknoteInput.accept(new Banknote(Currency.getInstance("CAD"), 5));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
 		}
 		else if (e.getSource() == b10) {
-			// update amount in Paid
-			paid += 10.0;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.banknoteInput.accept(new Banknote(Currency.getInstance("CAD"), 10));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
 		}
 		else if (e.getSource() == b20) {
-			// update amount in Paid
-			paid += 20.0;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.banknoteInput.accept(new Banknote(Currency.getInstance("CAD"), 20));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
 		}
 		else if (e.getSource() == b50) {
-			// update amount in Paid
-			paid += 50.0;
-			paidLabel.setText(String.format("Paid: $%.2f", paid));
+			// update amount in customerFrame.st.paymentTotal
+			try {
+				customerFrame.st.scs.banknoteInput.accept(new Banknote(Currency.getInstance("CAD"), 50));
+			} catch (DisabledException | OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			updateLabels();
+		}
+		else if (e.getSource() == finish) {
+			// TODO: integrate with attendant station
+			/*
+			try {
+				customerFrame.st.returnChange.returnChange(customerFrame.st.paymentTotal.subtract(customerFrame.st.totalToPay));
+			} catch (OverloadException | EmptyException | DisabledException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			*/
+			customerFrame.cardLayout.show(customerFrame.getContentPane(), "thankYou");
 		}
 		
 	}

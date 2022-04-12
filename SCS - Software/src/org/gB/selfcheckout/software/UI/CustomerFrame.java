@@ -5,6 +5,8 @@ import java.awt.CardLayout;
 import javax.swing.JFrame;
 
 import org.gB.selfcheckout.software.State;
+import org.lsmr.selfcheckout.Card;
+import org.lsmr.selfcheckout.Item;
 
 /**
  * JFrame to contain the UI used by customers at self-checkout stations.
@@ -17,21 +19,24 @@ public class CustomerFrame extends JFrame {
 	State st;
 	
 	public boolean isBeingUsed = false;
+	public Item currentItem;
+	Card myCard = new Card("DEBIT", "3234896546378965", "John Doe", "111", "1234", true, true);
 	
 	CustomerScanItem scanItem = new CustomerScanItem(this);
 	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag(this);
 	ProceedToPayment proceedToPay = new ProceedToPayment(this);
-	PayWithCard payWithCard = new PayWithCard(this);
-	PayWithCash payWithCash = new PayWithCash(this);
+	PayWithCardScreen payWithCard = new PayWithCardScreen(this);
+	PayWithCash payWithCash;
 	BlockedScreen blockedScreen = new BlockedScreen(this);
 	CustomerStationShutDown shutDown = new CustomerStationShutDown(this);
 	StartScreen startScreen = new StartScreen(this);
-	CustomerMainScreen mainScreen = new CustomerMainScreen(this);
+	CustomerMainScreen mainScreen;
 	EnterPLUCode enterPLU = new EnterPLUCode(this);
 	VisualCatalogue lookup = new VisualCatalogue(this);
 	CustomerAddBags addBags = new CustomerAddBags(this);
 	MemberInfo enterMember;
-	EnterAmountToPay paymentAmount = new EnterAmountToPay(this);
+	EnterAmountToPay paymentAmount;
+	ThankYouScreen thankYou = new ThankYouScreen(this);
 
 
 	public CustomerFrame(int stationIndex, State state) {
@@ -39,6 +44,9 @@ public class CustomerFrame extends JFrame {
 		this.stationIndex = stationIndex;
 		this.st = state;
 		enterMember = new MemberInfo(this);
+		mainScreen = new CustomerMainScreen(this);
+		payWithCash  = new PayWithCash(this);
+		paymentAmount = new EnterAmountToPay(this, myCard);
 		addPanels();
 		
 		// First panel
@@ -68,6 +76,7 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(addBags, "addBags");
 		getContentPane().add(enterMember, "enterMember");
 		getContentPane().add(paymentAmount, "paymentAmount");
+		getContentPane().add(thankYou, "thankYou");
 
 	}
 	

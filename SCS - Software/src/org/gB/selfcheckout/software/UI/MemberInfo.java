@@ -42,7 +42,7 @@ public class MemberInfo extends JPanel {
 		
 		// Store the entered member number and return to the main screen.
 		enterButton.addActionListener(e ->{
-			// TODO: Update the state with the member number.
+			customerFrame.st.memberNumber = keypad.enteredInfo;
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen");
 		});
 	}
