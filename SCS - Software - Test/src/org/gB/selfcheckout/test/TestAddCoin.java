@@ -19,23 +19,23 @@ public class TestAddCoin {
 	private State state;
 
 	@Before
-    public void setupTests() {
-        //Initialize State.
-        try {
-        	state = Main.init(100, 1);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
+	public void setupTests() {
+		// Initialize State.
+		try {
+			state = Main.init(100, 1);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
-        //Set variables to respective components of State.
-        assert state != null;
-    }
+		// Set variables to respective components of State.
+		assert state != null;
+	}
 
 	// Ensure the payment total is being accumulated correctly.
 	@Test
 	public void testInsertCoin() throws Exception {
 		state.addCoin = new AddCoin(state);
-		
+
 		BigDecimal total = new BigDecimal(0.05);
 		state.addCoin.validCoinDetected(null, new BigDecimal(0.05));
 		Assert.assertEquals(total, state.paymentTotal);
@@ -66,14 +66,14 @@ public class TestAddCoin {
 		state.addCoin.invalidCoinDetected(state.scs.coinValidator);
 		Assert.assertTrue(true);
 	}
-	
-    // Ensure the total does not change when the coin slot is disabled.
-    @Test
-    public void testInsertDisabled() {
-    	State state = new State();
-    	state.addCoin = new AddCoin(state);
-    	state.addCoin.disabled(null);
-    	state.addCoin.validCoinDetected(null, new BigDecimal(0.1));
-    	Assert.assertEquals(new BigDecimal(0), state.paymentTotal);
-    }
+
+	// Ensure the total does not change when the coin slot is disabled.
+	@Test
+	public void testInsertDisabled() {
+		State state = new State();
+		state.addCoin = new AddCoin(state);
+		state.addCoin.disabled(null);
+		state.addCoin.validCoinDetected(null, new BigDecimal(0.1));
+		Assert.assertEquals(new BigDecimal(0), state.paymentTotal);
+	}
 }

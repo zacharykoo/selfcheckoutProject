@@ -58,10 +58,12 @@ public class AttendantControlTest {
 			public boolean isShutdown = false;
 
 			@Override
-			public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {}
+			public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
+			}
 
 			@Override
-			public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {}
+			public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
+			}
 
 			@Override
 			public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
@@ -76,8 +78,8 @@ public class AttendantControlTest {
 		BarcodeScannerObserverStub stub = new BarcodeScannerObserverStub();
 		scsList.get(0).scs.mainScanner.attach(stub);
 
-		Barcode barcode = new Barcode(new Numeral[]{Numeral.one});
-        Item item = new BarcodedItem(barcode, 1);
+		Barcode barcode = new Barcode(new Numeral[] { Numeral.one });
+		Item item = new BarcodedItem(barcode, 1);
 
 		scsList.get(0).scs.mainScanner.scan(item);
 
@@ -92,7 +94,7 @@ public class AttendantControlTest {
 		try {
 			Assert.assertTrue(attendant.startupStation(5, 100, 1));
 			Assert.assertTrue(attendant.getSCSList().get(5).poweredOn);
-		} catch(Exception e) {
+		} catch (Exception e) {
 			Assert.fail("Should not throw an exception.");
 		}
 	}
@@ -175,7 +177,7 @@ public class AttendantControlTest {
 
 	@Test
 	public void testRemoveProduct() {
-		Numeral[] temp = {Numeral.one,Numeral.two,Numeral.three};
+		Numeral[] temp = { Numeral.one, Numeral.two, Numeral.three };
 		State state = scsList.get(0);
 		Barcode bc1 = new Barcode(temp);
 		BarcodedProduct product = new BarcodedProduct(bc1, "test", new BigDecimal(10), 0.1);

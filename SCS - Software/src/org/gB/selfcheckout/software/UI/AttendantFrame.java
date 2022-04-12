@@ -25,7 +25,7 @@ public class AttendantFrame extends JFrame {
 	AttendantStationShutDown shutDown;
 	AlertPage alert;
 
-	public AttendantFrame (List<State> states, List<CustomerFrame> cFrames, AttendantControl ac) {
+	public AttendantFrame(List<State> states, List<CustomerFrame> cFrames, AttendantControl ac) {
 		super("Attendant Station");
 		this.states = states;
 		this.cFrames = cFrames;
@@ -41,9 +41,9 @@ public class AttendantFrame extends JFrame {
 			i++;
 			carts.add(new AttendantCartScreen(this, state, i));
 		}
-		
+
 		addPanels();
-		
+
 		cardLayout.show(this.getContentPane(), "login");
 		this.setLayout(cardLayout);
 		this.setSize(1280, 720);
@@ -51,14 +51,14 @@ public class AttendantFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
-	
+
 	private void addPanels() {
-		
+
 		this.getContentPane().setLayout(cardLayout);
 
 		getContentPane().add(login, "login");
 		getContentPane().add(main, "main");
-		for (int i = 0; i < carts.size(); i ++)
+		for (int i = 0; i < carts.size(); i++)
 			getContentPane().add(carts.get(i), "cart" + Integer.toString(i));
 		getContentPane().add(shutDown, "shutDown");
 		getContentPane().add(alert, "alert");

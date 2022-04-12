@@ -10,34 +10,34 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestAddItemAfterPayment {
-    private State state;
+	private State state;
 
-    @Before
-    public void setup() {
-        //Initialize State.
-        try {
-        	state = Main.init(100, 1);
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
+	@Before
+	public void setup() {
+		// Initialize State.
+		try {
+			state = Main.init(100, 1);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 
-        //Set variables to respective components of State.
-        assert state != null;
-    }
+		// Set variables to respective components of State.
+		assert state != null;
+	}
 
-    @Test
-    public void testAddItemAfterPayment() {
-        AddItemAfterPayment addItemAfterPayment = new AddItemAfterPayment(state);
+	@Test
+	public void testAddItemAfterPayment() {
+		AddItemAfterPayment addItemAfterPayment = new AddItemAfterPayment(state);
 
-        assertNotNull(addItemAfterPayment);
-    }
+		assertNotNull(addItemAfterPayment);
+	}
 
-    @Test
-    public void testEnabled() {
-        AddItemAfterPayment addItemAfterPayment = new AddItemAfterPayment(state);
+	@Test
+	public void testEnabled() {
+		AddItemAfterPayment addItemAfterPayment = new AddItemAfterPayment(state);
 
-        addItemAfterPayment.enabled(null);
+		addItemAfterPayment.enabled(null);
 
-        assertFalse(state.scs.mainScanner.isDisabled());
-    }
+		assertFalse(state.scs.mainScanner.isDisabled());
+	}
 }

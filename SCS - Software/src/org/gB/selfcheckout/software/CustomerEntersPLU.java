@@ -9,7 +9,8 @@ import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 public class CustomerEntersPLU {
 	/**
-	 * Looks up the PLU code in the database and returns the product when entered correctly.
+	 * Looks up the PLU code in the database and returns the product when entered
+	 * correctly.
 	 * 
 	 * @param The PLU code to look up.
 	 * @return The single item looked up.
@@ -22,24 +23,26 @@ public class CustomerEntersPLU {
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Looks up the PLU code in the database and returns the list of products matched so far.
+	 * Looks up the PLU code in the database and returns the list of products
+	 * matched so far.
 	 * 
 	 * @param The partial or complete PLU code to look up.
 	 * @return The list of items looked up.
 	 **/
 	ArrayList<PLUCodedProduct> productList = new ArrayList<PLUCodedProduct>();
+
 	public ArrayList<PLUCodedProduct> getEnteredPLUProductList(PriceLookupCode code) {
 		boolean track = true;
 		Set<PriceLookupCode> keys = ProductDatabases.PLU_PRODUCT_DATABASE.keySet();
-		for(PriceLookupCode key : keys) {
-			for(int i = 0; i < code.numeralCount(); i++) {
-				if(key.getNumeralAt(i) != code.getNumeralAt(i)) {
+		for (PriceLookupCode key : keys) {
+			for (int i = 0; i < code.numeralCount(); i++) {
+				if (key.getNumeralAt(i) != code.getNumeralAt(i)) {
 					track = false;
 				}
 			}
-			if(track == true) {
+			if (track == true) {
 				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
 			}
 		}

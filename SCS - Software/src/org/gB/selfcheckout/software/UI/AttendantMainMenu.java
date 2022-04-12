@@ -32,15 +32,14 @@ public class AttendantMainMenu extends JPanel {
 	// Bottom layout for navigation controls:
 	private JPanel bottomPanel = new JPanel();
 	private JButton logoutButton = new JButton("Logout");
-	
+
 	/**
 	 * Initializes the main menu interface with the specified number of
 	 * self-checkout stations.
 	 * 
-	 * @param stations
-	 * 		The number of self-checkout stations that this attendant manages.
-	 * @param attendantFrame
-	 * 		The instance of AttendantFrame that owns this panel.
+	 * @param stations       The number of self-checkout stations that this
+	 *                       attendant manages.
+	 * @param attendantFrame The instance of AttendantFrame that owns this panel.
 	 */
 	public AttendantMainMenu(AttendantFrame attendantFrame, List<State> states) {
 		super();
@@ -48,15 +47,14 @@ public class AttendantMainMenu extends JPanel {
 		this.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 		this.setLayout(mainBorder); // Set the outermost layout.
 		// Create the tabs to manage each self-checkout station:
-		for (int i = 0; i < states.size(); i ++) tabs.addTab(
-				"Station " + Integer.toString(i + 1),
-				new StationInterface(i, states.get(i)));
+		for (int i = 0; i < states.size(); i++)
+			tabs.addTab("Station " + Integer.toString(i + 1), new StationInterface(i, states.get(i)));
 		this.add(tabs, BorderLayout.NORTH);
 
 		// Instantiate the navigation button, add them to the bottom panel:
 		bottomPanel.add(logoutButton);
 		this.add(bottomPanel, BorderLayout.SOUTH);
-		
+
 		// Setup event handlers:
 		logoutButton.addActionListener(e -> {
 			attendantFrame.shutDown.shutDown();
@@ -65,7 +63,7 @@ public class AttendantMainMenu extends JPanel {
 			attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "login");
 		});
 	}
-	
+
 	/**
 	 * JPanel that implements the attendant controls of a single self-checkout
 	 * system.
@@ -98,12 +96,11 @@ public class AttendantMainMenu extends JPanel {
 		private State st;
 
 		/**
-		 * Initialize the self-checkout station attendant controls, relating
-		 * the controls to the station with the specified index.
+		 * Initialize the self-checkout station attendant controls, relating the
+		 * controls to the station with the specified index.
 		 * 
-		 * @param index
-		 * 		The "number" of the self-checkout station whose attendant
-		 * 		controls will be manipulated with this instance.
+		 * @param index The "number" of the self-checkout station whose attendant
+		 *              controls will be manipulated with this instance.
 		 */
 		public StationInterface(int index, State state) {
 			super();
@@ -144,7 +141,7 @@ public class AttendantMainMenu extends JPanel {
 			refillMoneyPanel.add(refillBanknotes);
 			refillMoneyPanel.add(refillBanknotesButton);
 			this.add(refillMoneyPanel);
-			
+
 			// Set up event handlers:
 			power.addActionListener(e -> {
 				CustomerFrame cFrame = attendantFrame.cFrames.get(stationIndex);
@@ -161,7 +158,7 @@ public class AttendantMainMenu extends JPanel {
 					power.setText("Power Station Off");
 				}
 			});
-			
+
 			unblockStation.addActionListener(e -> {
 				CustomerFrame cFrame = attendantFrame.cFrames.get(stationIndex);
 				if (cFrame.isBeingUsed)
@@ -170,41 +167,36 @@ public class AttendantMainMenu extends JPanel {
 					cFrame.cardLayout.show(cFrame.getContentPane(), "startScreen");
 				blockStation.setText("Block");
 			});
-			
+
 			blockStation.addActionListener(e -> {
 				CustomerFrame cFrame = attendantFrame.cFrames.get(stationIndex);
 				cFrame.cardLayout.show(cFrame.getContentPane(), "blockedScreen");
 			});
-			
+
 			viewCart.addActionListener(e -> {
 				attendantFrame.carts.get(index).displayProductCart();
-				AttendantMainMenu.this.attendantFrame.cardLayout.show(
-						attendantFrame.getContentPane(),
+				AttendantMainMenu.this.attendantFrame.cardLayout.show(attendantFrame.getContentPane(),
 						"cart" + Integer.toString(stationIndex));
 			});
-			
+
 			refillPaper.addActionListener(e -> {
-				int delta = ReceiptPrinter.MAXIMUM_PAPER
-						- st.linesOfPaperRemaining;
+				int delta = ReceiptPrinter.MAXIMUM_PAPER - st.linesOfPaperRemaining;
 				try {
-					AttendantMainMenu.this.attendantFrame
-					.ac.addPaper(st, delta);
+					AttendantMainMenu.this.attendantFrame.ac.addPaper(st, delta);
 				} catch (OverloadException err) {
 					err.printStackTrace();
 				}
 			});
-			
+
 			refillInk.addActionListener(e -> {
-				int delta = ReceiptPrinter.MAXIMUM_INK
-						- st.charactersOfInkRemaining;
+				int delta = ReceiptPrinter.MAXIMUM_INK - st.charactersOfInkRemaining;
 				try {
-					AttendantMainMenu.this.attendantFrame
-					.ac.addInkCartridge(st, delta);
+					AttendantMainMenu.this.attendantFrame.ac.addInkCartridge(st, delta);
 				} catch (OverloadException err) {
 					err.printStackTrace();
 				}
 			});
-			
+
 			refillCoinsButton.addActionListener(e -> {
 				BigDecimal value;
 				switch (refillBanknotes.getSelectedIndex()) {
@@ -224,19 +216,17 @@ public class AttendantMainMenu extends JPanel {
 					value = new BigDecimal(2.0);
 				}
 
-				int delta = st.scs.coinDispensers.get(value).getCapacity()
-						- st.scs.coinDispensers.get(value).size();
-				for (int i = 0; i < delta; i ++) {
+				int delta = st.scs.coinDispensers.get(value).getCapacity() - st.scs.coinDispensers.get(value).size();
+				for (int i = 0; i < delta; i++) {
 					try {
-						AttendantMainMenu.this.attendantFrame
-						.ac.refillCoinDispenser(st, new Coin(
-								Currency.getInstance("CAD"), value));
+						AttendantMainMenu.this.attendantFrame.ac.refillCoinDispenser(st,
+								new Coin(Currency.getInstance("CAD"), value));
 					} catch (OverloadException err) {
 						err.printStackTrace();
 					}
 				}
 			});
-			
+
 			refillBanknotesButton.addActionListener(e -> {
 				int value;
 				switch (refillBanknotes.getSelectedIndex()) {
@@ -255,25 +245,22 @@ public class AttendantMainMenu extends JPanel {
 
 				int delta = st.scs.banknoteDispensers.get(value).getCapacity()
 						- st.scs.banknoteDispensers.get(value).size();
-				for (int i = 0; i < delta; i ++) {
+				for (int i = 0; i < delta; i++) {
 					try {
-						AttendantMainMenu.this.attendantFrame
-						.ac.refillBanknoteDispenser(st, new Banknote(
-								Currency.getInstance("CAD"), value));
+						AttendantMainMenu.this.attendantFrame.ac.refillBanknoteDispenser(st,
+								new Banknote(Currency.getInstance("CAD"), value));
 					} catch (OverloadException err) {
 						err.printStackTrace();
 					}
 				}
 			});
-			
+
 			emptyCoins.addActionListener(e -> {
-				AttendantMainMenu.this.attendantFrame
-					.ac.emptyCoinStorageUnit(st);
+				AttendantMainMenu.this.attendantFrame.ac.emptyCoinStorageUnit(st);
 			});
-			
+
 			emptyBanknotes.addActionListener(e -> {
-				AttendantMainMenu.this.attendantFrame
-					.ac.emptyBanknoteStorageUnit(st);
+				AttendantMainMenu.this.attendantFrame.ac.emptyBanknoteStorageUnit(st);
 			});
 		}
 	}

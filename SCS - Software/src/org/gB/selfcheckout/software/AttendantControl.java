@@ -43,7 +43,7 @@ public class AttendantControl {
 			supervisionStation.remove(state.scs);
 		}
 		return true;
-    }
+	}
 
 	/**
 	 * Shuts down the station remotely. (aka, uninstalls the "software")
@@ -83,8 +83,8 @@ public class AttendantControl {
 	/**
 	 * Powers on the station.
 	 * 
-	 * @param stationId The station to power on.
-	 * @param scaleMaxWeight The maximum weight of the scale.
+	 * @param stationId        The station to power on.
+	 * @param scaleMaxWeight   The maximum weight of the scale.
 	 * @param scaleSensitivity The sensitivity of the scale.
 	 * 
 	 * @return If the power on was successful.
@@ -97,9 +97,11 @@ public class AttendantControl {
 	}
 
 	/**
-	 * Returns the list of all the states that are controlled by this Attendant Control.
+	 * Returns the list of all the states that are controlled by this Attendant
+	 * Control.
 	 * 
-	 * @return The list of all the states that are controlled by this Attendant Control.
+	 * @return The list of all the states that are controlled by this Attendant
+	 *         Control.
 	 */
 	public ArrayList<State> getSCSList() {
 		return this.scsList;
@@ -108,12 +110,12 @@ public class AttendantControl {
 	/**
 	 * Adds ink to the given station.
 	 * 
-	 * @param state The state to add the ink to.
+	 * @param state              The state to add the ink to.
 	 * @param inkCartridgeAmount The amount of ink to add.
 	 * 
 	 * @return If the ink was successfully added.
 	 * 
-	 * @throws OverloadException 
+	 * @throws OverloadException
 	 */
 	public boolean addInkCartridge(State state, int inkCartridgeAmount) throws OverloadException {
 		state.charactersOfInkRemaining += inkCartridgeAmount;
@@ -124,7 +126,7 @@ public class AttendantControl {
 	/**
 	 * Adds paper to the given station.
 	 * 
-	 * @param state The state to add the paper to.
+	 * @param state       The state to add the paper to.
 	 * @param paperAmount The amount of paper to add.
 	 * 
 	 * @return If the paper was successfully added.
@@ -140,7 +142,7 @@ public class AttendantControl {
 	/**
 	 * Loads the given coins into the given station.
 	 * 
-	 * @param state The station to load the coin into.
+	 * @param state     The station to load the coin into.
 	 * @param banknotes The coins to load.
 	 * 
 	 * @return If the coin dispenser unit was successfully refilled.
@@ -175,7 +177,7 @@ public class AttendantControl {
 	/**
 	 * Loads the given banknotes into the given station.
 	 * 
-	 * @param state The station to load the banknotes into.
+	 * @param state     The station to load the banknotes into.
 	 * @param banknotes The banknotes to load.
 	 * 
 	 * @return If the banknote dispenser unit was successfully refilled.
@@ -220,7 +222,7 @@ public class AttendantControl {
 		boolean track = true;
 		char[] charArray = partialLookUpCode.toCharArray();
 		Set<PriceLookupCode> keys = ProductDatabases.PLU_PRODUCT_DATABASE.keySet();
-		for(PriceLookupCode key : keys) {
+		for (PriceLookupCode key : keys) {
 			for (int i = 0; i < key.toString().length(); i++) {
 				if (i < charArray.length) {
 					if (key.toString().charAt(i) != charArray[i]) {
@@ -230,12 +232,12 @@ public class AttendantControl {
 					break;
 				}
 			}
-			
+
 			if (track) {
 				productList.add(ProductDatabases.PLU_PRODUCT_DATABASE.get(key));
 			}
 		}
-		
+
 		return productList;
 	}
 
@@ -257,7 +259,7 @@ public class AttendantControl {
 	/**
 	 * Removes a product from the given station.
 	 * 
-	 * @param state The state to remove the product from.
+	 * @param state   The state to remove the product from.
 	 * @param product The product to remove.
 	 * 
 	 * @return If the product was successfully removed.
@@ -276,9 +278,9 @@ public class AttendantControl {
 	 * 
 	 * @throws OverloadException
 	 */
-    public boolean approveWeightDifference(State state) throws OverloadException {
-        state.expectedWeight = state.scs.baggingArea.getCurrentWeight();
-        state.enableScanning();
+	public boolean approveWeightDifference(State state) throws OverloadException {
+		state.expectedWeight = state.scs.baggingArea.getCurrentWeight();
+		state.enableScanning();
 		return true;
-    }
+	}
 }

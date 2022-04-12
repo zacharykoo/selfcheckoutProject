@@ -13,15 +13,15 @@ import org.lsmr.selfcheckout.Item;
  */
 public class CustomerFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
-	
+
 	public CardLayout cardLayout = new CardLayout();
 	int stationIndex;
 	State st;
-	
+
 	public boolean isBeingUsed = false;
 	public Item currentItem;
 	Card myCard = new Card("DEBIT", "3234896546378965", "John Doe", "111", "1234", true, true);
-	
+
 	CustomerScanItem scanItem = new CustomerScanItem(this);
 	CustomerWaitingToBag waitToBag = new CustomerWaitingToBag(this);
 	ProceedToPayment proceedToPay = new ProceedToPayment(this);
@@ -38,17 +38,16 @@ public class CustomerFrame extends JFrame {
 	EnterAmountToPay paymentAmount;
 	ThankYouScreen thankYou = new ThankYouScreen(this);
 
-
 	public CustomerFrame(int stationIndex, State state) {
 		super("Self-Checkout Station: " + Integer.toString(stationIndex + 1));
 		this.stationIndex = stationIndex;
 		this.st = state;
 		enterMember = new MemberInfo(this);
 		mainScreen = new CustomerMainScreen(this);
-		payWithCash  = new PayWithCash(this);
+		payWithCash = new PayWithCash(this);
 		paymentAmount = new EnterAmountToPay(this, myCard);
 		addPanels();
-		
+
 		// First panel
 		cardLayout.show(getContentPane(), "startScreen");
 
@@ -57,9 +56,9 @@ public class CustomerFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
-	
+
 	private void addPanels() {
-		
+
 		this.getContentPane().setLayout(cardLayout);
 
 		getContentPane().add(proceedToPay, "proceedToPay");
@@ -79,7 +78,7 @@ public class CustomerFrame extends JFrame {
 		getContentPane().add(thankYou, "thankYou");
 
 	}
-	
+
 	public void waitingToBag() {
 		cardLayout.show(getContentPane(), "waitToBag");
 		waitToBag.waiting();

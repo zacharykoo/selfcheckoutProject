@@ -1,6 +1,8 @@
 package org.gB.selfcheckout.software;
+
 import org.lsmr.selfcheckout.Barcode;
-import org.lsmr.selfcheckout.devices.*;
+import org.lsmr.selfcheckout.devices.AbstractDevice;
+import org.lsmr.selfcheckout.devices.BarcodeScanner;
 import org.lsmr.selfcheckout.devices.observers.AbstractDeviceObserver;
 import org.lsmr.selfcheckout.devices.observers.BarcodeScannerObserver;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
@@ -18,14 +20,13 @@ import org.lsmr.selfcheckout.products.BarcodedProduct;
  * weight of the scale is unspecified.
  */
 public class ScanItem implements BarcodeScannerObserver {
-	private State state;  // The state of the self checkout station's software.
+	private State state; // The state of the self checkout station's software.
 	private boolean enabled; // Indicates whether the watched device is enabled.
 
 	/**
 	 * Initializes with system state, a barcode scanner, and a scale but no item.
 	 *
-	 * @param system
-	 * 		Access to system state information.
+	 * @param system Access to system state information.
 	 */
 	public ScanItem(State state) {
 		this.state = state;
@@ -35,8 +36,7 @@ public class ScanItem implements BarcodeScannerObserver {
 	/*
 	 * Called when the barcode scanner slot is enabled.
 	 * 
-	 * @param device
-	 * 		The coin slot being enabled.
+	 * @param device The coin slot being enabled.
 	 */
 	@Override
 	public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
@@ -46,28 +46,26 @@ public class ScanItem implements BarcodeScannerObserver {
 	/*
 	 * Called when the barcode scanner slot is enabled.
 	 * 
-	 * @param device
-	 * 		The coin slot being enabled.
+	 * @param device The coin slot being enabled.
 	 */
 	@Override
 	public void disabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
 		this.enabled = false;
 	}
-	
+
 	/**
-	 * Adds an instance of the scanned item to the scanned item list in the
-	 * software state (if the barcode scanner is enabled). Sets a flag for the
-	 * electronic scale to enable the barcode scanners when the correct weight
-	 * is detected. The barcode scanners are disabled until such a time.
+	 * Adds an instance of the scanned item to the scanned item list in the software
+	 * state (if the barcode scanner is enabled). Sets a flag for the electronic
+	 * scale to enable the barcode scanners when the correct weight is detected. The
+	 * barcode scanners are disabled until such a time.
 	 * 
-	 * @param barcodeScanner
-	 * 		The barcode scanner instance that called this method.
-	 * @param barcode
-	 * 		The barcode of the scanned item.
+	 * @param barcodeScanner The barcode scanner instance that called this method.
+	 * @param barcode        The barcode of the scanned item.
 	 */
 	@Override
 	public void barcodeScanned(BarcodeScanner barcodeScanner, Barcode barcode) {
-		if (!this.enabled) return;
+		if (!this.enabled)
+			return;
 		state.itemScanned = true;
 		// Grab the product from the database, if it exists
 		BarcodedProduct product = state.idb.getBarcodedProduct(barcode);

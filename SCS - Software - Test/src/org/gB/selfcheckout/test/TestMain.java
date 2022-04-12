@@ -19,29 +19,29 @@ import junit.framework.Assert;
  */
 public class TestMain {
 	// Ensure an exception is thrown on negative max weight.
-	@Test (expected = SimulationException.class)
+	@Test(expected = SimulationException.class)
 	public void testNegativeMaxWeight() throws Exception {
 		Main.init(-5, 5);
 	}
-	
+
 	// Ensure an exception is thrown on negative sensitivity.
-	@Test (expected = SimulationException.class)
+	@Test(expected = SimulationException.class)
 	public void testNegativeSensitivity() throws Exception {
 		Main.init(5, -5);
 	}
-	
+
 	// Ensure an exception is thrown on 0 max weight.
-	@Test (expected = SimulationException.class)
+	@Test(expected = SimulationException.class)
 	public void testZeroMaxWeight() throws Exception {
 		Main.init(0, 5);
 	}
-	
+
 	// Ensure an exception is thrown on 0 sensitivity.
-	@Test (expected = SimulationException.class)
+	@Test(expected = SimulationException.class)
 	public void testZeroSensitivity() throws Exception {
 		Main.init(5, 0);
 	}
-	
+
 	// With valid scale parameters, ensure the state is correctly initialized.
 	@Test
 	public void testNormalParameters() throws Exception {
@@ -55,7 +55,7 @@ public class TestMain {
 		// Assert.assertNotNull(state.checkout);
 		Assert.assertNotNull(state.paymentMode);
 		Assert.assertNotNull(state.scanItem);
-		
+
 		// Ensure all devices are enabled or disabled as required.
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
@@ -67,15 +67,13 @@ public class TestMain {
 		Assert.assertTrue(state.scs.banknoteOutput.isDisabled());
 		Assert.assertTrue(state.scs.banknoteValidator.isDisabled());
 		Assert.assertTrue(state.scs.banknoteStorage.isDisabled());
-		for (Map.Entry<Integer, BanknoteDispenser> d :
-        	state.scs.banknoteDispensers.entrySet())
-				Assert.assertTrue(d.getValue().isDisabled());
+		for (Map.Entry<Integer, BanknoteDispenser> d : state.scs.banknoteDispensers.entrySet())
+			Assert.assertTrue(d.getValue().isDisabled());
 		Assert.assertTrue(state.scs.coinSlot.isDisabled());
 		Assert.assertTrue(state.scs.coinTray.isDisabled());
 		Assert.assertTrue(state.scs.coinValidator.isDisabled());
 		Assert.assertTrue(state.scs.coinStorage.isDisabled());
-		for (Map.Entry<BigDecimal, CoinDispenser> d :
-        	state.scs.coinDispensers.entrySet())
-				Assert.assertTrue(d.getValue().isDisabled());
+		for (Map.Entry<BigDecimal, CoinDispenser> d : state.scs.coinDispensers.entrySet())
+			Assert.assertTrue(d.getValue().isDisabled());
 	}
 }

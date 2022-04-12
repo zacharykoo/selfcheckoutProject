@@ -1,4 +1,5 @@
 package org.gB.selfcheckout.test;
+
 import java.math.BigDecimal;
 
 import org.gB.selfcheckout.software.CustomerDoesNotWantToBagScannedItem;
@@ -16,31 +17,35 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 	private State state;
 	private BarcodedProduct appleProduct;
 	private BarcodedProduct heavyProduct;
-	
+
 	@Before
 	public void setup() throws Exception {
 		state = Main.init(10000, 10);
-		CustomerDoesNotWantToBagScannedItem customerDoesNotBagScannedItem = new CustomerDoesNotWantToBagScannedItem(state);
+		CustomerDoesNotWantToBagScannedItem customerDoesNotBagScannedItem = new CustomerDoesNotWantToBagScannedItem(
+				state);
 		state.scs.baggingArea.attach(customerDoesNotBagScannedItem);
 		state.customerDoesNotWantToBagScannedItem = customerDoesNotBagScannedItem;
-		
+
 		Numeral[] numeral1 = new Numeral[2];
-        numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
-        Barcode barcode1 = new Barcode(numeral1); // barcode is 10
-        this.appleProduct = new BarcodedProduct(barcode1, "Apple", BigDecimal.valueOf(2), 25.0);
-        
-        numeral1[0] = Numeral.one; numeral1[1] = Numeral.one; // 11
-        Barcode barcode2 = new Barcode(numeral1); // barcode is 11
-        this.heavyProduct = new BarcodedProduct(barcode2, "Heavy Item", BigDecimal.valueOf(2), 20000);
+		numeral1[0] = Numeral.one;
+		numeral1[1] = Numeral.zero; // 10
+		Barcode barcode1 = new Barcode(numeral1); // barcode is 10
+		this.appleProduct = new BarcodedProduct(barcode1, "Apple", BigDecimal.valueOf(2), 25.0);
+
+		numeral1[0] = Numeral.one;
+		numeral1[1] = Numeral.one; // 11
+		Barcode barcode2 = new Barcode(numeral1); // barcode is 11
+		this.heavyProduct = new BarcodedProduct(barcode2, "Heavy Item", BigDecimal.valueOf(2), 20000);
 	}
-	
+
 	@Test
 	public void testValidWeightChange() {
 		state.customerDoesNotWantToBagScannedItem.enabled(null);
 		// Make sure the scale is enabled.
 		// "Apple" product, barcode = 10, price = 2, weight = 100.0
-        
-        Item a = new Item(25.0) {};
+
+		Item a = new Item(25.0) {
+		};
 		// "Scan" an item.
 		state.addProduct(this.appleProduct);
 		state.waitingForBagging = false;
@@ -52,15 +57,16 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
-	
+
 	@Test
 	public void testValidWeightChangeButBaggingExpected() {
-		//Product i = new Product(new BigDecimal(45.6), true) {};
-		
-        Item a = new Item(25.0) {};
-        state.addProduct(this.appleProduct);
+		// Product i = new Product(new BigDecimal(45.6), true) {};
+
+		Item a = new Item(25.0) {
+		};
+		state.addProduct(this.appleProduct);
 		// "Scan" an item.
-		//state.addProduct(i);
+		// state.addProduct(i);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
@@ -68,14 +74,15 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		state.scs.baggingArea.add(a);
 		// Ensure the state is correctly updated.
 	}
-	
+
 	@Test
 	public void testValidDisabledWeightChange() {
-		//Product i = new Product(new BigDecimal(45.6), true) {};
+		// Product i = new Product(new BigDecimal(45.6), true) {};
 		state.addProduct(appleProduct);
-		Item a = new Item(25.0) {};
+		Item a = new Item(25.0) {
+		};
 		// "Scan" an item.
-		//state.addProduct(i);
+		// state.addProduct(i);
 		state.waitingForBagging = false;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
@@ -87,14 +94,15 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
 	}
-	
+
 	@Test
 	public void testInvalidWeightChange() {
-		//Product i1 = new Product(new BigDecimal(45.6), true) {};
-		Item a2 = new Item(25.0) {};
+		// Product i1 = new Product(new BigDecimal(45.6), true) {};
+		Item a2 = new Item(25.0) {
+		};
 		// "Scan" item 'a'.
-		//state.addProduct(i1);
-		
+		// state.addProduct(i1);
+
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
 		// "Weight" item 'b'.
@@ -103,52 +111,53 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
 	}
-	
+
 	@Test
 	public void testUnexpectedChange() {
 		state.addProduct(appleProduct);
-		Item i = new Item(25.0) {};
+		Item i = new Item(25.0) {
+		};
 		state.scs.baggingArea.add(i);
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
-	
-	
+
 	@Test
 	public void testValidAfterOverload() {
-		Item a1 = new Item(25.0) {};
-		Item a2 = new Item(20000) {};
+		Item a1 = new Item(25.0) {
+		};
+		Item a2 = new Item(20000) {
+		};
 		// "Scan" an item.
-		
-		
+
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
 		// Put a spurious overloading item on the scale.
-		
+
 		state.scs.baggingArea.add(a2);
-		
+
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
-		
+
 		state.addProduct(appleProduct);
 		state.scs.baggingArea.add(a1); // Add the scanned item.
-		
+
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
-		
+
 		state.scs.baggingArea.remove(a2); // Remove the spurious item.
 		// Ensure the state is correctly updated.
-		
+
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
-	
-	
+
 	@Test
 	public void overloadCycle() {
-        state.addProduct(this.heavyProduct);
-        
-		Item i = new Item(20000) {};
+		state.addProduct(this.heavyProduct);
+
+		Item i = new Item(20000) {
+		};
 		state.scs.baggingArea.add(i);
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
@@ -157,14 +166,15 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
-	
+
 	@Test
 	public void overloadCycleButDisabled() {
 		state.customerDoesNotWantToBagScannedItem.disabled(null);
-		
-        state.addProduct(this.heavyProduct);
-        
-		Item i = new Item(20000) {};
+
+		state.addProduct(this.heavyProduct);
+
+		Item i = new Item(20000) {
+		};
 		state.scs.baggingArea.add(i);
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
@@ -173,23 +183,22 @@ public class TestCustomerDoesNotWantToBagScannedItem {
 		Assert.assertFalse(state.scs.mainScanner.isDisabled());
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
-	
+
 	public void addItemWhileDisabled() {
 		state.addProduct(appleProduct);
-		
-		Item a = new Item(25.0) {};
+
+		Item a = new Item(25.0) {
+		};
 		state.scs.baggingArea.disable(); // Disable the scale.
 		// "Scan" an item.
-		//state.addProduct(i);
+		// state.addProduct(i);
 
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
 		state.scs.baggingArea.add(a);
-		
+
 		Assert.assertTrue(state.scs.mainScanner.isDisabled());
 		Assert.assertTrue(state.scs.handheldScanner.isDisabled());
 	}
-	
-	
-	
+
 }

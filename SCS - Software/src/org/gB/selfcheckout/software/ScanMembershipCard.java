@@ -9,17 +9,16 @@ import org.lsmr.selfcheckout.devices.observers.CardReaderObserver;
 public class ScanMembershipCard implements CardReaderObserver {
 	private State state;
 	private Boolean enable;
-	
+
 	/**
 	 * Constructor Method
 	 * 
-	 * @param state
-	 * 		The instance of the system state to which the card will scan
+	 * @param state The instance of the system state to which the card will scan
 	 */
 	public ScanMembershipCard(State state) {
 		this.state = state;
 	}
-	
+
 	/**
 	 * Enable function
 	 * 
@@ -66,10 +65,9 @@ public class ScanMembershipCard implements CardReaderObserver {
 	 * Enable function
 	 * 
 	 * Enables the card reader
-	 * @param reader
-	 * 		The reader that called the function
-	 * @param data
-	 * 		The data for the card that is read
+	 * 
+	 * @param reader The reader that called the function
+	 * @param data   The data for the card that is read
 	 */
 	@Override
 	public void cardDataRead(CardReader reader, CardData data) {
