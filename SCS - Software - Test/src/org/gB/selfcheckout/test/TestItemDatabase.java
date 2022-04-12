@@ -1,6 +1,7 @@
 package org.gB.selfcheckout.test;
 
 import org.gB.selfcheckout.software.ItemDatabase;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -157,6 +158,7 @@ public class TestItemDatabase {
     		}
     	}
     	
+    	database.removePLUCodedEntry(pluCode);
     	// Iterate through the Barcode database and get check product info
     	ArrayList<Barcode> bCodes = new ArrayList<>();
     	ArrayList<BarcodedProduct> bProducts = new ArrayList<>();
@@ -164,10 +166,12 @@ public class TestItemDatabase {
     	bCodes.add(barcode2);
     	bProducts.add(appleProduct);
     	bProducts.add(watermelonProduct);
+    	System.out.println(bProducts.size());
     	for (Map.Entry<Barcode, BarcodedProduct> pair: barProducts.entrySet()) {
     		Barcode bcode = pair.getKey();
     		BarcodedProduct bProduct = pair.getValue();
     		for (int i = 0; i < barProducts.size(); i++) {
+    			
     			// check that the barcodes in the database are the ones added
     			Assert.assertTrue(bCodes.contains(bcode));
     			// check that the products in the database are the ones added
@@ -261,5 +265,11 @@ public class TestItemDatabase {
     	ItemDatabase newDatabase = database.getInstance();
     	Assert.assertTrue(newDatabase instanceof ItemDatabase);
     	Assert.assertEquals(null, newDatabase.getProduct(barcode));
+    }
+    
+    @After
+    public void clean() {
+    	database.getBarcodedProductDatabase().clear();
+    	database.getPLUProductDatabase().clear();
     }
 }
