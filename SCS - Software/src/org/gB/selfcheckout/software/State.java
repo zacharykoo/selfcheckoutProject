@@ -80,6 +80,8 @@ public class State {
 	public ReturnChange returnChange = null;
 	public PrintReceipt printReceipt = null;
 	
+	public CustomerDoesNotWantToBagScannedItem customerDoesNotWantToBagScannedItem = null;
+	
 	// Stores the current power state of the self-checkout station.
 	public boolean poweredOn = true;
 

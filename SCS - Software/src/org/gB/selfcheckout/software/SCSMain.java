@@ -75,6 +75,8 @@ public class SCSMain {
 	    // Instantiate the PrintReceipt observer and attach it to the ReceiptPrinter device
 	    state.printReceipt = new PrintReceipt(state);
 	    scs.printer.attach(state.printReceipt);
+	    
+	    state.customerDoesNotWantToBagScannedItem = new CustomerDoesNotWantToBagScannedItem(state);
 
 		state.scs.scanningArea.disable();
 		state.scs.baggingArea.disable();
