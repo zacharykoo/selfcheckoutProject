@@ -76,8 +76,6 @@ public class SCSMain {
 	    state.printReceipt = new PrintReceipt(state);
 	    scs.printer.attach(state.printReceipt);
 	    
-	    state.customerDoesNotWantToBagScannedItem = new CustomerDoesNotWantToBagScannedItem(state);
-
 		state.scs.scanningArea.disable();
 		state.scs.baggingArea.disable();
 		state.enableScanning();
@@ -96,42 +94,6 @@ public class SCSMain {
 		System.out.println(type);
 	}
 
-	/**
-	 *
-	 */
-	public static void checkout() {
-
-	}
-
-	/**
-	 *
-	 */
-	public static void proceedToPay() {
-
-	}
-
-	public static void payWithCard(BigDecimal amountToPay) {
-
-	}
-
-
-	public static void payWithCash() {
-
-	}
-
-	/**
-	 *
-	 */
-	public static void addCustomerBags() {
-
-	}
-
-	/**
-	 *
-	 */
-	public static void endAddCustomerBags() {
-
-	}
 
 	/** Prints a receipt to the customer
 	 * @throws OverloadException
@@ -151,10 +113,5 @@ public class SCSMain {
 		scs.printer.removeReceipt();
 	}
 
-	/**
-	 *
-	 */
-	public static void dispenseChange() {
-
-	}
+	
 }
