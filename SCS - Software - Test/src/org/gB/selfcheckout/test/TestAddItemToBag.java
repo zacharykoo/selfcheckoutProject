@@ -8,7 +8,10 @@ import org.gB.selfcheckout.software.State;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.lsmr.selfcheckout.Barcode;
 import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.Numeral;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
 /**
@@ -16,6 +19,8 @@ import org.lsmr.selfcheckout.products.Product;
  */
 public class TestAddItemToBag {
 	private State state; // Stores a program state for testing.
+	private BarcodedProduct sampleProduct;
+	
 	
 	// Initializes a state for testing with a sensible weight limits
 	// an an instance of the AddItemToBage use case class.
@@ -31,10 +36,13 @@ public class TestAddItemToBag {
 	// correctly by the state being reset to a scannable mode.
 	@Test
 	public void testVaidWeightChange() {
-		Product p = new Product(new BigDecimal(45.6), true) {};
+		Numeral[] numeral1 = new Numeral[2];
+        numeral1[0] = Numeral.one; numeral1[1] = Numeral.zero; // 10
+        Barcode barcode1 = new Barcode(numeral1); // barcode is 10
+        this.sampleProduct = new BarcodedProduct(barcode1, "Sample", BigDecimal.valueOf(2), 45.6);
 		Item i = new Item(45.6) {};
 		// "Scan" an item.
-		state.addProduct(p);
+		state.addProduct(sampleProduct);
 		state.waitingForBagging = true;
 		state.scs.mainScanner.disable();
 		state.scs.handheldScanner.disable();
