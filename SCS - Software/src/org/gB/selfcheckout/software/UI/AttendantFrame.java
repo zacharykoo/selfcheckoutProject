@@ -21,7 +21,6 @@ public class AttendantFrame extends JFrame {
 	public CardLayout cardLayout = new CardLayout();
 	LoginScreen login;
 	AttendantMainMenu main;
-	ArrayList<AttendantLookupProduct> lookups = new ArrayList<AttendantLookupProduct>();
 	ArrayList<AttendantCartScreen> carts = new ArrayList<AttendantCartScreen>();
 	AttendantStationShutDown shutDown;
 	AlertPage alert;
@@ -43,9 +42,6 @@ public class AttendantFrame extends JFrame {
 			carts.add(new AttendantCartScreen(this, state, i));
 		}
 		
-		for (State state : states)
-			lookups.add(new AttendantLookupProduct(this, state));
-		
 		addPanels();
 		
 		cardLayout.show(this.getContentPane(), "login");
@@ -65,8 +61,6 @@ public class AttendantFrame extends JFrame {
 		for (int i = 0; i < carts.size(); i ++)
 			getContentPane().add(carts.get(i), "cart" + Integer.toString(i));
 		getContentPane().add(shutDown, "shutDown");
-		for (int i = 0; i < lookups.size(); i ++)
-			getContentPane().add(lookups.get(i), "lookup" + Integer.toString(i));
 		getContentPane().add(alert, "alert");
 	}
 }
