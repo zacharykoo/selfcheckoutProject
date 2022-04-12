@@ -3,8 +3,6 @@ package org.gB.selfcheckout.software;
 import java.math.BigDecimal;
 import java.util.Currency;
 import org.lsmr.selfcheckout.Coin;
-import org.lsmr.selfcheckout.devices.EmptyException;
-import org.lsmr.selfcheckout.devices.OverloadException;
 import org.lsmr.selfcheckout.devices.SelfCheckoutStation;
 
 /**
@@ -79,91 +77,6 @@ public class SCSMain {
 		state.scs.scanningArea.disable();
 		state.enableScanning();
 
-		// Create the printer and get it ready
-		// scs.printer.addInk(1000);
-		// scs.printer.addPaper(1000);
-
 		return state;
-	}
-
-	/**
-	 * Stub error method that will be used to announce errors to the user when
-	 * a UI becomes available.
-	 *
-	 * @param type
-	 *		The type of error that took place.
-	 */
-	public static void error(String type) {
-
-	}
-
-	/**
-	 *
-	 */
-	public static void checkout() {
-
-	}
-
-	/**
-	 *
-	 */
-	public static void proceedToPay() {
-
-	}
-
-	public static void payWithCard(BigDecimal amountToPay) {
-		/*
-		// Check that the user can pay
-		if (!state.paymentEnabled) {
-			error("Cannot pay without payment mode enabled");
-			return;
-		}
-		*/
-
-
-	}
-
-
-	public static void payWithCash() {
-
-	}
-
-	/**
-	 *
-	 */
-	public static void addCustomerBags() {
-
-	}
-
-	/**
-	 *
-	 */
-	public static void endAddCustomerBags() {
-
-	}
-
-	/** Prints a receipt to the customer
-	 * @throws OverloadException
-	 * @throws EmptyException
-	 *
-	 */
-	public void printReceipt(double totalForPrinting) throws EmptyException, OverloadException {
-
-		String printString = new String("Receipt: \n");
-		printString = printString.concat("Total: " + totalForPrinting);
-
-		for (int i = 0; i < printString.length(); i++) {
-			scs.printer.print(printString.charAt(i));
-		}
-
-		scs.printer.cutPaper();
-		scs.printer.removeReceipt();
-	}
-
-	/**
-	 *
-	 */
-	public static void dispenseChange() {
-
 	}
 }
