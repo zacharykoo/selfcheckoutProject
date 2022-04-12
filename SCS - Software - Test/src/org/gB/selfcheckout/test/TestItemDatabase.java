@@ -166,7 +166,6 @@ public class TestItemDatabase {
     	bCodes.add(barcode2);
     	bProducts.add(appleProduct);
     	bProducts.add(watermelonProduct);
-    	System.out.println(bProducts.size());
     	for (Map.Entry<Barcode, BarcodedProduct> pair: barProducts.entrySet()) {
     		Barcode bcode = pair.getKey();
     		BarcodedProduct bProduct = pair.getValue();
