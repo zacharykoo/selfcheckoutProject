@@ -1,6 +1,11 @@
 package org.gB.selfcheckout.software.UI;
 
-import java.awt.*;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -71,8 +76,7 @@ public class LoginScreen extends JPanel {
 			String username = new String(loginfield.getText());
 			String password = new String(passwordfield.getPassword());
 			if (logindatabase.login(username, password)) {
-				//TODO: Change Screens
-				//AttendantControl(scsList);
+				attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
 			}
     	});
 		subpanel.add(loginbutton, c);

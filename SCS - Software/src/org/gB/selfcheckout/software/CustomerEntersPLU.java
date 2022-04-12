@@ -32,7 +32,6 @@ public class CustomerEntersPLU {
 	 * @return The list of items looked up.
 	 **/
 	ArrayList<PLUCodedProduct> productList = new ArrayList<PLUCodedProduct>();
-	
 	public ArrayList<PLUCodedProduct> getEnteredPLUProductList(PriceLookupCode code) {
 		boolean track = true;
 		Set<PriceLookupCode> keys = ProductDatabases.PLU_PRODUCT_DATABASE.keySet();

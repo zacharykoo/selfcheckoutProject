@@ -1,17 +1,28 @@
 package org.gB.selfcheckout.software.UI;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.math.BigDecimal;
-import java.util.Map;
-import java.util.Map.*;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Map.Entry;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.gB.selfcheckout.software.State;
-import org.lsmr.selfcheckout.Barcode;
-import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
 /**
@@ -24,7 +35,9 @@ import org.lsmr.selfcheckout.products.Product;
  * 
 **/
 public class AttendantCartScreen extends JPanel implements ListSelectionListener {
-    private State customerState;
+	private static final long serialVersionUID = 1L;
+	private AttendantFrame attendantFrame;
+	private State customerState;
     private JList<Entry<Product,Integer>> items;
     private DefaultListModel<Entry<Product,Integer>> itemModel;
     private JButton removeButton, backButton;
@@ -34,8 +47,9 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
      *
      * @param state The state of the current customer's station
      */
-    public AttendantCartScreen(State state) {
+    public AttendantCartScreen(AttendantFrame attendantFrame, State state) {
         customerState = state;
+        this.attendantFrame = attendantFrame;
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(500, 500));
         this.setMinimumSize(new Dimension(200, 200));
@@ -73,7 +87,7 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
         backButton.setActionCommand("Back");
         backButton.addActionListener(backListener);
 
-        String name = itemModel.getElementAt(items.getSelectedIndex()).toString();
+//        String name = itemModel.getElementAt(items.getSelectedIndex()).toString();
         JPanel buttonPane = new JPanel();
         buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
         buttonPane.add(backButton);
@@ -106,12 +120,14 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
     }
     class BackListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            //TODO: Back button implementation
+            attendantFrame.cardLayout.show(attendantFrame.getContentPane(), "main");
         }
     }
     class RemoveListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            customerState.productCart.remove(items.getSelectedValue().getKey());
+        	Entry<Product, Integer> entry = items.getSelectedValue();
+        	if (entry == null) return;
+            customerState.productCart.remove(entry.getKey());
             int index = items.getSelectedIndex();
             itemModel.remove(index);
 

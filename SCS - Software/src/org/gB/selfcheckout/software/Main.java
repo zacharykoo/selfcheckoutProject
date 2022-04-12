@@ -18,10 +18,9 @@ import org.lsmr.selfcheckout.products.BarcodedProduct;
 import org.lsmr.selfcheckout.products.PLUCodedProduct;
 
 public class Main {
-    public static ArrayList<State> states = new ArrayList<State>();
-    static AttendantFrame aFrame;
+    static ArrayList<State> states = new ArrayList<State>();
     static ArrayList<CustomerFrame> cFrames = new ArrayList<CustomerFrame>();
-    
+
     public static State init(int scaleMaxWeight, int scaleSensitivity) throws Exception {
         State state = new SCSMain().init(scaleMaxWeight, scaleSensitivity);
         states.add(state);
@@ -39,12 +38,12 @@ public class Main {
             	State s = init(100, 1);
                 states.add(s);
                 cFrames.add(new CustomerFrame(i, states.get(i)));
-                
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        aFrame = new AttendantFrame(states, cFrames);
+        AttendantControl ac = new AttendantControl(states);
+        AttendantFrame aFrame = new AttendantFrame(states, cFrames, ac);
     }
     
     private static void populateDatabases() {

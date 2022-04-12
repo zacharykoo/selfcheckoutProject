@@ -14,6 +14,7 @@ public class CustomerReturnsToAddingItems implements TouchScreenObserver{
 		this.state = state;
 		this.enabled = true;
 		this.returnToScan = false;
+
 	}
 	@Override
 	public void enabled(AbstractDevice<? extends AbstractDeviceObserver> device) {
