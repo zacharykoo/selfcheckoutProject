@@ -50,7 +50,7 @@ public class Main {
     	ItemDatabase idbInit = new ItemDatabase();
     	
     	PriceLookupCode plu1 = new PriceLookupCode("7654");
-		PLUCodedProduct plup1 = new PLUCodedProduct(plu1, "Red Pepper", new BigDecimal(5.35));
+		PLUCodedProduct plup1 = new PLUCodedProduct(plu1, "Pepper", new BigDecimal(5.35));
 		ProductDatabases.PLU_PRODUCT_DATABASE.put(plu1, plup1);
 		idbInit.getInstance().addEntry(new PLUCodedItem(plu1, 5.5), plup1);
 		
@@ -85,12 +85,12 @@ public class Main {
 		idbInit.getInstance().addEntry(new PLUCodedItem(plu7, 14.7), plup7);
 		
 		Barcode bc1 = new Barcode(new Numeral[] {Numeral.five, Numeral.four, Numeral.three, Numeral.two, Numeral.one});
-		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "Froot Loops", new BigDecimal(5.35), 15.5);
+		BarcodedProduct bcp1 = new BarcodedProduct(bc1, "FrootLoops", new BigDecimal(5.35), 15.5);
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc1, bcp1);
 		idbInit.getInstance().addEntry(new BarcodedItem(bc1, 15.5), bcp1);
 		
 		Barcode bc2 = new Barcode(new Numeral[] {Numeral.three, Numeral.two, Numeral.zero, Numeral.nine, Numeral.one});
-		BarcodedProduct bcp2 = new BarcodedProduct(bc2, "Salt Shaker", new BigDecimal(9.99), 11.3);
+		BarcodedProduct bcp2 = new BarcodedProduct(bc2, "SaltShaker", new BigDecimal(9.99), 11.3);
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc2, bcp2);
 		idbInit.getInstance().addEntry(new BarcodedItem(bc2, 11.3), bcp2);
 		
@@ -100,7 +100,7 @@ public class Main {
 		idbInit.getInstance().addEntry(new BarcodedItem(bc3, 8.10), bcp3);
 		
 		Barcode bc4 = new Barcode(new Numeral[] {Numeral.four, Numeral.two, Numeral.one, Numeral.two, Numeral.two});
-		BarcodedProduct bcp4 = new BarcodedProduct(bc4, "Hair Brush", new BigDecimal(13.45), 22.50);
+		BarcodedProduct bcp4 = new BarcodedProduct(bc4, "HairBrush", new BigDecimal(13.45), 22.50);
 		ProductDatabases.BARCODED_PRODUCT_DATABASE.put(bc4, bcp4);
 		idbInit.getInstance().addEntry(new BarcodedItem(bc4, 22.50), bcp4);
 
