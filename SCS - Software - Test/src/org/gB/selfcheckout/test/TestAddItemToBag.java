@@ -163,6 +163,20 @@ public class TestAddItemToBag {
 		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
 	}
 	
+	@Test
+	public void disabledOverloadCycle() {
+		state.addItemToBag.disabled(null);
+		Item i = new Item(20000) {};
+		state.scs.baggingArea.add(i);
+		Assert.assertFalse(state.waitingForBagging);
+		Assert.assertFalse(state.scs.mainScanner.isDisabled());
+		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
+		state.scs.baggingArea.remove(i);
+		Assert.assertFalse(state.waitingForBagging);
+		Assert.assertFalse(state.scs.mainScanner.isDisabled());
+		Assert.assertFalse(state.scs.handheldScanner.isDisabled());
+	}
+	
 	// Ensure the state is not updated if the scale is disabled while waiting
 	// an item.
 	@Test
