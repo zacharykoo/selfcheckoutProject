@@ -16,11 +16,15 @@ import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
 public class AttendantControl {
+	private ArrayList<State> scsList; // List of all the states.
+	private SupervisionStation supervisionStation; // The Supervision Station.
+	ArrayList<PLUCodedProduct> productList = new ArrayList<PLUCodedProduct>(); // List of all the products.
 
-	private ArrayList<State> scsList;
-	private SupervisionStation supervisionStation;
-	ArrayList<PLUCodedProduct> productList = new ArrayList<PLUCodedProduct>();
-
+	/**
+	 * Initializes the Attendant Control.
+	 * 
+	 * @param scsList The list of all the states.
+	 */
 	public AttendantControl(ArrayList<State> scsList) {
 		this.scsList = scsList;
 		supervisionStation = new SupervisionStation();
@@ -29,7 +33,11 @@ public class AttendantControl {
 		}
 	}
 
-	// Allow attendant to logout with supervisor on the current state
+	/**
+	 * Logs out of the supervisor station.
+	 * 
+	 * @return If the logout was successful.
+	 */
 	public boolean logout() {
 		for (State state : this.scsList) {
 			supervisionStation.remove(state.scs);
@@ -37,7 +45,13 @@ public class AttendantControl {
 		return true;
     }
 
-
+	/**
+	 * Shuts down the station remotely. (aka, uninstalls the "software")
+	 * 
+	 * @param state The state to shut down.
+	 * 
+	 * @return If the shutdown was successful.
+	 */
 	public boolean shutdownStation(State state) {
 		for (BanknoteDispenser dispenser : state.scs.banknoteDispensers.values()) {
 			dispenser.detachAll();
@@ -66,6 +80,15 @@ public class AttendantControl {
 		return true;
 	}
 
+	/**
+	 * Powers on the station.
+	 * 
+	 * @param stationId The station to power on.
+	 * @param scaleMaxWeight The maximum weight of the scale.
+	 * @param scaleSensitivity The sensitivity of the scale.
+	 * 
+	 * @return If the power on was successful.
+	 */
 	public boolean startupStation(int stationId, int scaleMaxWeight, int scaleSensitivity) throws Exception {
 		new Main();
 		this.scsList.set(stationId, Main.init(scaleMaxWeight, scaleSensitivity));
@@ -73,26 +96,60 @@ public class AttendantControl {
 		return true;
 	}
 
+	/**
+	 * Returns the list of all the states that are controlled by this Attendant Control.
+	 * 
+	 * @return The list of all the states that are controlled by this Attendant Control.
+	 */
 	public ArrayList<State> getSCSList() {
 		return this.scsList;
 	}
 
+	/**
+	 * Adds ink to the given station.
+	 * 
+	 * @param state The state to add the ink to.
+	 * @param inkCartridgeAmount The amount of ink to add.
+	 * 
+	 * @return If the ink was successfully added.
+	 * 
+	 * @throws OverloadException 
+	 */
 	public boolean addInkCartridge(State state, int inkCartridgeAmount) throws OverloadException {
 		state.charactersOfInkRemaining += inkCartridgeAmount;
 		state.scs.printer.addInk(inkCartridgeAmount);
 		return true;
 	}
 
+	/**
+	 * Adds paper to the given station.
+	 * 
+	 * @param state The state to add the paper to.
+	 * @param paperAmount The amount of paper to add.
+	 * 
+	 * @return If the paper was successfully added.
+	 * 
+	 * @throws OverloadException
+	 */
 	public boolean addPaper(State state, int paperAmount) throws OverloadException {
 		state.linesOfPaperRemaining += paperAmount;
 		state.scs.printer.addPaper(paperAmount);
 		return true;
 	}
 
+	/**
+	 * Loads the given coins into the given station.
+	 * 
+	 * @param state The station to load the coin into.
+	 * @param banknotes The coins to load.
+	 * 
+	 * @return If the coin dispenser unit was successfully refilled.
+	 * 
+	 * @throws OverloadException
+	 */
 	public boolean refillCoinDispenser(State state, Coin... coins) throws OverloadException {
-		// coinDispenser attempt. Not sure if working.
 		if (!state.poweredOn) {
-			for (Coin coin : coins) { // TODO: Check if this is correct.
+			for (Coin coin : coins) {
 				state.scs.coinDispensers.get(coin.getValue()).load(coin);
 			}
 			return true;
@@ -100,6 +157,13 @@ public class AttendantControl {
 		return false;
 	}
 
+	/**
+	 * Empties the coin storage unit.
+	 * 
+	 * @param state The station to empty the coin storage unit.
+	 * 
+	 * @return If the coin storage unit was successfully emptied.
+	 */
 	public boolean emptyCoinStorageUnit(State state) {
 		if (!state.poweredOn) {
 			state.scs.coinStorage.unload();
@@ -108,6 +172,16 @@ public class AttendantControl {
 		return false;
 	}
 
+	/**
+	 * Loads the given banknotes into the given station.
+	 * 
+	 * @param state The station to load the banknotes into.
+	 * @param banknotes The banknotes to load.
+	 * 
+	 * @return If the banknote dispenser unit was successfully refilled.
+	 * 
+	 * @throws OverloadException
+	 */
 	public boolean refillBanknoteDispenser(State state, Banknote... banknotes) throws OverloadException {
 		if (!state.poweredOn) {
 			for (Banknote banknote : banknotes) {
@@ -118,6 +192,13 @@ public class AttendantControl {
 		return false;
 	}
 
+	/**
+	 * Empties the banknote storage unit.
+	 * 
+	 * @param state The station to empty the banknote storage unit.
+	 * 
+	 * @return If the banknote storage unit was successfully emptied.
+	 */
 	public boolean emptyBanknoteStorageUnit(State state) {
 		if (!state.poweredOn) {
 			state.scs.banknoteStorage.unload();
@@ -126,7 +207,13 @@ public class AttendantControl {
 		return false;
 	}
 
-	// create a method to get an item from the item database
+	/**
+	 * Searches for a product in the product list, using the given product code.
+	 * 
+	 * @param partialLookUpCode The partial product code to search for.
+	 * 
+	 * @return An ArrayList of all the products that match the given product code.
+	 */
 	public ArrayList<PLUCodedProduct> looksUpProduct(String partialLookUpCode) {
 		productList.clear();
 
@@ -152,18 +239,43 @@ public class AttendantControl {
 		return productList;
 	}
 
-	// disable any user interaction, but allow user unloading/loading
+	/**
+	 * Blocks the station from being accessed by the customer.
+	 * 
+	 * @param state The station to block.
+	 * 
+	 * @return If the station was successfully blocked.
+	 * 
+	 * @throws DisabledException
+	 * @throws OverloadException
+	 */
 	public boolean blockStation(State state) throws DisabledException, OverloadException {
 		state.enableScanning();
 		return true;
 	}
 
+	/**
+	 * Removes a product from the given station.
+	 * 
+	 * @param state The state to remove the product from.
+	 * @param product The product to remove.
+	 * 
+	 * @return If the product was successfully removed.
+	 */
 	public boolean removeProduct(State state, Product product) {
-		// based on removeProduct method in State from another member
 		state.removeProduct(product);
 		return true;
 	}
 
+	/**
+	 * Approves a weight difference at the station.
+	 * 
+	 * @param state The state to approve the weight difference at.
+	 * 
+	 * @return If the weight difference was approved.
+	 * 
+	 * @throws OverloadException
+	 */
     public boolean approveWeightDifference(State state) throws OverloadException {
         state.expectedWeight = state.scs.baggingArea.getCurrentWeight();
         state.enableScanning();

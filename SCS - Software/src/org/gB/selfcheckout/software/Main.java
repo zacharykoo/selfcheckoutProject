@@ -12,7 +12,7 @@ public class Main {
     }
 
     public static void error(String message) {
-        // System.out.println(message);
+        System.out.println(message);
     }
 
     public static void main(String[] args) { // Not sure how we want to create all the stations, so just added this as a temporary thing.

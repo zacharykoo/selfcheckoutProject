@@ -191,14 +191,11 @@ public class ReturnChange implements BanknoteSlotObserver{
     //when the banknote is removed, we can try to emit more banknotes
     @Override
     public void banknoteRemoved(BanknoteSlot slot) {
-        //TODO: not sure how we want to handle this right now ...maybe we error on GUI in the later iterations
-        //for now, we will call Main.error()
         try{
             returnABanknote();
         }
         //we can catch 3 types of exceptions here by printing the stack trace ...
         catch (OverloadException | EmptyException | DisabledException e){
-            //e.printStackTrace();
             Main.error("Most likely that no more banknotes are available with banknote denomination" + bankDenom[curBanknoteIndex]);
         }
     }
