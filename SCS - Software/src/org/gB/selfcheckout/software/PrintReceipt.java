@@ -82,7 +82,6 @@ public class PrintReceipt implements ReceiptPrinterObserver {
     	
     	// Print change due
         Double change = state.paymentTotal.doubleValue() - state.totalToPay.doubleValue();
-        /*pdc.getTotalPaid().subtract(pdc.getTotalCost()).doubleValue(); */
         String changeString = "Change due: $" + change + "\n";
         for (int q = 0; q < changeString.length(); q ++)
         {

@@ -17,11 +17,6 @@ import org.gB.selfcheckout.software.*;
 import org.junit.Assert;
 import org.junit.Before;
 
-/*
- * TODO: testCoinOutput2 and testBanknoteOutput1 sometimes error ...
- * I think its the coin dispenser problem? But idk.. need to test more tomorrow
-*/
-
 public class TestReturnChange{
     private State state;
     private BigDecimal [] coinDenom;

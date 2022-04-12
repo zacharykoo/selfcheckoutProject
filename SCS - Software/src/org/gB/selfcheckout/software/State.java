@@ -38,7 +38,7 @@ public class State {
 	public BigDecimal paymentTotal = new BigDecimal(0.0);
 	// Stores the total price of currently scanned products
 	public BigDecimal totalToPay = new BigDecimal(0.0);
-	
+	// Indiciates if a card has been inserted.
 	public boolean isCardInserted = false;
 	public boolean itemScanned = false;
 	
@@ -80,10 +80,11 @@ public class State {
 	public ReturnChange returnChange = null;
 	public PrintReceipt printReceipt = null;
 	
+	// Stores the current power state of the self-checkout station.
 	public boolean poweredOn = true;
 
     //the use case where the membership card information is entered by numpad
-    String membershipCardInfo="";
+    public String membershipCardInfo = "";
 	
 	/**
 	 * Returns the current expected weight of the scanned items list.

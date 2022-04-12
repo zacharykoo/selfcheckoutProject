@@ -202,69 +202,7 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
         	displayProductCart();
         	attendantFrame.cFrames.get(index).mainScreen.displayProductCart();
         	
-        	/*
-            String pName = cartDisplay.getSelectedValue().toString();
-            pName = pName.split(" ")[0];
-            
-            attendantFrame.cFrames.get(index).mainScreen.displayProductCart();
-            
-            double weight = 0.0;
-			
-			Item item = null;
-			System.out.println("removing from cart "+index);
-			System.out.println("cart has "+attendantFrame.cFrames.get(index).mainScreen.cartProducts.size()+" products");
-            
-            for (Product p : attendantFrame.cFrames.get(index).mainScreen.cartProducts) {
-            	System.out.println("in for loop");
-            	if (p instanceof BarcodedProduct) {
-            		BarcodedProduct bp = (BarcodedProduct) p;
-            		if (bp.getDescription().compareTo(pName) == 0) {
-                		attendantFrame.cFrames.get(index).st.removeProduct(bp);
-                		for (Item itm : attendantFrame.cFrames.get(index).st.scannedItems) {
-                			try {
-                    			BarcodedItem bci = (BarcodedItem) itm;
-                    			if (bp.getBarcode().equals(bci.getBarcode())) {
-                    				item = bci;
-                    				break;
-                    			}
-                			} catch (Exception e2) {
-                				
-                			}
-                		}
-            		}
-            	} else {
-            		PLUCodedProduct pp = (PLUCodedProduct) p;
-            		System.out.println("plucoded");
-            		// item of that product
-            		if (pp.getDescription().compareTo(pName) == 0) {
-            			System.out.println("desc matched");
-                		for (Item itm : attendantFrame.cFrames.get(index).st.scannedItems) {
-                			System.out.println("iteming");
-                			try {
-                    			PLUCodedItem pci = (PLUCodedItem) itm;
-                    			if (pp.getPLUCode().equals(pci.getPLUCode())) {
-                    				System.out.println("setting");
-                    				item = pci;
-                    				break;
-                    			}
-                			} catch (Exception e3) {
-                				
-                			}
-                		}
-                		attendantFrame.cFrames.get(index).st.removeProduct(pp);
-
-            		}
-            	}
-            }
-        	displayProductCart();
-        	attendantFrame.cFrames.get(index).mainScreen.displayProductCart();
-        	try {
-				attendantFrame.cFrames.get(index).st.removePurchasedItemFromScale(item);
-			} catch (OverloadException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-        */
+        	
         }
         
     }
