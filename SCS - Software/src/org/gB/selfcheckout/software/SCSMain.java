@@ -82,10 +82,6 @@ public class SCSMain {
 		state.scs.baggingArea.disable();
 		state.enableScanning();
 
-		// Create the printer and get it ready
-		// scs.printer.addInk(1000);
-		// scs.printer.addPaper(1000);
-
 		return state;
 	}
 
@@ -115,14 +111,6 @@ public class SCSMain {
 	}
 
 	public static void payWithCard(BigDecimal amountToPay) {
-		/*
-		// Check that the user can pay
-		if (!state.paymentEnabled) {
-			error("Cannot pay without payment mode enabled");
-			return;
-		}
-		*/
-
 
 	}
 
