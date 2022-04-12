@@ -96,6 +96,7 @@ public class EnterPLUCode extends JPanel implements ActionListener {
 				}
 				if (isValidProduct) {
 					customerFrame.currentItem = new PLUCodedItem(new PriceLookupCode(pluCode), weight);
+					customerFrame.st.scannedItems.add(customerFrame.currentItem);
 					customerFrame.st.addProduct(customerFrame.st.idb.getInstance().getPLUCodedProduct(new PriceLookupCode(pluCode)));
 					customerFrame.waitingToBag();
 					keypad.enteredInfo = "";

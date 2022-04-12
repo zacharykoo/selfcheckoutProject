@@ -6,6 +6,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigDecimal;
+import java.util.Vector;
+import java.util.ArrayList;
 import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
@@ -23,6 +26,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.gB.selfcheckout.software.State;
+import org.lsmr.selfcheckout.BarcodedItem;
+import org.lsmr.selfcheckout.Item;
+import org.lsmr.selfcheckout.PLUCodedItem;
+import org.lsmr.selfcheckout.devices.OverloadException;
+import org.lsmr.selfcheckout.products.BarcodedProduct;
+import org.lsmr.selfcheckout.products.PLUCodedProduct;
 import org.lsmr.selfcheckout.products.Product;
 
 /**
@@ -41,13 +50,15 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
     private JList<Entry<Product,Integer>> items;
     private DefaultListModel<Entry<Product,Integer>> itemModel;
     private JButton removeButton, backButton;
+	private JList cartDisplay = new JList();
+	private int index;
 
     /**
      * Generates a JPanel for the Attendant Cart Screen
      *
      * @param state The state of the current customer's station
      */
-    public AttendantCartScreen(AttendantFrame attendantFrame, State state) {
+    public AttendantCartScreen(AttendantFrame attendantFrame, State state, int index) {
         customerState = state;
         this.attendantFrame = attendantFrame;
         this.setLayout(new GridBagLayout());
@@ -55,6 +66,9 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
         this.setMinimumSize(new Dimension(200, 200));
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
+		this.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        
+        this.index = index - 1;
 
         itemModel = new DefaultListModel<Entry<Product,Integer>>();
         for(Entry<Product, Integer> entry: customerState.productCart.entrySet()) {
@@ -68,7 +82,7 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
         items.addListSelectionListener(this);
         items.setVisibleRowCount(10);
 
-        JScrollPane listScrollPane = new JScrollPane(items);
+        JScrollPane listScrollPane = new JScrollPane(cartDisplay);
         c.weightx = 0.5;
         c.weighty = 1.0;
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -104,6 +118,35 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
         c.gridy = 1;
         this.add(buttonPane, c);
     }
+    
+    public void displayProductCart() {
+    	
+		cartDisplay.setListData(new Object[0]);
+		Vector<String> cartString = new Vector<String>();
+		Vector<Product> cartProducts = new Vector<Product>();
+		
+		cartString.add("Cart Contains:");
+		
+		
+		attendantFrame.cFrames.get(index).st.productCart.forEach((product, integer) -> cartProducts.add(product));
+		
+		for (Product p : cartProducts) {
+			try {
+				BarcodedProduct bp = (BarcodedProduct) p;
+				cartString.add(String.format("%s x %d: $%.2f", bp.getDescription(), attendantFrame.cFrames.get(index).st.productCart.get(bp), attendantFrame.cFrames.get(index).st.productCart.get(bp)*bp.getPrice().floatValue()));
+			} catch (Exception e) {
+				
+				PLUCodedProduct pp = (PLUCodedProduct) p;
+				System.out.println("desc: "+pp.getDescription());
+
+				cartString.add(String.format("%s x %d: $%.2f", pp.getDescription(), attendantFrame.cFrames.get(index).st.productCart.get(pp), attendantFrame.cFrames.get(index).st.productCart.get(pp)*pp.getPrice().floatValue()));
+			}
+		}
+		
+		cartDisplay.setListData(cartString);
+		
+    }
+    
     @Override
     public void valueChanged(ListSelectionEvent event) {
         if (event.getValueIsAdjusting() == false) {
@@ -125,26 +168,104 @@ public class AttendantCartScreen extends JPanel implements ListSelectionListener
     }
     class RemoveListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-        	Entry<Product, Integer> entry = items.getSelectedValue();
-        	if (entry == null) return;
-            customerState.productCart.remove(entry.getKey());
-            int index = items.getSelectedIndex();
-            itemModel.remove(index);
+        	
+        	String pstr = cartDisplay.getSelectedValue().toString();
+            String pName = pstr.split(" ")[0];
+            String pPrice = pstr.split(" ")[3];
+            pPrice = pPrice.substring(1);
+            float price = Float.parseFloat(pPrice);
+            customerState.totalToPay = customerState.totalToPay.subtract(new BigDecimal(price));
 
-            int size = itemModel.getSize();
+			Product removeProduct = null;
+			ArrayList<Product> products = new ArrayList<Product>();
+			
+			for (Product p : attendantFrame.cFrames.get(index).mainScreen.cartProducts) {
+				products.add(p);
+			}
+			
+			for (Product p1 : products) {
+				if (p1 instanceof BarcodedProduct) {
+            		BarcodedProduct bp = (BarcodedProduct) p1;
+            		if (bp.getDescription().compareTo(pName) == 0) {
+            			removeProduct = bp;
+            		}
+            	} else {
+            		PLUCodedProduct pp = (PLUCodedProduct) p1;
+            		if (pp.getDescription().compareTo(pName) == 0) {
+            			removeProduct = pp;
+            		}
+            	}
+			}
+			attendantFrame.cFrames.get(index).st.productCart.remove(removeProduct);
+            
+            // Display both updated carts
+        	displayProductCart();
+        	attendantFrame.cFrames.get(index).mainScreen.displayProductCart();
+        	
+        	/*
+            String pName = cartDisplay.getSelectedValue().toString();
+            pName = pName.split(" ")[0];
+            
+            attendantFrame.cFrames.get(index).mainScreen.displayProductCart();
+            
+            double weight = 0.0;
+			
+			Item item = null;
+			System.out.println("removing from cart "+index);
+			System.out.println("cart has "+attendantFrame.cFrames.get(index).mainScreen.cartProducts.size()+" products");
+            
+            for (Product p : attendantFrame.cFrames.get(index).mainScreen.cartProducts) {
+            	System.out.println("in for loop");
+            	if (p instanceof BarcodedProduct) {
+            		BarcodedProduct bp = (BarcodedProduct) p;
+            		if (bp.getDescription().compareTo(pName) == 0) {
+                		attendantFrame.cFrames.get(index).st.removeProduct(bp);
+                		for (Item itm : attendantFrame.cFrames.get(index).st.scannedItems) {
+                			try {
+                    			BarcodedItem bci = (BarcodedItem) itm;
+                    			if (bp.getBarcode().equals(bci.getBarcode())) {
+                    				item = bci;
+                    				break;
+                    			}
+                			} catch (Exception e2) {
+                				
+                			}
+                		}
+            		}
+            	} else {
+            		PLUCodedProduct pp = (PLUCodedProduct) p;
+            		System.out.println("plucoded");
+            		// item of that product
+            		if (pp.getDescription().compareTo(pName) == 0) {
+            			System.out.println("desc matched");
+                		for (Item itm : attendantFrame.cFrames.get(index).st.scannedItems) {
+                			System.out.println("iteming");
+                			try {
+                    			PLUCodedItem pci = (PLUCodedItem) itm;
+                    			if (pp.getPLUCode().equals(pci.getPLUCode())) {
+                    				System.out.println("setting");
+                    				item = pci;
+                    				break;
+                    			}
+                			} catch (Exception e3) {
+                				
+                			}
+                		}
+                		attendantFrame.cFrames.get(index).st.removeProduct(pp);
 
-            if (size == 0) { //Nobody's left, disable firing.
-                removeButton.setEnabled(false);
-
-            } else { //Select an index.
-                if (index == itemModel.getSize()) {
-                    //removed item in last position
-                    index--;
-                }
-
-                items.setSelectedIndex(index);
-                items.ensureIndexIsVisible(index);
+            		}
+            	}
             }
+        	displayProductCart();
+        	attendantFrame.cFrames.get(index).mainScreen.displayProductCart();
+        	try {
+				attendantFrame.cFrames.get(index).st.removePurchasedItemFromScale(item);
+			} catch (OverloadException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        */
         }
+        
     }
 }

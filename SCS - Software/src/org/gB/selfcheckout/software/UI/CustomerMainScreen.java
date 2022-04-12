@@ -46,10 +46,11 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 	private JButton pay = new JButton("Pay");
 	private JButton memeberInfo = new JButton("Enter Member Info");
 	private JButton addBags = new JButton("Add Bags");
+	public Vector<Product> cartProducts = new Vector<Product>();
 
 	private JLabel paidLabel = new JLabel();
 	private JLabel totalLabel = new JLabel();
-		
+	
 	//public Map<Product, Integer> productCart = new HashMap<>();
 	private JList cartDisplay = new JList();
 
@@ -138,10 +139,10 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		
 		cartDisplay.setListData(new Object[0]);
 		Vector<String> cartString = new Vector<String>();
-		Vector<Product> cartProducts = new Vector<Product>();
+		cartProducts.removeAllElements();
 		
 		cartString.add("Cart Contains:");
-		
+				
 		customerFrame.st.productCart.forEach((product, integer) -> cartProducts.add(product));
 		
 		for (Product p : cartProducts) {
@@ -174,7 +175,6 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		}
 		else if (e.getSource() == remove) {
 			// Alert attendant with message "Customer at station "+stationIndex+" wants to remove an item"
-			// Backend: block?
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "blockedScreen");
 		}
 		else if (e.getSource() == addBags) {
@@ -186,7 +186,6 @@ public class CustomerMainScreen extends JPanel implements ActionListener {
 		else if (e.getSource() == pay) {
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "proceedToPay");
 		}
-
 
 	}
 }

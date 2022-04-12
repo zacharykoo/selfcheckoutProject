@@ -16,7 +16,7 @@ import org.gB.selfcheckout.software.State;
 public class AttendantFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	List<State> states;
-	List<CustomerFrame> cFrames;
+	public List<CustomerFrame> cFrames;
 	AttendantControl ac;
 	public CardLayout cardLayout = new CardLayout();
 	LoginScreen login;
@@ -37,9 +37,11 @@ public class AttendantFrame extends JFrame {
 		main = new AttendantMainMenu(this, states);
 		alert = new AlertPage(this);
 		shutDown = new AttendantStationShutDown(this);
-		
-		for (State state : states)
-			carts.add(new AttendantCartScreen(this, state));
+		int i = 0;
+		for (State state : states) {
+			i++;
+			carts.add(new AttendantCartScreen(this, state, i));
+		}
 		
 		for (State state : states)
 			lookups.add(new AttendantLookupProduct(this, state));
@@ -53,6 +55,7 @@ public class AttendantFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
+	
 	private void addPanels() {
 		
 		this.getContentPane().setLayout(cardLayout);

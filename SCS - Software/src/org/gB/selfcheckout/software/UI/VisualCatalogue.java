@@ -226,6 +226,7 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 			if (isValidProduct) {
 				customerFrame.currentItem = new PLUCodedItem(indexMap.get(desc).getPLUCode(), weight);
 				customerFrame.st.addProduct(indexMap.get(desc));
+				customerFrame.st.scannedItems.add(customerFrame.currentItem);
 				customerFrame.waitingToBag();
 			}
 		}

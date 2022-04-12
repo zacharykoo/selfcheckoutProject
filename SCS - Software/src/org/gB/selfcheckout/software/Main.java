@@ -36,7 +36,6 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             try {
             	State s = init(100, 1);
-                states.add(s);
                 cFrames.add(new CustomerFrame(i, states.get(i)));
             } catch (Exception e) {
                 e.printStackTrace();

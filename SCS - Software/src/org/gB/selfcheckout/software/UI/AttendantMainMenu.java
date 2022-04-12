@@ -87,8 +87,8 @@ public class AttendantMainMenu extends JPanel {
 		private JButton emptyBanknotes = new JButton("Empty Banknote Storage");
 		// Money refill panel:
 		private JPanel refillMoneyPanel = new JPanel();
-		private JButton refillCoinsButton = new JButton("Refil Coins");
-		private JButton refillBanknotesButton = new JButton("Refil Banknotes");
+		private JButton refillCoinsButton = new JButton("Refill Coins");
+		private JButton refillBanknotesButton = new JButton("Refill Banknotes");
 		private JComboBox<String> refillCoins = new JComboBox<String>();
 		private JComboBox<String> refillBanknotes = new JComboBox<String>();
 		// The index of the associated self-checkout station.
@@ -161,6 +161,7 @@ public class AttendantMainMenu extends JPanel {
 			});
 			
 			viewCart.addActionListener(e -> {
+				attendantFrame.carts.get(index).displayProductCart();
 				AttendantMainMenu.this.attendantFrame.cardLayout.show(
 						attendantFrame.getContentPane(),
 						"cart" + Integer.toString(stationIndex));
