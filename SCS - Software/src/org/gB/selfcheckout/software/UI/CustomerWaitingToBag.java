@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 import org.lsmr.selfcheckout.BarcodedItem;
 import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.PLUCodedItem;
+import org.lsmr.selfcheckout.devices.OverloadException;
 
 /**
  * JPanel that implements the interface shown to the customer when the system is
@@ -56,7 +57,12 @@ public class CustomerWaitingToBag extends JPanel {
 				// Reset the timer.
 				attendantTimer.cancel();
 				attendantTimer.purge();
-				itemNotBagged(); // Handle the item not being bagged.
+				try {
+					itemNotBagged();
+				} catch (OverloadException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} // Handle the item not being bagged.
 			}});
 		bag.addActionListener(new ActionListener() {
 			@Override
@@ -91,16 +97,31 @@ public class CustomerWaitingToBag extends JPanel {
 		attendantTimer = new Timer();
 		attendantTimer.schedule(new TimerTask() {
 			@Override
-			public void run() { itemNotBagged(); }}, 
+			public void run() { try {
+				itemNotBagged();
+			} catch (OverloadException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} }}, 
 			5000);
 	}
 	
 	/**
 	 * In the event that a scanned item was not bagged, changes the UI to the
 	 * blocked screen and alerts the attendant interface of the issue.
+	 * @throws OverloadException 
 	 */
-	private void itemNotBagged() {
+	private void itemNotBagged() throws OverloadException {
 		// TODO: Transition to the blocked screen.
+		if (customerFrame.currentItem instanceof BarcodedItem) {
+			BarcodedItem bi = (BarcodedItem) customerFrame.currentItem;
+			customerFrame.st.scs.baggingArea.add(bi);
+		} else {
+			PLUCodedItem pi = (PLUCodedItem) customerFrame.currentItem;
+			customerFrame.st.scs.baggingArea.add(pi);
+		}
+		customerFrame.mainScreen.displayProductCart();
+		customerFrame.st.expectedWeight = customerFrame.st.scs.baggingArea.getCurrentWeight();
 		customerFrame.cardLayout.show(customerFrame.getContentPane(), "blockedScreen");
 
 		// TODO: Alert the attendant that the item was not bagged.
