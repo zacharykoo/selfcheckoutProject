@@ -55,6 +55,7 @@ public class ThankYouScreen extends JPanel {
 		
 		next.addActionListener(e ->{
 			// Tell attendant station to restart this station
+			customerFrame.st.printReceipt.printReceipt();
 			customerFrame.isBeingUsed = false;
 			customerFrame.st.expectedWeight = 0;
 			customerFrame.st.productCart = new HashMap<>();
