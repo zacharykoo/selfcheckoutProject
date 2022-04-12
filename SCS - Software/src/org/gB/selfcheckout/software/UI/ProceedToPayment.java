@@ -93,13 +93,21 @@ public class ProceedToPayment extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == credit || e.getSource() == debit || e.getSource() == giftCard) {
+			// enable payment mode
+			customerFrame.st.paymentMode.enablePaymentMode();
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "payWithCard");
 		} 
 		else if (e.getSource() == cash) {
+			// enable payment mode
+			customerFrame.st.paymentMode.enablePaymentMode();
+			customerFrame.payWithCash.updateLabels();
 			customerFrame.cardLayout.show(customerFrame.getContentPane(), "payWithCash");
 		}
 		else if (e.getSource() == backButton) {
-			this.customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
+			// disable payment mode
+			customerFrame.mainScreen.displayProductCart();
+			customerFrame.st.paymentMode.disablePaymentMode();
+			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
 		}
 		
 		

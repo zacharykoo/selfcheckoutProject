@@ -53,6 +53,7 @@ public class PayWithCard implements CardReaderObserver {
 
 	@Override
 	public void cardDataRead(CardReader reader, CardData data) {
+
 		cardData = data;
 
 		// If the amount to pay is greater than what is left to pay, only pay what's left
@@ -63,17 +64,18 @@ public class PayWithCard implements CardReaderObserver {
 		// Check that card data isn't corrupted?
 		// Send error back to main & return if it is
 
-        //TODO: should I take out money from the card here?
         //try to actually take out the money from the card
         //we first need to query the card issuer from state
-
         CardIssuer issuer = state.cardIssuerDatabase.getCardIssuer(data.getType());
         if (issuer == null){
-            //TODO: if the issuer don't exist, probably should print some error in front end from here
+            //if the issuer don't exist
             Main.error("card issuer is empty!");
             //System.out.println("card issuer is empty!");
             return;
         }
+        
+		System.out.println("not null");
+
         //otherwise, issuer is not null
         //quote from CardIssuer.java: 
         //``to debit a purchase, a hold is first placed on the amount and then the
@@ -82,21 +84,27 @@ public class PayWithCard implements CardReaderObserver {
         int holdNum = issuer.authorizeHold(data.getNumber(), amountToPay);
         if (holdNum == -1){
             Main.error("authorizeHold failed!");
-            //System.out.println("authorizeHold failed!");
         }
+        
+		System.out.println("authorizedm holdnum = "+holdNum);
+
         //if the transaction was successful 
         if (!issuer.postTransaction(data.getNumber(), holdNum, amountToPay)){
-            //TODO: if the transaction failed, probably should print some error in front end
+            //if the transaction failed
             Main.error("transaction failed!");
             //System.out.println("transaction failed!");
             return;
         }
         //else the transaction was successful!
+        
+        
+		System.out.println("successful");
 
 
-		// Update total if it isn't corrupted
+		// Update total
 		state.paymentTotal = state.paymentTotal.add(amountToPay);
-		
+		System.out.println("total now: "+state.paymentTotal);
+
 		// Check if this card has been used before
 		int i = 0;
 		for (Pair<CardData, BigDecimal> pair : state.cardPayments) {

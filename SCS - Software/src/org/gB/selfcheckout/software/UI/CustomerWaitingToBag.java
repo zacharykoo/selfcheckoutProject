@@ -68,8 +68,8 @@ public class CustomerWaitingToBag extends JPanel {
 					BarcodedItem bi = (BarcodedItem) customerFrame.currentItem;
 					customerFrame.st.scs.baggingArea.add(bi);
 				} catch (Exception e2) {
-					PLUCodedItem bi = (PLUCodedItem) customerFrame.currentItem;
-					customerFrame.st.scs.baggingArea.add(bi);
+					PLUCodedItem pi = (PLUCodedItem) customerFrame.currentItem;
+					customerFrame.st.scs.baggingArea.add(pi);
 				}
 				customerFrame.mainScreen.displayProductCart();
 				customerFrame.cardLayout.show(customerFrame.getContentPane(), "mainScreen"); // Handle the item not being bagged.

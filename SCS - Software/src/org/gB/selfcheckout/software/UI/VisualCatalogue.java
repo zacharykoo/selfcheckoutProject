@@ -19,7 +19,9 @@ import javax.swing.*;
 
 import org.gB.selfcheckout.software.ItemDatabase;
 import org.lsmr.selfcheckout.Barcode;
+import org.lsmr.selfcheckout.Item;
 import org.lsmr.selfcheckout.Numeral;
+import org.lsmr.selfcheckout.PLUCodedItem;
 import org.lsmr.selfcheckout.PriceLookupCode;
 import org.lsmr.selfcheckout.external.ProductDatabases;
 import org.lsmr.selfcheckout.products.BarcodedProduct;
@@ -48,6 +50,8 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 	private JLabel firstL, secondL, thirdL;
 	private JButton firstB, secondB, thirdB, leftArrow, rightArrow;
 	int startingOffset = 0;
+	private HashMap<String, PLUCodedProduct> indexMap = new HashMap();
+
 	
 	public ArrayList<String> itemMenu = new ArrayList<String>();;
 	
@@ -157,11 +161,11 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 		
 	}
 	
-	// This is hardcoded for now, will be integrated with backend later
 	private void setUpItemOptions() {
-		
 		// Add barcoded products to drop down menu
-		ProductDatabases.PLU_PRODUCT_DATABASE.forEach((plu, pluCodedProduct) -> itemMenu.add(pluCodedProduct.getDescription()));
+		
+		ProductDatabases.PLU_PRODUCT_DATABASE.forEach((plu, pluCodedProduct) -> indexMap.put(pluCodedProduct.getDescription(), pluCodedProduct));
+		indexMap.forEach((description, product) -> 	itemMenu.add(description));
 	}
 	
 	private void updateCatalogue() {
@@ -201,16 +205,79 @@ public class VisualCatalogue extends JPanel implements ActionListener {
 			updateCatalogue();
 		}
 		else if (e.getSource() == firstB) {
-			// Select product and add to cart - backend integration required
-			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
+			// Select product and add to cart - backend integration
+			String desc = itemMenu.get(startingOffset);
+			PLUCodedProduct pcp = indexMap.get(desc);
+			
+			boolean isValidProduct = false;
+			double weight = 0.0;
+			
+			// new item of that product
+			for (Item it : customerFrame.st.idb.getInstance().itemList) {
+				if (it instanceof PLUCodedItem) {
+					PLUCodedItem pluItem = (PLUCodedItem) it;
+					if (pluItem.getPLUCode().equals(pcp.getPLUCode())) {
+						isValidProduct = true;
+						weight = pluItem.getWeight();
+					}
+				}
+			}
+			
+			if (isValidProduct) {
+				customerFrame.currentItem = new PLUCodedItem(indexMap.get(desc).getPLUCode(), weight);
+				customerFrame.st.addProduct(indexMap.get(desc));
+				customerFrame.waitingToBag();
+			}
 		}
 		else if (e.getSource() == secondB) {
-			// Select product and add to cart
-			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
+			// Select product and add to cart - backend integration
+			String desc = itemMenu.get(startingOffset+1);
+			PLUCodedProduct pcp = indexMap.get(desc);
+			
+			boolean isValidProduct = false;
+			double weight = 0.0;
+			
+			// new item of that product
+			for (Item it : customerFrame.st.idb.getInstance().itemList) {
+				if (it instanceof PLUCodedItem) {
+					PLUCodedItem pluItem = (PLUCodedItem) it;
+					if (pluItem.getPLUCode().equals(pcp.getPLUCode())) {
+						isValidProduct = true;
+						weight = pluItem.getWeight();
+					}
+				}
+			}
+			
+			if (isValidProduct) {
+				customerFrame.currentItem = new PLUCodedItem(indexMap.get(desc).getPLUCode(), weight);
+				customerFrame.st.addProduct(indexMap.get(desc));
+				customerFrame.waitingToBag();
+			}
 		}
 		else if (e.getSource() == thirdB) {
-			// Select product and add to cart
-			customerFrame.cardLayout.show(this.customerFrame.getContentPane(), "mainScreen");
+			// Select product and add to cart - backend integration
+			String desc = itemMenu.get(startingOffset+2);
+			PLUCodedProduct pcp = indexMap.get(desc);
+			
+			boolean isValidProduct = false;
+			double weight = 0.0;
+			
+			// new item of that product
+			for (Item it : customerFrame.st.idb.getInstance().itemList) {
+				if (it instanceof PLUCodedItem) {
+					PLUCodedItem pluItem = (PLUCodedItem) it;
+					if (pluItem.getPLUCode().equals(pcp.getPLUCode())) {
+						isValidProduct = true;
+						weight = pluItem.getWeight();
+					}
+				}
+			}
+			
+			if (isValidProduct) {
+				customerFrame.currentItem = new PLUCodedItem(indexMap.get(desc).getPLUCode(), weight);
+				customerFrame.st.addProduct(indexMap.get(desc));
+				customerFrame.waitingToBag();
+			}
 		}
 		
 	}

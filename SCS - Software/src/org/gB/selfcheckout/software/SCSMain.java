@@ -95,7 +95,7 @@ public class SCSMain {
 	 *		The type of error that took place.
 	 */
 	public static void error(String type) {
-
+		System.out.println(type);
 	}
 
 	/**

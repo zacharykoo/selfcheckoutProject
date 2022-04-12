@@ -61,11 +61,11 @@ public class State {
 	// Stores the payments made for each card transactions.
 	public ArrayList<Pair<Card.CardData, BigDecimal>> cardPayments =
 		new ArrayList<Pair<Card.CardData, BigDecimal>>();
-	
+	//public CustomerDoesNotWantToBagScannedItem customerDoesNotWantToBagScannedItem = null;
 	// A database to contain items for purchase.
 	public ItemDatabase idb = null;
 	// A database to contain card issuer with the corresponding card type
-	public CardIssuerDatabase cardIssuerDatabase = null;
+	public CardIssuerDatabase cardIssuerDatabase = CardIssuerDatabase.c;
 	// An instance of the self checkout station hardware.
 	public SelfCheckoutStation scs = null;
 	// Instances of the use case handlers.
@@ -97,14 +97,9 @@ public class State {
 	 * Add the specified item to the scanned items list. The expected weight
 	 * is updated appropriately.
 	 * 
-	 * @param item
+	 * @param product
 	 * 		The item to be added to the scanned items list.
 	 */
-	// public void addItem(Item item) {
-	// 	scannedItems.add(item);
-	// 	expectedWeight += item.getWeight();
-	// }
-	
 	public void addProduct(Product product) {
 		if (productCart.containsKey(product)) {
 			// Increment count of that product
@@ -127,18 +122,10 @@ public class State {
 	 * Removes the specified item from the scanned items list. The expected
 	 * weight is updated appropriately.
 	 * 
-	 * @param item
+	 * @param product
 	 * 		The item to be removed from the scanned items list.
 	 * @return True if the item was removed, false otherwise.
 	 */
-	public boolean removeItem(Item item) {
-		if (scannedItems.remove(item)) {
-			expectedWeight = 0.0;
-			for (Item i : this.scannedItems) expectedWeight += i.getWeight();
-			return true;
-		} else return false;
-	}
-	
 	public boolean removeProduct(Product product) {
 		boolean isProductRemoved = false;
 		// If there is more than 1 reduce count of that product, else remove product
@@ -290,7 +277,7 @@ public class State {
 		scs.mainScanner.disable();
 		scs.handheldScanner.disable();
 		scs.printer.disable();
-		scs.cardReader.disable();
+		scs.cardReader.enable();
 		scs.banknoteInput.enable();
 		scs.banknoteOutput.enable();
 		scs.banknoteValidator.enable();

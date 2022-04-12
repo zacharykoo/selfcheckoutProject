@@ -160,7 +160,7 @@ public class AttendantControl {
 
 	public boolean removeProduct(State state, Product product) {
 		// based on removeProduct method in State from another member
-//		state.removeProduct(product);
+		state.removeProduct(product);
 		return true;
 	}
 
