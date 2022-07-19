@@ -1,4 +1,4 @@
-# selfcheckoutProject
+# Self Checkout Project
 
 This project is designed to reprecate a normal self-checkout system in a super market.
 Items can be scanned, bagged and price will be updated accordingly. Weight of the items are tracked in the bagging area to ensure items is correctly scanned.
